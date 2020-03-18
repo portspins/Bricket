@@ -5,7 +5,7 @@ public class Main {
         // Get a search query from the user
 
         // Create a new Search object with a BricksetScraper object and the query
-        
+        BricksetScraper scraper = new BricksetScraper("motorcycle");
         // Iterate through Search's SearchResults and print out the info from each
 
     }
