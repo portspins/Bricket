@@ -7,4 +7,4 @@ Authors
 * Andrew Guillory
 * [Dayton Hasty](https://github.com/dayt0n)
 * Matthew Hise
-* Daniel Morris
+* [Daniel Morris](https://github.com/dwmUAH)
