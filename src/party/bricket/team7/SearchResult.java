@@ -1,7 +1,7 @@
 package party.bricket.team7;
 
 import java.util.*;
-/** SearchResult: A class that will act as a data type for a single item
+/** party.bricket.team7.SearchResult: A class that will act as a data type for a single item
  * from a brickset search's result list.
  * Stored inside are:
  * ID#, Brickset page link, Thumbnail link, Name, MSRP, Theme, Release Date,
@@ -19,10 +19,10 @@ public class SearchResult {
     private int partCount = 0;                                          // Part Count of the set
     private boolean retired = false;                                       // Retired Flag
     private String retireDate = "";                                     // Date of retirement, if applicable
-    private ArrayList<String> minifigNames = new ArrayList<String>();   // List of Minifigs in the set
+    private ArrayList<String> minifigNames = new ArrayList<>();   // List of Minifigs in the set
     /** Full Constructor. Takes all inputs to fill out the attributes.
      */
-     public SearchResult(int idNumberIn, String bricksetIn, String thumbnailIn, String nameIn, double msrpIn, String themeIn, String releaseDateIn, int partCountIn, boolean retiredFlag, String retireDateIn, ArrayList<String> minifigNamesIn) {
+    public SearchResult(int idNumberIn, String bricksetIn, String thumbnailIn, String nameIn, double msrpIn, String themeIn, String releaseDateIn, int partCountIn, boolean retiredFlag, String retireDateIn, ArrayList<String> minifigNamesIn) {
         idNumber = idNumberIn;
         brickset = bricksetIn;
         thumbnail = thumbnailIn;
@@ -187,10 +187,7 @@ public class SearchResult {
      */
     public boolean setRetirementDate(String rt) {
         retireDate = rt;
-        if(rt.compareTo("")!=0)
-            retired = true;
-        else
-            retired = false;
+        retired = rt.compareTo("") != 0;
         return true;
     }
 
@@ -208,5 +205,14 @@ public class SearchResult {
     public boolean setList(ArrayList<String> minis) {
         minifigNames = minis;
         return true;
+    }
+
+    /**toString()
+     * Default print method, outputs a string of the SearchResult's
+     * data that will be used in the list created by the GUI.
+     */
+    public String toString() {
+        String excerpt = idNumber + " " + thumbnail + " " + name + " " + theme;
+        return excerpt;
     }
 }
