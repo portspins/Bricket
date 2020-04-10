@@ -9,7 +9,7 @@ import org.jsoup.select.Elements;
 
 enum scopes { ALL, SETS, MINIFIGS, PARTS, BRICKLISTS, NEWS, MEMBERS }
 
-public class BricksetScraper {
+public class BricksetSearchScraper {
 
     private String url;
     private ArrayList<String> IDs;
@@ -22,7 +22,7 @@ public class BricksetScraper {
      * @param query the keyword a user wants to search for
      * @param scope the type of sets a user wants to search within
      */
-    BricksetScraper(String query, scopes scope) {
+    BricksetSearchScraper(String query, scopes scope) {
         // build URL
         names = new ArrayList<String>();
         IDs = new ArrayList<String>();
@@ -64,7 +64,7 @@ public class BricksetScraper {
         }
     }
 
-    BricksetScraper(String query) {
+    BricksetSearchScraper(String query) {
         names = new ArrayList<String>();
         IDs = new ArrayList<String>();
         links = new ArrayList<String>();
@@ -104,33 +104,6 @@ public class BricksetScraper {
             System.out.println("Link: " + links.get(i));
             IDs.add(tempID);
         }
-    }
-
-    /**
-     * Constructor for scraping an individual item page
-     * @param result the desired item's SearchResult
-     */
-    BricksetScraper(SearchResult result) {
-        url = "https://brickset.com" + result.getBSLink();
-        try {
-            doc = Jsoup.connect(url).get(); // store html in memory for speed
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * scrapes item in right-hand side of item page "Set Type"
-     * @return set type (Normal, Minifig, etc)
-     */
-    public String scrapeSetType() {
-        // this is WIP... but then again isn't this whole project
-        // will be in first <section class='featurebox'>.....
-        Elements elFeatureboxes = doc.select("class.featurebox");
-        String type = elFeatureboxes.get(0).select("dt.Set Type > dd").text();
-        // the above code could very well not work, I haven't tried the > descriptor yet
-        System.out.println("Set Type: " + type);
-        return type;
     }
 
     public ArrayList<String> getIDs() {

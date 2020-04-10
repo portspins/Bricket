@@ -14,12 +14,12 @@ public class Search {
     //Used to store Search Results from the scraper
     private ArrayList<SearchResult> sResults = new ArrayList<SearchResult>();
     //Object to access scraper
-    private BricksetScraper bSScraper;
+    private BricksetSearchScraper bSScraper;
 
     //Constructor
     private void Search(String query){
         searchQuery = query;
-        bSScraper = new BricksetScraper(searchQuery);
+        bSScraper = new BricksetSearchScraper(searchQuery);
     }
 
     //Used to get searchQuery

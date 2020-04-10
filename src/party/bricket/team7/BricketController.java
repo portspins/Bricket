@@ -9,7 +9,16 @@ public class BricketController {
     }
 
     public void searchSubmitted(String query) {
-        BricksetScraper searchScraper = new BricksetScraper(query);
+        BricksetSearchScraper searchScraper = new BricksetSearchScraper(query);
+        // did some testing of BricksetItemScraper here. will change
+        // from searchresult to researchresult as a parameter later
+        //
+        //SearchResult res = new SearchResult();
+        //res.setBSLink(searchScraper.getLinks().get(0));
+        //BricksetItemScraper individual = new BricksetItemScraper(res);
+        //String setType = individual.scrapeSetType();
+        //String theme = individual.scrapeTheme();
+        //individual.scrapeIsRetired();
         ArrayList<String> IDs = searchScraper.getIDs();
         for(String id : IDs) {
             JLabel searchItem = new JLabel(id);
