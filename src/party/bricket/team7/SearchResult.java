@@ -9,7 +9,7 @@ import java.util.*;
  * @author Daniel Morris
  */
 public class SearchResult {
-    private int idNumber = 0;                                           // ID number in "####-####" format
+    private String idNumber = "";                                           // ID number in "####-####" format
     private String brickset = "";                                       // Brickset Link
     private String thumbnail = "";                                      // Thumbnail Link
     private String name = "";                                           // Set Name
@@ -22,7 +22,7 @@ public class SearchResult {
     private ArrayList<String> minifigNames = new ArrayList<>();   // List of Minifigs in the set
     /** Full Constructor. Takes all inputs to fill out the attributes.
      */
-    public SearchResult(int idNumberIn, String bricksetIn, String thumbnailIn, String nameIn, double msrpIn, String themeIn, String releaseDateIn, int partCountIn, boolean retiredFlag, String retireDateIn, ArrayList<String> minifigNamesIn) {
+    public SearchResult(String idNumberIn, String bricksetIn, String thumbnailIn, String nameIn, double msrpIn, String themeIn, String releaseDateIn, int partCountIn, boolean retiredFlag, String retireDateIn, ArrayList<String> minifigNamesIn) {
         idNumber = idNumberIn;
         brickset = bricksetIn;
         thumbnail = thumbnailIn;
@@ -36,18 +36,25 @@ public class SearchResult {
         minifigNames = minifigNamesIn;
     }
 
+    /**
+     * constructor with no inputs
+     */
+    public SearchResult() {
+        name = ""; // just needed something here I guess
+    }
+
     /** GetIDNumber.
      *Retrieves a copy of the id number.
      */
-    public int getIdNumber() {
-        int decoy = idNumber;
+    public String getIdNumber() {
+        String decoy = idNumber;
         return decoy;
     }
 
     /**SetIDNumber.
      *Sets the id number to the input parameter.
      */
-    public boolean setIdNumber(int id) {
+    public boolean setIdNumber(String id) {
         idNumber = id;
         return true;
     }

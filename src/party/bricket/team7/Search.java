@@ -19,9 +19,7 @@ public class Search {
     //Constructor
     private void Search(String query){
         searchQuery = query;
-        bSScraper = new BricksetScraper();
-        bSScraper.BricksetScraper(searchQuery);
-
+        bSScraper = new BricksetScraper(searchQuery);
     }
 
     //Used to get searchQuery
@@ -32,21 +30,27 @@ public class Search {
 
     //I'm having a little trouble with this class.
     //I just need to know what else will be accessible from the scraper once it is done
-    private void addSearchResult(){
-        SearchResult sR = new SearchResult(bSScraper.getName(), bSScraper.getID());
-        sResults.add(sR);
+    private void addSearchResult() throws NoSuchFieldException {
+        ArrayList<String> ids = bSScraper.getIDs();
+        ArrayList<String> names = bSScraper.getNames();
+        ArrayList<String> links = bSScraper.getLinks();
+        if(ids.size() != names.size()) {
+            throw new NoSuchFieldException();
+        }
+        for(int i = 0; i < names.size(); i++) {
+            SearchResult sR = new SearchResult();
+            sR.setName(names.get(i));
+            sR.setIdNumber(ids.get(i));
+            sR.setBSLink(links.get(i));
+            sResults.add(sR);
+        }
     }
 
     //This will return a search result in sResult array with the given ID number
-    private SearchResult getSearchResult(Integer ID){
-        Integer i = 0;
-
+    private SearchResult getSearchResult(String ID){
         for(SearchResult sR: sResults){
-            if(sResults.get(i).getIdNumber()==ID){
-                return sResults.get(i);
-            }
-            else{
-                i++;
+            if(sR.getIdNumber().equals(ID)){
+                return sR;
             }
         }
         System.out.println("Could not find search result");
