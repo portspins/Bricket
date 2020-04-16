@@ -36,13 +36,15 @@ public class ResearchResult {
      */
 
     // MODIFY TO TAKE SEARCH RESULT!!
-    public ResearchResult() {
+    //Edit by Daniel added parameters, change if not what we wanted,
+    // I just tried to fix the errors.
+    public ResearchResult(SearchResult searchRes, String thm, String imgLink, boolean ret) {
         id = searchRes.getId();                                   // Initialize ID string in "####-####" format
         name = searchRes.getName();                               // Initialize item name
         bricksetLink = searchRes.getItemLink();                   // Initialize link to product page on Brickset
-        this.theme = theme;                                       // Initialize theme
+        this.theme = thm;                                         // Initialize theme
         imageLink = imgLink;                                      // Initialize link to image of item
-        this.retired = retired;                                   // Initialize retired flag
+        this.retired = ret;                                   // Initialize retired flag
 
         retailPrice = 0.0;                                        // Initialize Recommended Retail Price in dollars
         value = 0.0;                                              // Initialize average value (or estimated value, if not retired) in dollars
