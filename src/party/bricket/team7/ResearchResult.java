@@ -33,15 +33,10 @@ public class ResearchResult {
 
     /**
      * Creates a new ResearchResult object
-     * @param searchRes the search result defining the item
-     * @param theme the item's theme
-     * @param imgLink the item's image link
-     * @param retired flag denoting whether or not the item is retired
      */
 
-    // MODIFY TO TAKE SEARCH RESULT
-
-    public ResearchResult(SearchResult searchRes, String theme, String imgLink, boolean retired) {
+    // MODIFY TO TAKE SEARCH RESULT!!
+    public ResearchResult() {
         id = searchRes.getId();                                   // Initialize ID string in "####-####" format
         name = searchRes.getName();                               // Initialize item name
         bricksetLink = searchRes.getItemLink();                   // Initialize link to product page on Brickset
