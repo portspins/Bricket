@@ -17,20 +17,24 @@ public class Search {
     private BricksetSearchScraper bSScraper;
 
     //Constructor
-    private void Search(String query){
+    public Search(String query) {
         searchQuery = query;
         bSScraper = new BricksetSearchScraper(searchQuery);
+        try {
+            addSearchResults();
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        }
     }
 
     //Used to get searchQuery
-    private String getSearchQuery(){
-        String nothing = searchQuery;
-        return nothing;
+    public String getSearchQuery() {
+        return searchQuery;
     }
 
     //I'm having a little trouble with this class.
     //I just need to know what else will be accessible from the scraper once it is done
-    private void addSearchResult() throws NoSuchFieldException {
+    private void addSearchResults() throws NoSuchFieldException {
         ArrayList<String> ids = bSScraper.getIDs();
         ArrayList<String> names = bSScraper.getNames();
         ArrayList<String> links = bSScraper.getLinks();
@@ -38,18 +42,15 @@ public class Search {
             throw new NoSuchFieldException();
         }
         for(int i = 0; i < names.size(); i++) {
-            SearchResult sR = new SearchResult();
-            sR.setName(names.get(i));
-            sR.setIdNumber(ids.get(i));
-            sR.setBSLink(links.get(i));
+            SearchResult sR = new SearchResult(ids.get(i), names.get(i), 2000, links.get(i), ""); // Needs real data for year and link
             sResults.add(sR);
         }
     }
 
     //This will return a search result in sResult array with the given ID number
-    private SearchResult getSearchResult(String ID){
+    public SearchResult getSearchResult(String ID) {
         for(SearchResult sR: sResults){
-            if(sR.getIdNumber().equals(ID)){
+            if(sR.getId().equals(ID)){
                 return sR;
             }
         }
@@ -58,8 +59,7 @@ public class Search {
     }
 
     //This will display all the search results currently inside sResults
-    private void displaySearchResults(){
-
+    public void displaySearchResults() {
         for(SearchResult i: sResults){
             System.out.println(i.toString());
         }

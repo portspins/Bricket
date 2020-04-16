@@ -2,9 +2,16 @@ package party.bricket.team7;
 
 import java.util.ArrayList;
 
+/**
+ * Manages the adding, removing, and modifying of ResearchResults.
+ *
+ * @author Matthew Hise
+ *
+ */
+
 public class Speculator {
-    private BricksetScraper bSScraper;
-    private ArrayList<ResearchResult> specs = new ArrayList<ResearchResult>;
+    //private BricksetItemScraper bSScraper;
+    //private ArrayList<ResearchResult> specs;
 
     void Speculator(){
 
@@ -16,20 +23,20 @@ public class Speculator {
      * @param res
      * @param query
      */
-    private void addResearchResult(SearchResult res, String query) {
-        bSScraper = new BricksetScraper(query);
-        ResearchResult rResult = new ResearchResult();
+    //private void addResearchResult(SearchResult res, String query) {
+        //bSScraper = new BricksetItemScraper(res);
+        //ResearchResult rResult = new ResearchResult(res, "","",false);
         /**we can either add code here to be able to move the info from SearchResult to the current Research Result
          * or handle the conversion in the controller
          */
 
-        specs.add(rResult);
-    }
-    private void modifyResearchResult(String setName){
+        //specs.add(rResult);
+    //}
+    //private void modifyResearchResult(String setName){
         /**Search the list for the set based on the set name
          * Not entirely sure how else we wanted to format this part
          */
-    }
+   // }
 
 
 }

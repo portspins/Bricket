@@ -4,12 +4,15 @@ import javax.swing.*;
 import java.util.ArrayList;
 
 public class BricketController {
-    BricketController() {
 
+    private Search search;
+
+    BricketController() {
+        search = null;
     }
 
     public void searchSubmitted(String query) {
-        BricksetSearchScraper searchScraper = new BricksetSearchScraper(query);
+        // BricksetSearchScraper searchScraper = new BricksetSearchScraper(query);
         // did some testing of BricksetItemScraper here. will change
         // from searchresult to researchresult as a parameter later
         //
@@ -19,9 +22,7 @@ public class BricketController {
         //String setType = individual.scrapeSetType();
         //String theme = individual.scrapeTheme();
         //individual.scrapeIsRetired();
-        ArrayList<String> IDs = searchScraper.getIDs();
-        for(String id : IDs) {
-            JLabel searchItem = new JLabel(id);
-        }
+        search = new Search(query);
+        search.displaySearchResults();
     }
 }
