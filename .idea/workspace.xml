@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4eede522-bafe-4567-8306-7cabe5fd6dc0" name="Default Changelist" comment="Updated ResearchResult constructor to take four parameters only, with the first being a SearchResult">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="4eede522-bafe-4567-8306-7cabe5fd6dc0" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/party/bricket/team7/BricketController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/party/bricket/team7/BricketController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/party/bricket/team7/Search.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/party/bricket/team7/Search.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/party/bricket/team7/ResearchResult.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/party/bricket/team7/ResearchResult.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/party/bricket/team7/Speculator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/party/bricket/team7/Speculator.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -114,6 +113,10 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue="Application.BricketFrame" />
+      <item itemvalue="Application.Main" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Application.BricketFrame" />
@@ -308,5 +311,9 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="342" y="141" key="new project wizard/0.0.1920.1040@0.0.1920.1040" timestamp="1585077571280" />
+    <state x="303" y="1" width="672" height="678" key="search.everywhere.popup" timestamp="1587007805590">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="303" y="1" width="672" height="678" key="search.everywhere.popup/0.0.1280.680@0.0.1280.680" timestamp="1587007805590" />
   </component>
 </project>

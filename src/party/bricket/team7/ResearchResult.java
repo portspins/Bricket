@@ -21,7 +21,7 @@ public class ResearchResult {
     private final boolean retired;                                      // Retired flag
 
     // These attributes will be able to be affected by the user
-    private double retailPrice;                                         // Recommended Retail Price in dollars
+    private double retailPrice;                                         // Retail Price in dollars
     private double value;                                               // Average value (or estimated value, if not retired) in dollars
     private double pricePerPart;                                        // The price per piece in cents
     private ArrayList<String> minifigNames;                             // List of minifigs contained in the item
@@ -224,6 +224,26 @@ public class ResearchResult {
      */
     public String toString() {
         return "Item: " + id + " " + name + "\tValue: " + value;
+    }
+
+    /** Implementing an equals method for easy comparison
+     * only comparing equality based on ID and name. We may want to add more
+     * Author: Andrew
+     */
+    public boolean equals(Object obj){
+        if(this == obj){
+            return true;
+        }
+        else if(obj == null){
+            return false;
+        }
+        else if(obj instanceof ResearchResult){
+            ResearchResult RE = (ResearchResult) obj;
+            if(RE.getName().equals(name) && RE.getID().equals(id)){
+                return true;
+            }
+        }
+        return false;
     }
 }
 
