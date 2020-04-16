@@ -33,21 +33,18 @@ public class ResearchResult {
 
     /**
      * Creates a new ResearchResult object
-     * @param searchRes the search result defining the item
-     * @param theme the item's theme
-     * @param imgLink the item's image link
-     * @param retired flag denoting whether or not the item is retired
      */
 
-    // MODIFY TO TAKE SEARCH RESULT
-
-    public ResearchResult(SearchResult searchRes, String theme, String imgLink, boolean retired) {
+    // MODIFY TO TAKE SEARCH RESULT!!
+    //Edit by Daniel added parameters, change if not what we wanted,
+    // I just tried to fix the errors.
+    public ResearchResult(SearchResult searchRes, String thm, String imgLink, boolean ret) {
         id = searchRes.getId();                                   // Initialize ID string in "####-####" format
         name = searchRes.getName();                               // Initialize item name
         bricksetLink = searchRes.getItemLink();                   // Initialize link to product page on Brickset
-        this.theme = theme;                                       // Initialize theme
+        this.theme = thm;                                         // Initialize theme
         imageLink = imgLink;                                      // Initialize link to image of item
-        this.retired = retired;                                   // Initialize retired flag
+        this.retired = ret;                                   // Initialize retired flag
 
         retailPrice = 0.0;                                        // Initialize Recommended Retail Price in dollars
         value = 0.0;                                              // Initialize average value (or estimated value, if not retired) in dollars

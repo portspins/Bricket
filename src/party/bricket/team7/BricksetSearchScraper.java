@@ -15,6 +15,7 @@ public class BricksetSearchScraper {
     private ArrayList<String> IDs;
     private ArrayList<String> names;
     private ArrayList<String> links;
+    private ArrayList<String> thumbnails;
     private Document doc;
 
     /**
@@ -68,6 +69,8 @@ public class BricksetSearchScraper {
         names = new ArrayList<String>();
         IDs = new ArrayList<String>();
         links = new ArrayList<String>();
+        thumbnails = new ArrayList<String>();
+
         Elements elID;
         Elements elName;
         Elements elUrl;
@@ -80,16 +83,12 @@ public class BricksetSearchScraper {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        //System.out.println(doc.html());
         elCategories = doc.select("div.col"); // narrow down to divs w/ col
         elCategories = elCategories.select("div.span3"); // narrow down to divs w/ col && span3
         elName = elCategories.select("h1"); // names will always be in h1 tag
         elID = elCategories.select("li.set"); // unordered list item per result, with class 'set'
         elUrl = elCategories.select("div.tags");
         elUrl = elUrl.select("div.floatleft");
-        //System.out.println("Found " + categories.size() + " divs");
-        //System.out.println("Found " + names.size() + " items");
-        //System.out.println("Found " + ids.size() + " ahrefs");
         String tempID;
         for(int i = 0; i < elName.size(); i++) { // loop through as long as we have a name
             tempID = elID.get(i).select("a[href]").attr("href"); // get link in href
@@ -99,9 +98,11 @@ public class BricksetSearchScraper {
             }
             names.add(elName.get(i).text());
             links.add(elUrl.get(i).select("a[href]").attr("href"));
-            System.out.println("Name: "+ names.get(i));
-            System.out.println("ID: " + tempID);
-            System.out.println("Link: " + links.get(i));
+            thumbnails.add(elID.get(i).select("img").attr("src"));
+            System.out.println("Name:      "+ names.get(i));
+            System.out.println("ID:        " + tempID);
+            System.out.println("Link:      " + links.get(i));
+            System.out.println("Thumbnail: " + thumbnails.get(i));
             IDs.add(tempID);
         }
     }
@@ -116,6 +117,10 @@ public class BricksetSearchScraper {
 
     public ArrayList<String> getLinks() {
         return links;
+    }
+
+    public ArrayList<String> getThumbnails() {
+        return thumbnails;
     }
 
 }

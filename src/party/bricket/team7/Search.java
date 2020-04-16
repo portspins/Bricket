@@ -38,11 +38,12 @@ public class Search {
         ArrayList<String> ids = bSScraper.getIDs();
         ArrayList<String> names = bSScraper.getNames();
         ArrayList<String> links = bSScraper.getLinks();
+        ArrayList<String> thumbnails = bSScraper.getThumbnails();
         if(ids.size() != names.size()) {
             throw new NoSuchFieldException();
         }
         for(int i = 0; i < names.size(); i++) {
-            SearchResult sR = new SearchResult(ids.get(i), names.get(i), 2000, links.get(i), ""); // Needs real data for year and link
+            SearchResult sR = new SearchResult(ids.get(i), names.get(i), 2000, links.get(i), thumbnails.get(i)); // Needs real data for year and link
             sResults.add(sR);
         }
     }
