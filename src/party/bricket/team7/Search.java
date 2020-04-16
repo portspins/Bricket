@@ -6,6 +6,7 @@ package party.bricket.team7;
  * Uses an instantiation of BrickSet Scraper
  */
 import java.util.ArrayList;
+import java.util.Iterator;
 
 
 public class Search {
@@ -48,15 +49,17 @@ public class Search {
         }
     }
 
-    //This will return a search result in sResult array with the given ID number
-    public SearchResult getSearchResult(String ID) {
-        for(SearchResult sR: sResults){
-            if(sR.getId().equals(ID)){
-                return sR;
-            }
+    //This will return a search result in sResult array at the given slot
+    public SearchResult selectSearchResult(int i) {
+        if (i >= 0 && i < sResults.size()) {
+            return sResults.get(i);
         }
-        System.out.println("Could not find search result");
         return null;
+    }
+
+    //This will return an iterator to search results
+    public Iterator<SearchResult> getSearchIterator() {
+        return sResults.iterator();
     }
 
     //This will display all the search results currently inside sResults
