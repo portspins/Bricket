@@ -16,7 +16,7 @@ public class BricksetItemScraper {
      * @param result the desired item's SearchResult
      */
     BricksetItemScraper(SearchResult result) {
-        url = "https://brickset.com" + result.getBSLink();
+        url = "https://brickset.com" + result.getItemLink();
         try {
             doc = Jsoup.connect(url).get(); // store html in memory for speed
         } catch (IOException e) {
