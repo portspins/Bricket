@@ -30,20 +30,22 @@ public class ResearchResult {
     private Date releaseDate;                                           // Release date of set
     private Date retireDate;                                            // Date of retirement, if applicable
 
+
     /**
      * Creates a new ResearchResult object
-     * @param id the item's ID string in "####-####" format
-     * @param name the item's name
+     * @param searchRes the search result defining the item
      * @param theme the item's theme
-     * @param bsLink the item's Brickset link
      * @param imgLink the item's image link
      * @param retired flag denoting whether or not the item is retired
      */
-    public ResearchResult(String id, String name, String theme, String bsLink, String imgLink, boolean retired) {
-        this.id = id;                                             // Initialize ID string in "####-####" format
-        this.name = name;                                         // Initialize item name
+
+    // MODIFY TO TAKE SEARCH RESULT
+
+    public ResearchResult(SearchResult searchRes, String theme, String imgLink, boolean retired) {
+        id = searchRes.getId();                                   // Initialize ID string in "####-####" format
+        name = searchRes.getName();                               // Initialize item name
+        bricksetLink = searchRes.getItemLink();                   // Initialize link to product page on Brickset
         this.theme = theme;                                       // Initialize theme
-        bricksetLink = bsLink;                                    // Initialize link to product page on Brickset
         imageLink = imgLink;                                      // Initialize link to image of item
         this.retired = retired;                                   // Initialize retired flag
 
