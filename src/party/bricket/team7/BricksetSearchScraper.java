@@ -4,13 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-
-/**
- * enum for search scope types on brickset.com
- */
-enum scopes { ALL, SETS, MINIFIGS, PARTS, BRICKLISTS, NEWS, MEMBERS }
 
 /**
  * BricksetSearchScraper is an html scraper for searches on brickset.com
@@ -46,7 +40,7 @@ public class BricksetSearchScraper {
         url = "https://brickset.com/sets?query=" + query;
         System.out.println("Scraping: " + url);
         try {
-            doc = Jsoup.connect(url).cookie("setsPageLength","500").get();
+            doc = Jsoup.connect(url).cookie("setsPageLength","50").get();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -56,6 +50,7 @@ public class BricksetSearchScraper {
         elName = elItems.select("div.highslide-caption > h1");
         elYear = elItems.select("div.meta");
         Integer tempYear = -1;
+        String thumb = null;
         for(int i = 0; i < elItems.size(); i++) { // loop through as long as we have a name
             // if year is not found, a -1 is returned in place of the year for that item.
             if(!elYear.get(i).select("a.year").text().isEmpty()) {
@@ -68,7 +63,11 @@ public class BricksetSearchScraper {
             IDs.add(elID.get(i).select("div.tags").select("a[href]").get(0).text());
             names.add(elName.get(i).text());
             links.add(elUrl.get(i).attr("href"));
-            thumbnails.add(elItems.get(i).select("img").attr("src"));
+            thumb = elItems.get(i).select("img").attr("src");
+            if(thumb.startsWith("/")) { // this is a relative path, so add brickset.com to it
+                thumb = "https://brickset.com" + thumb;
+            }
+            thumbnails.add(thumb);
             System.out.println("Name:      "+ names.get(i));
             System.out.println("ID:        " + IDs.get(i));
             System.out.println("Link:      " + links.get(i));
