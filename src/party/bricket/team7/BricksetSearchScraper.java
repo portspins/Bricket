@@ -7,8 +7,15 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+/**
+ * enum for search scope types on brickset.com
+ */
 enum scopes { ALL, SETS, MINIFIGS, PARTS, BRICKLISTS, NEWS, MEMBERS }
 
+/**
+ * BricksetSearchScraper is an html scraper for searches on brickset.com
+ * @author Dayton Hasty
+ */
 public class BricksetSearchScraper {
 
     private String url;
@@ -20,121 +27,94 @@ public class BricksetSearchScraper {
     private Document doc;
 
     /**
-     * Constructor if a user wants to search within a specific scope
-     * @param query the keyword a user wants to search for
-     * @param scope the type of sets a user wants to search within
+     * Constructor for basic searches without a scope
+     * @param query the string a user searches for. can be name, ID, etc.
      */
-    BricksetSearchScraper(String query, scopes scope) {
-        // build URL
-        names = new ArrayList<String>();
-        IDs = new ArrayList<String>();
-        url = "https://brickset.com/search?query=" + query + "&scope=";
-        switch(scope) {
-            case ALL:
-                url += "All";
-                break;
-            case SETS:
-                url += "Sets";
-                break;
-            case MINIFIGS:
-                url += "Minifigs";
-                break;
-            case PARTS:
-                url += "Parts";
-                break;
-            case BRICKLISTS:         // don't think we actually need cases from here down,
-                url += "BrickLists"; // but they are options on the site so I will include them
-                break;
-            case NEWS:
-                url += "News";
-                break;
-            case MEMBERS:
-                url += "Members";
-                break;
-            default:           // default scope will be all
-                url += "All";
-                break;
-        }
-        if(scope == scopes.ALL) {
-            try {
-                doc = Jsoup.connect(url).get();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            Elements categories = doc.select(".col span3");
-            System.out.println("URL: " + url);
-        }
-    }
-
     BricksetSearchScraper(String query) {
         names = new ArrayList<String>();
         IDs = new ArrayList<String>();
         links = new ArrayList<String>();
         thumbnails = new ArrayList<String>();
         years = new ArrayList<Integer>();
+
         Elements elID;
         Elements elName;
         Elements elUrl;
-        Elements elCategories;
+        Elements elItems;
         Elements elYear;
         // build URL
-        url = "https://brickset.com/search?query=" + query + "&scope=All";
+        url = "https://brickset.com/sets?query=" + query;
         System.out.println("Scraping: " + url);
         try {
-            doc = Jsoup.connect(url).get();
+            doc = Jsoup.connect(url).cookie("setsPageLength","500").get();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        elCategories = doc.select("div.col"); // narrow down to divs w/ col
-        elCategories = elCategories.select("div.span3"); // narrow down to divs w/ col && span3
-        elName = elCategories.select("h1"); // names will always be in h1 tag
-        elID = elCategories.select("li.set"); // unordered list item per result, with class 'set'
-        elUrl = elCategories.select("div.tags");
-        elUrl = elUrl.select("div.floatleft");
-        String tempID;
+        elItems = doc.select("article.set");
+        elUrl = elItems.select("div.meta").select("h1").select("a[href]");
+        elID = elItems.select("div.meta");
+        elName = elItems.select("div.highslide-caption > h1");
+        elYear = elItems.select("div.meta");
         Integer tempYear = -1;
-        for(int i = 0; i < elName.size(); i++) { // loop through as long as we have a name
-            tempID = elID.get(i).select("a[href]").attr("href"); // get link in href
-            tempID = tempID.substring(tempID.lastIndexOf('/')+1);
-            if(tempID.contains(".")) {
-                tempID = tempID.substring(0, tempID.indexOf('.'));
-            }
-            if(!elID.get(i).select("a.year").text().isEmpty()) {
-                tempYear = Integer.valueOf(elID.get(i).select("a.year").text());
+        for(int i = 0; i < elItems.size(); i++) { // loop through as long as we have a name
+            // if year is not found, a -1 is returned in place of the year for that item.
+            if(!elYear.get(i).select("a.year").text().isEmpty()) {
+                tempYear = Integer.valueOf(elYear.get(i).select("a.year").text());
                 years.add(tempYear);
                 tempYear = -1;
             } else {
                 years.add(tempYear); // set to -1
             }
+            IDs.add(elID.get(i).select("div.tags").select("a[href]").get(0).text());
             names.add(elName.get(i).text());
-            links.add(elUrl.get(i).select("a[href]").attr("href"));
-            thumbnails.add(elID.get(i).select("img").attr("src"));
+            links.add(elUrl.get(i).attr("href"));
+            thumbnails.add(elItems.get(i).select("img").attr("src"));
             System.out.println("Name:      "+ names.get(i));
-            System.out.println("ID:        " + tempID);
+            System.out.println("ID:        " + IDs.get(i));
             System.out.println("Link:      " + links.get(i));
             System.out.println("Thumbnail: " + thumbnails.get(i));
             System.out.println("Year:      " + years.get(i));
-            IDs.add(tempID);
+            System.out.println("");
         }
+        System.out.println("===============\nGot " + years.size() + " items\n================");
     }
 
+    /**
+     * get for item IDs from search
+     * @return ArrayList of item IDs as strings
+     */
     public ArrayList<String> getIDs() {
         return IDs;
     }
 
+    /**
+     * get for item names from search
+     * @return ArrayList of item names as strings
+     */
     public ArrayList<String> getNames() {
         return names;
     }
 
+    /**
+     * get for links to item pages from search
+     * @return ArrayList of relative path links as strings
+     */
     public ArrayList<String> getLinks() {
         return links;
     }
 
+    /**
+     * get for thumbnail image links for items from search
+     * @return ArrayList of absolute path image links as strings
+     */
     public ArrayList<String> getThumbnails() {
         return thumbnails;
     }
 
-    // if year is not found, a -1 is returned in place of the year for that item.
+    /**
+     * get for release years of items from search
+     * @return ArrayList of years as Integers
+     */
     public ArrayList<Integer> getYears() {
         return years;
     }

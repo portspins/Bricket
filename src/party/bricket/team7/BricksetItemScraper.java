@@ -6,6 +6,10 @@ import org.jsoup.select.Elements;
 import org.jsoup.nodes.Element;
 import java.io.IOException;
 
+/**
+ * BricksetItemScraper is an html scraper for values on individual item pages on brickset.cocm
+ * @author Dayton Hasty
+ */
 public class BricksetItemScraper {
 
     private String url;
@@ -31,11 +35,13 @@ public class BricksetItemScraper {
     public String scrapeSetType() {
         // will be in first <section class='featurebox'>.....
         Elements elFeatureboxes = doc.select("section.featurebox");
-        String type = elFeatureboxes.get(0).select("dt:contains(Set Type) + dd").html();
-        // the above code could very well not work, I haven't tried the > descriptor yet
-        return type;
+        return elFeatureboxes.get(0).select("dt:contains(Set Type) + dd").html();
     }
 
+    /**
+     * scrapes theme in format "theme: subtheme" from right-hand side of item page
+     * @return theme of item
+     */
     public String scrapeTheme() {
         Elements elFeatureboxes = doc.select("section.featurebox");
         String subtheme = elFeatureboxes.get(0).select("dt:contains(Subtheme) + dd").html();
@@ -47,6 +53,10 @@ public class BricksetItemScraper {
         return theme;
     }
 
+    /**
+     * scrapes if the item is retired or not based on if it is still being sold
+     * @return boolean true if it is retired and false if it is still being sold
+     */
     public boolean scrapeIsRetired() {
         Elements elFeatureboxes = doc.select("section.featurebox");
         Element availability = elFeatureboxes.get(2);
@@ -64,6 +74,10 @@ public class BricksetItemScraper {
         return true;
     }
 
+    /**
+     * scrapes the display image link from item page
+     * @return returns string of URL to image
+     */
     public String scrapeImgLink() {
         Elements contentClass = doc.select("div.content");
         String src = contentClass.select("img").attr("src");
