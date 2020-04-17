@@ -156,6 +156,15 @@ public class ResearchResult {
         this.rating = (int) (rating * 20);
     }
 
+    /** Returns a copy of the list of minifigNames
+     */
+    public ArrayList<String> getMinifigList() {
+        ArrayList<String> copy = new ArrayList<String>();
+        for (String s: minifigNames)
+            copy.add(s);
+        return copy;
+    }
+
     /** Gets the minifig's name at an index.
      * @param i the index of the minifig whose name is to be returned, starting at 0
      * @return the minifig's name or an empty string if i is out of range
