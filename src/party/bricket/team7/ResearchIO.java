@@ -18,7 +18,7 @@ public interface ResearchIO {
     /** GetItemLink.
      *Retrieves the brickset link.
      */
-    ResearchResult stored = new ResearchResult();
+    //ResearchResult stored = new ResearchResult();
 
     /** loadResearch.
      * Accepts a file name String and returns the stored

@@ -42,9 +42,9 @@ public class ResearchResult {
         id = searchRes.getId();                                   // Initialize ID string in "####-####" format
         name = searchRes.getName();                               // Initialize item name
         bricksetLink = searchRes.getItemLink();                   // Initialize link to product page on Brickset
-        this.theme = thm;                                         // Initialize theme
+        theme = thm;                                              // Initialize theme
         imageLink = imgLink;                                      // Initialize link to image of item
-        this.retired = ret;                                   // Initialize retired flag
+        retired = ret;                                            // Initialize retired flag
 
         retailPrice = 0.0;                                        // Initialize Recommended Retail Price in dollars
         value = 0.0;                                              // Initialize average value (or estimated value, if not retired) in dollars

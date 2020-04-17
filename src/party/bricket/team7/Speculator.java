@@ -23,11 +23,9 @@ public class Speculator {
         if(specs.size() < 5) {
             bSScraper = new BricksetItemScraper(res);//How to merge current version with version on computer (personal question)
             ResearchResult rResult = new ResearchResult(
-                    res.getId(),
-                    res.getName(),
+                    res,
                     bSScraper.scrapeTheme(),
-                    res.getItemLink(),
-                    bSScraper.getImgLink(), //Need to add method to BricksetItemScraper to get the image link
+                    bSScraper.scrapeImgLink(), //Need to add method to BricksetItemScraper to get the image link
                     bSScraper.scrapeIsRetired()
             );
 

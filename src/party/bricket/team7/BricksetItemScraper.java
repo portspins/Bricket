@@ -51,16 +51,21 @@ public class BricksetItemScraper {
         Elements elFeatureboxes = doc.select("section.featurebox");
         Element availability = elFeatureboxes.get(2);
         String date = availability.select("dt:contains(United States) + dd").text();
-        if(date.isEmpty()) {
+        if (date.isEmpty()) {
             return true;
         }
         // get rid of price
         int lastSpace = date.lastIndexOf(" ");
         int hyphen = date.lastIndexOf("-");
-        date = date.substring(hyphen+2,lastSpace);
-        if(date.equals("now")) {
+        date = date.substring(hyphen + 2, lastSpace);
+        if (date.equals("now")) {
             return false;
         }
         return true;
+    }
+
+    public String scrapeImgLink() {
+        String link = null;
+        return link;
     }
 }
