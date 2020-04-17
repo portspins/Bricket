@@ -10,14 +10,14 @@ import java.util.*;
 public class SearchResult {
     private String id;                                                  // ID number in "####-####" format
     private String name;                                                // Item name
-    private int releaseYear;                                            // Item release year
+    private Integer releaseYear;                                            // Item release year
     private String itemLink;                                            // Item's Brickset Link
     private String thumbnailLink;                                       // Thumbnail Link
 
 
     /** Full Constructor. Takes all inputs to fill out the attributes.
      */
-    public SearchResult(String id, String name, int releaseYear, String itemLink, String thumbnailLink) {
+    public SearchResult(String id, String name, Integer releaseYear, String itemLink, String thumbnailLink) {
         this.id = id;
         this.name = name;
         this.releaseYear = releaseYear;
@@ -63,7 +63,7 @@ public class SearchResult {
     /**getReleaseYear
      * Retrieves the release year.
      */
-    public int getReleaseYear() {
+    public Integer getReleaseYear() {
         return releaseYear;
     }
 

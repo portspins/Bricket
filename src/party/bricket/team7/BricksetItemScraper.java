@@ -65,7 +65,8 @@ public class BricksetItemScraper {
     }
 
     public String scrapeImgLink() {
-        String link = null;
-        return link;
+        Elements contentClass = doc.select("div.content");
+        String src = contentClass.select("img").attr("src");
+        return src;
     }
 }

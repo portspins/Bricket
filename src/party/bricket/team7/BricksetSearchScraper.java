@@ -16,6 +16,7 @@ public class BricksetSearchScraper {
     private ArrayList<String> names;
     private ArrayList<String> links;
     private ArrayList<String> thumbnails;
+    private ArrayList<Integer> years;
     private Document doc;
 
     /**
@@ -70,11 +71,12 @@ public class BricksetSearchScraper {
         IDs = new ArrayList<String>();
         links = new ArrayList<String>();
         thumbnails = new ArrayList<String>();
-
+        years = new ArrayList<Integer>();
         Elements elID;
         Elements elName;
         Elements elUrl;
         Elements elCategories;
+        Elements elYear;
         // build URL
         url = "https://brickset.com/search?query=" + query + "&scope=All";
         System.out.println("Scraping: " + url);
@@ -90,11 +92,19 @@ public class BricksetSearchScraper {
         elUrl = elCategories.select("div.tags");
         elUrl = elUrl.select("div.floatleft");
         String tempID;
+        Integer tempYear = -1;
         for(int i = 0; i < elName.size(); i++) { // loop through as long as we have a name
             tempID = elID.get(i).select("a[href]").attr("href"); // get link in href
             tempID = tempID.substring(tempID.lastIndexOf('/')+1);
             if(tempID.contains(".")) {
                 tempID = tempID.substring(0, tempID.indexOf('.'));
+            }
+            if(!elID.get(i).select("a.year").text().isEmpty()) {
+                tempYear = Integer.valueOf(elID.get(i).select("a.year").text());
+                years.add(tempYear);
+                tempYear = -1;
+            } else {
+                years.add(tempYear); // set to -1
             }
             names.add(elName.get(i).text());
             links.add(elUrl.get(i).select("a[href]").attr("href"));
@@ -103,6 +113,7 @@ public class BricksetSearchScraper {
             System.out.println("ID:        " + tempID);
             System.out.println("Link:      " + links.get(i));
             System.out.println("Thumbnail: " + thumbnails.get(i));
+            System.out.println("Year:      " + years.get(i));
             IDs.add(tempID);
         }
     }
@@ -121,6 +132,11 @@ public class BricksetSearchScraper {
 
     public ArrayList<String> getThumbnails() {
         return thumbnails;
+    }
+
+    // if year is not found, a -1 is returned in place of the year for that item.
+    public ArrayList<Integer> getYears() {
+        return years;
     }
 
 }
