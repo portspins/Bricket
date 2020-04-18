@@ -194,7 +194,9 @@ public final class BricketFrame extends JFrame implements BricketView {
             result.add(thumb, BorderLayout.LINE_START);
             result.add(name, BorderLayout.CENTER);
             result.add(new JLabel(current.getReleaseYear().toString() + " "), BorderLayout.LINE_END);
-            result.setPreferredSize(new Dimension(300, 40));
+            result.setMaximumSize(new Dimension(300, 50));
+            result.setAlignmentY(Component.TOP_ALIGNMENT);
+            result.setBorder(BorderFactory.createEmptyBorder(0,2,3,0));
             searchResultPanel.add(result);
             searchResultPanel.setPreferredSize(new Dimension(300, (int) (searchResultPanel.getPreferredSize().getHeight() + 40)));
         }
