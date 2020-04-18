@@ -17,7 +17,7 @@ public final class BricketFrame extends JFrame implements BricketView {
     final JTextField searchField;
     final JPanel searchBarPanel;
     final JPanel searchResultPanel;
-    final JPanel researchPanel;
+    final JTabbedPane researchResultPanel;
     final JScrollPane searchScroll;
     final BricketController controller;
     final String SEARCH_MSG;
@@ -38,8 +38,8 @@ public final class BricketFrame extends JFrame implements BricketView {
         searchButton = new JButton("Search");
         searchBarPanel = new JPanel();
         searchResultPanel = new JPanel();
+        researchResultPanel = new JTabbedPane();
         searchScroll = new JScrollPane(searchResultPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        researchPanel = new JPanel();
         SEARCH_MSG = "Search by item ID or name...";
 
         searchScroll.setPreferredSize(new Dimension(365,700));
@@ -127,7 +127,7 @@ public final class BricketFrame extends JFrame implements BricketView {
         this.add(searchScroll, BorderLayout.LINE_START);
 
         // Add the research panel to the window
-        this.add(researchPanel, BorderLayout.LINE_END);
+        this.add(researchResultPanel, BorderLayout.CENTER);
 
         // Set the initial size of the window
         this.setSize(new Dimension(1280,720));
@@ -246,7 +246,7 @@ public final class BricketFrame extends JFrame implements BricketView {
     public void viewResearchResult(ResearchResult result) {
         if(result != null) {
             try {
-                add(BricketPanelFactory.createResearchResultPanel(result), BorderLayout.CENTER);
+                researchResultPanel.addTab(result.getID(), new ImageIcon(), BricketPanelFactory.createResearchResultPanel(result), result.getID() + " " + result.getName());
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
