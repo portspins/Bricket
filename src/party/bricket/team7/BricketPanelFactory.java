@@ -3,6 +3,8 @@ package party.bricket.team7;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.net.URL;
 
@@ -22,7 +24,7 @@ public abstract class BricketPanelFactory {
         result.add(new JLabel(res.getReleaseYear().toString() + " "), BorderLayout.LINE_END);
         result.setMaximumSize(new Dimension(335, 50));
         result.setAlignmentY(Component.TOP_ALIGNMENT);
-        result.setBorder(BorderFactory.createEmptyBorder(0,2,3,0));
+        result.setBorder(BorderFactory.createEmptyBorder(2,2,2,0));
         return result;
     }
 

@@ -100,22 +100,7 @@ public final class BricketFrame extends JFrame implements BricketView {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if(searchButton.isEnabled()) {
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            clearSearchResults();
-                            SwingUtilities.invokeLater(new Runnable() {
-                                @Override
-                                public void run() {
-                                    try {
-                                        viewSearchResults(controller.refreshSearch(searchField.getText()));
-                                    } catch (IOException ex) {
-                                        ex.printStackTrace();
-                                    }
-                                }
-                            });
-                        }
-                    }).start();
+                    submitSearchQuery();
                 }
             }
         });
@@ -181,14 +166,34 @@ public final class BricketFrame extends JFrame implements BricketView {
     @Override
     public void viewSearchResults(Iterator<SearchResult> itr) throws IOException {
         SearchResult current;
+        JSeparator separator;
+        JPanel newResult;
         searchResultPanel.setBorder(BorderFactory.createTitledBorder("Search Results"));
         int i = 0;
         while(itr.hasNext()) {
             current = itr.next();
             try {
-                JPanel newResult = BricketPanelFactory.createSearchResultPanel(current);
+                newResult = BricketPanelFactory.createSearchResultPanel(current);
+                newResult.addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        Component[] comps = e.getComponent().getParent().getComponents();
+                        int index = 0;
+                        for (Component comp : comps) {
+                            if (comp == e.getComponent()) {
+                                break;
+                            } else if (comp instanceof JPanel) {
+                                index++;
+                            }
+                        }
+                        submitSearchSelected(index);
+                    }
+                });
                 searchResultPanel.add(newResult);
                 searchResultPanel.setPreferredSize(new Dimension(335, (int) (searchResultPanel.getPreferredSize().getHeight() + 40)));
+                separator = new JSeparator();
+                separator.setMaximumSize(new Dimension(335,1));
+                searchResultPanel.add(separator);
                 i++;
             } catch (IOException ex) {
                 ex.printStackTrace();
@@ -207,12 +212,22 @@ public final class BricketFrame extends JFrame implements BricketView {
 
     @Override
     public void submitSearchQuery() {
-
-    }
-
-    @Override
-    public int getScope() {
-        return 0;
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                clearSearchResults();
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            viewSearchResults(controller.refreshSearch(searchField.getText()));
+                        } catch (IOException ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+                });
+            }
+        }).start();
     }
 
     @Override
@@ -266,7 +281,7 @@ public final class BricketFrame extends JFrame implements BricketView {
     }
 
     @Override
-    public void submitSearchSelected() {
+    public void submitSearchSelected(int index) {
 
     }
 
