@@ -42,7 +42,7 @@ public final class BricketFrame extends JFrame implements BricketView {
         SEARCH_MSG = "Search by item ID or name...";
 
         searchScroll.setPreferredSize(new Dimension(350,700));
-        searchScroll.getVerticalScrollBar().setUnitIncrement(12);
+        searchScroll.getVerticalScrollBar().setUnitIncrement(13);
         searchScroll.setBorder(BorderFactory.createEmptyBorder());
 
         this.setFocusable( true );
@@ -60,6 +60,7 @@ public final class BricketFrame extends JFrame implements BricketView {
 
         // Set the search bar panel's layout
         searchBarPanel.setLayout(new BoxLayout(searchBarPanel, BoxLayout.X_AXIS));
+        searchBarPanel.setBorder(BorderFactory.createEmptyBorder(12,22,12,0));
 
         // Set the search result panel's layout
         searchResultPanel.setLayout(new BoxLayout(searchResultPanel, BoxLayout.Y_AXIS));
@@ -124,6 +125,7 @@ public final class BricketFrame extends JFrame implements BricketView {
 
         // Add the components to the panel
         searchBarPanel.add(searchField);
+        searchBarPanel.add(Box.createRigidArea(new Dimension(2, 0)));
         searchBarPanel.add(searchButton);
 
         this.addMouseListener(new MouseAdapter() {
@@ -194,6 +196,8 @@ public final class BricketFrame extends JFrame implements BricketView {
         }
         if (i == 0) {
             searchResultPanel.add(new JLabel("  No results found!"));
+        } else if (i == 1) {
+            searchResultPanel.setBorder(BorderFactory.createTitledBorder("Search Results - 1 result found"));
         } else if (i == 50) {
             searchResultPanel.setBorder(BorderFactory.createTitledBorder("Search Results - showing top 50 matches"));
         } else {
