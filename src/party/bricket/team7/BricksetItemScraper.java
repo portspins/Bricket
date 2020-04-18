@@ -84,6 +84,9 @@ public class BricksetItemScraper {
     public String scrapeImgLink() {
         Elements contentClass = doc.select("div.content");
         String src = contentClass.select("img").attr("src");
+        if(src.startsWith("/")) { // this is a relative path, so add brickset.com to it
+            src = "https://brickset.com" + src;
+        }
         return src;
     }
 
