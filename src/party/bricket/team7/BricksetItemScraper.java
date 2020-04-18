@@ -64,7 +64,7 @@ public class BricksetItemScraper {
         Elements elFeatureBoxes = doc.select("section.featurebox");
         Element availability = elFeatureBoxes.get(2);
         String date = availability.select("dt:contains(United States) + dd").text();
-        if (date.isEmpty()) {
+        if (date.isEmpty() || date.equals("-")) {
             return true;
         }
         // get rid of price
@@ -175,6 +175,9 @@ public class BricksetItemScraper {
             return -1.0;
         }
         String strRRP = elRRP.text();
+        if(!strRRP.contains("$")) {
+            return -1.0;
+        }
         strRRP = strRRP.substring(strRRP.lastIndexOf("$")+1);
         return Double.parseDouble(strRRP);
     }
@@ -250,7 +253,7 @@ public class BricksetItemScraper {
         Elements elFeatureBoxes = doc.select("section.featurebox");
         Element availability = elFeatureBoxes.get(2);
         String date = availability.select("dt:contains(United States) + dd").text();
-        if (date.isEmpty()) {
+        if (date.isEmpty() || date.equals("-")) {
             return retired;
         }
         // get rid of price
@@ -274,7 +277,7 @@ public class BricksetItemScraper {
         Elements elFeatureBoxes = doc.select("section.featurebox");
         Element availability = elFeatureBoxes.get(2);
         String date = availability.select("dt:contains(United States) + dd").text();
-        if (date.isEmpty()) {
+        if (date.isEmpty() || date.equals("-")) {
             return release;
         }
         int hyphen = date.lastIndexOf("-");
