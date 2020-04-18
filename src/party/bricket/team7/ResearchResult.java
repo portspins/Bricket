@@ -1,7 +1,9 @@
 package party.bricket.team7;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 
 /**
  * Represents one Lego item to be researched.
@@ -27,8 +29,8 @@ public class ResearchResult {
     private ArrayList<String> minifigNames;                             // List of minifigs contained in the item
     private int rating;                                                 // Rating from 20-100
     private int partCount;                                              // Part count of the set
-    private Date releaseDate;                                           // Release date of set
-    private Date retireDate;                                            // Date of retirement, if applicable
+    private Calendar releaseDate;                                           // Release date of set
+    private Calendar retireDate;                                            // Date of retirement, if applicable
 
 
     /**
@@ -51,8 +53,10 @@ public class ResearchResult {
         pricePerPart = 0.0;                                       // Initialize price per piece in cents
         rating = 0;                                               // Initialize rating
         partCount = 0;                                            // Initialize part count of the set
-        releaseDate = new Date();                                 // Initialize release date of set
-        retireDate = new Date();                                  // Initialize date of retirement
+        releaseDate = Calendar.getInstance(TimeZone.getTimeZone("America/Chicago"));    // Initialize release date of set
+        releaseDate.setTimeInMillis(0);
+        retireDate  = Calendar.getInstance(TimeZone.getTimeZone("America/Chicago"));    // Initialize date of retirement
+        retireDate.setTimeInMillis(0);
         minifigNames = new ArrayList<String>();                   // Initialize list of minifigs
     }
 
@@ -159,10 +163,7 @@ public class ResearchResult {
     /** Returns a copy of the list of minifigNames
      */
     public ArrayList<String> getMinifigList() {
-        ArrayList<String> copy = new ArrayList<String>();
-        for (String s: minifigNames)
-            copy.add(s);
-        return copy;
+        return (ArrayList<String>) minifigNames.clone();
     }
 
     /** Gets the minifig's name at an index.
@@ -200,29 +201,29 @@ public class ResearchResult {
     /** Gets the item's release date.
      * @return a copy of the item's release date as a Date object reference
      */
-    public Date getReleaseDate() {
-        return (Date) releaseDate.clone();
+    public Calendar getReleaseDate() {
+        return (Calendar) releaseDate.clone();
     }
 
     /** Sets the item's release date.
      * @param releaseDate the item's release date
      */
-    public void setReleaseDate(Date releaseDate) {
-        this.releaseDate = (Date) releaseDate.clone();
+    public void setReleaseDate(Calendar releaseDate) {
+        this.releaseDate = (Calendar) releaseDate.clone();
     }
 
     /** Gets the item's release date.
      * @return a copy of the item's release date as a Date object reference
      */
-    public Date getRetireDate() {
-        return (Date) retireDate.clone();
+    public Calendar getRetireDate() {
+        return (Calendar) retireDate.clone();
     }
 
     /** Sets the item's retire date.
      * @param retireDate the item's retire date
      */
-    public void setRetireDate(Date retireDate) {
-        this.retireDate = (Date) retireDate.clone();
+    public void setRetireDate(Calendar retireDate) {
+        this.retireDate = (Calendar) retireDate.clone();
     }
 
     /** Provides a string representation of the object.

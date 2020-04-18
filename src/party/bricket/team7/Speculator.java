@@ -9,23 +9,30 @@ public class Speculator {
     private LinkedList<ResearchResult> specs = new LinkedList<ResearchResult>();
     private ResearchResult selectedResult;
 
-    public void Speculator(){
+    public Speculator(){
 
     }
 
     //add a new ResearchResult to the list by constructing it from the scrapper and a passed in SearchResult
     /**Removed the 5 tab limit. Is that ok?*/
-    private void addResearchResult(SearchResult res) {
-        bSScraper = new BricksetItemScraper(res);
+    public void addResearchResult(SearchResult res) {
+        ResearchResult rResult = makeResearchResult(res);
+        specs.add(rResult);
+    }
 
-        ResearchResult rResult = new ResearchResult(
+    /**
+     * make new ResearchResult from SearchResult
+     * @param res
+     * @return
+     */
+    private ResearchResult makeResearchResult(SearchResult res) {
+        bSScraper = new BricksetItemScraper(res);
+        return new ResearchResult(
                 res,
                 bSScraper.scrapeTheme(),
                 bSScraper.scrapeImgLink(),
                 bSScraper.scrapeIsRetired()
         );
-
-        specs.add(rResult);
     }
 
     //add a ResearchResult by passing it in
@@ -75,18 +82,16 @@ public class Speculator {
      */
     public Boolean hasResults(){
         if(specs.isEmpty()){
-            return false;//specs has no results
-        }
-        else{
-            return true;//specs has results
+            return false; //specs has no results
+        } else {
+            return true; //specs has results
         }
     }
 
     //replace a ResearchResult by passing in a SearchResult and constructing the item to be added
 
-    /**Confused
-     * I'm not entirely sure how we are doing the replace methods.
-     * I assumed (and implemented) that we pass in what we want to replace and replace it with the current selectedResult
+    /**
+     * Replaces selectedResult in list as well as the variable with the ResearchResult form of SearchResult res
      * @param res
      * @return
      */
@@ -95,17 +100,10 @@ public class Speculator {
             System.out.println("There are currently no opened sessions");
             return null;
         }
-        else{
-            for (ResearchResult r : specs) {
-                if (res.getName() == r.getName() && res.getId() == r.getID()) {
-                    specs.set(specs.indexOf(r), selectedResult);
-                    return r;//return replaced result
-                } else {
-                    continue;
-                }
-            }
-        }
-        return null;//couldn't find item to replace in list
+        ResearchResult temp = makeResearchResult(res);
+        specs.set(specs.indexOf(selectedResult),temp);
+        selectedResult = temp;
+        return selectedResult;
     }
 
    //Replace a ResearchResult in the list by passing in a ResearchResult
@@ -188,14 +186,14 @@ public class Speculator {
      * @param date
      * @return
      */
-    public Boolean setReleaseDate(Date date){
+    public Boolean setReleaseDate(Calendar date){
         selectedResult.setReleaseDate(date);
         return true;
     }
 
    //set Retire date of selectedResult
     /**same suggestion as previous.*/
-    public Boolean setRetireDate(Date date){
+    public Boolean setRetireDate(Calendar date){
         selectedResult.setRetireDate(date);
         return true;
     }

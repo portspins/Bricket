@@ -68,12 +68,6 @@ public class BricksetSearchScraper {
                 thumb = "https://brickset.com" + thumb;
             }
             thumbnails.add(thumb);
-            System.out.println("Name:      "+ names.get(i));
-            System.out.println("ID:        " + IDs.get(i));
-            System.out.println("Link:      " + links.get(i));
-            System.out.println("Thumbnail: " + thumbnails.get(i));
-            System.out.println("Year:      " + years.get(i));
-            System.out.println("");
         }
         System.out.println("===============\nGot " + years.size() + " items\n================");
     }
