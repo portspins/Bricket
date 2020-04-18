@@ -4,6 +4,7 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EtchedBorder;
+import javax.swing.border.SoftBevelBorder;
 import javax.swing.event.MouseInputAdapter;
 import java.awt.*;
 import java.awt.event.*;
@@ -55,7 +56,7 @@ public final class BricketFrame extends JFrame implements BricketView {
 
         // Set the search field's maximum width
         searchField.setPreferredSize(new Dimension(200, 20));
-        searchField.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED, new Color(66,66,66), new Color(66,66,66)));
+        searchField.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED, new Color(66,66,66), new Color(66,66,66)));
         searchField.setMaximumSize(searchField.getPreferredSize());
 
         // Set the search bar panel's layout
@@ -190,7 +191,7 @@ public final class BricketFrame extends JFrame implements BricketView {
                     }
                 });
                 searchResultPanel.add(newResult);
-                searchResultPanel.setPreferredSize(new Dimension(335, (int) (searchResultPanel.getPreferredSize().getHeight() + 40)));
+                searchResultPanel.setPreferredSize(new Dimension(335, (int) (searchResultPanel.getPreferredSize().getHeight() + 45)));
                 separator = new JSeparator();
                 separator.setMaximumSize(new Dimension(335,1));
                 searchResultPanel.add(separator);
@@ -282,7 +283,7 @@ public final class BricketFrame extends JFrame implements BricketView {
 
     @Override
     public void submitSearchSelected(int index) {
-
+        controller.selectSearchResult(index);
     }
 
     @Override

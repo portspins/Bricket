@@ -21,7 +21,8 @@ public class BricketController {
     }
 
     public ResearchResult selectSearchResult(int index) {
-        //return spec.addResearchResult(search.getSearchResult(index));
-        return null;
+        spec.addResearchResult(search.getSearchResult(index));
+        System.out.println(spec.getResearchResult().getPricePerPart());
+        return spec.getResearchResult();
     }
 }
