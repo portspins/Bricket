@@ -15,6 +15,7 @@ public final class BricketFrame extends JFrame implements BricketView {
     final JPanel searchBarPanel;
     final JPanel searchResultPanel;
     final JPanel researchPanel;
+    final JScrollPane searchScroll;
     final BricketController controller;
     final String SEARCH_MSG;
 
@@ -34,8 +35,12 @@ public final class BricketFrame extends JFrame implements BricketView {
         searchButton = new JButton("Search");
         searchBarPanel = new JPanel();
         searchResultPanel = new JPanel();
+        searchScroll = new JScrollPane(searchResultPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         researchPanel = new JPanel();
         SEARCH_MSG = "Search by item ID or name...";
+
+        searchScroll.setPreferredSize(new Dimension(315,700));
+        searchScroll.getVerticalScrollBar().setUnitIncrement(12);
 
         this.setFocusable( true );
 
@@ -53,7 +58,7 @@ public final class BricketFrame extends JFrame implements BricketView {
 
         // Set the search result panel's layout
         searchResultPanel.setLayout(new BoxLayout(searchResultPanel, BoxLayout.Y_AXIS));
-        searchResultPanel.setPreferredSize(new Dimension(300, 700));
+        searchResultPanel.setPreferredSize(new Dimension(300, 40));
 
         searchField.addFocusListener(new FocusListener() {
             @Override
@@ -116,7 +121,7 @@ public final class BricketFrame extends JFrame implements BricketView {
         this.add(searchBarPanel, BorderLayout.PAGE_START);
 
         // Add the search result panel to the window
-        this.add(searchResultPanel, BorderLayout.LINE_START);
+        this.add(searchScroll, BorderLayout.LINE_START);
 
         // Add the research panel to the window
         this.add(researchPanel, BorderLayout.LINE_END);
@@ -153,6 +158,8 @@ public final class BricketFrame extends JFrame implements BricketView {
         }
 
         searchResultPanel.setBorder(null);
+        searchResultPanel.setPreferredSize(new Dimension(300, 40));
+        searchResultPanel.repaint();
     }
 
     @Override
@@ -178,14 +185,10 @@ public final class BricketFrame extends JFrame implements BricketView {
             result.add(thumb, BorderLayout.LINE_START);
             result.add(name, BorderLayout.CENTER);
             result.add(new JLabel(current.getReleaseYear().toString() + " "), BorderLayout.LINE_END);
+            result.setPreferredSize(new Dimension(300, 40));
             searchResultPanel.add(result);
             searchResultPanel.setPreferredSize(new Dimension(300, (int) (searchResultPanel.getPreferredSize().getHeight() + 40)));
         }
-        JScrollPane searchScroll = new JScrollPane(searchResultPanel,
-                JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-                JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        searchScroll.setPreferredSize(new Dimension(315,700));
-        this.add(searchScroll, BorderLayout.LINE_START);
     }
 
     @Override
