@@ -178,32 +178,26 @@ public final class BricketFrame extends JFrame implements BricketView {
 
     @Override
     public void viewSearchResults(Iterator<SearchResult> itr) throws IOException {
-        JPanel result;
-        JLabel name;
-        JLabel thumb;
-        URL url;
-        Image image;
-        Image newImage;
         SearchResult current;
         searchResultPanel.setBorder(BorderFactory.createTitledBorder("Search Results"));
+        int i = 0;
         while(itr.hasNext()) {
             current = itr.next();
-            result = new JPanel();
-            thumb = new JLabel();
-            url = new URL(current.getThumbnailLink());
-            image = ImageIO.read(url);
-            newImage = image.getScaledInstance(50, 40,  java.awt.Image.SCALE_SMOOTH);
-            name = new JLabel("  " + current.getId() + " " + current.getName());
-            result.setLayout(new BorderLayout());
-            thumb.setIcon(new ImageIcon(newImage));
-            result.add(thumb, BorderLayout.LINE_START);
-            result.add(name, BorderLayout.CENTER);
-            result.add(new JLabel(current.getReleaseYear().toString() + " "), BorderLayout.LINE_END);
-            result.setMaximumSize(new Dimension(335, 50));
-            result.setAlignmentY(Component.TOP_ALIGNMENT);
-            result.setBorder(BorderFactory.createEmptyBorder(0,2,3,0));
-            searchResultPanel.add(result);
-            searchResultPanel.setPreferredSize(new Dimension(335, (int) (searchResultPanel.getPreferredSize().getHeight() + 40)));
+            try {
+                JPanel newResult = BricketPanelFactory.createSearchResultPanel(current);
+                searchResultPanel.add(newResult);
+                searchResultPanel.setPreferredSize(new Dimension(335, (int) (searchResultPanel.getPreferredSize().getHeight() + 40)));
+                i++;
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+        if (i == 0) {
+            searchResultPanel.add(new JLabel("  No results found!"));
+        } else if (i == 50) {
+            searchResultPanel.setBorder(BorderFactory.createTitledBorder("Search Results - showing top 50 matches"));
+        } else {
+            searchResultPanel.setBorder(BorderFactory.createTitledBorder("Search Results - " + i + " results found"));
         }
     }
 

@@ -66,7 +66,7 @@ public class Speculator {
      * @return
      */
     public ResearchResult resetResearchResult(){
-
+        return null;
     }
 
     /**Question
@@ -207,7 +207,7 @@ public class Speculator {
      * @return
      */
     public double calcValue(ResearchResult res){
-
+        return 0;
     }
 
     /**Question
@@ -224,6 +224,6 @@ public class Speculator {
      * @return
      */
     public Boolean isSaved(){
-
+        return true;
     }
 }
