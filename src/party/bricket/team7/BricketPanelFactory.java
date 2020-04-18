@@ -24,12 +24,28 @@ public abstract class BricketPanelFactory {
         result.add(new JLabel(res.getReleaseYear().toString() + " "), BorderLayout.LINE_END);
         result.setMaximumSize(new Dimension(335, 50));
         result.setAlignmentY(Component.TOP_ALIGNMENT);
-        result.setBorder(BorderFactory.createEmptyBorder(2,2,2,0));
+        result.setBorder(BorderFactory.createEmptyBorder(2,2,2,7));
         return result;
     }
 
     // Add stuff from constructor
 
+    public static JPanel createResearchResultPanel(ResearchResult res) throws IOException {
+        JPanel result = new JPanel();
+        JLabel setPhoto = new JLabel();
+        URL url = new URL(res.getImageLink());
+        Image image = ImageIO.read(url);
+        Image newImage = image.getScaledInstance(100, 80,  java.awt.Image.SCALE_SMOOTH);
+        JLabel name = new JLabel("  " + res.getID() + " " + res.getName());
+        result.setLayout(new BorderLayout());
+        setPhoto.setIcon(new ImageIcon(newImage));
+        result.add(setPhoto, BorderLayout.LINE_START);
+        result.add(name, BorderLayout.CENTER);
+        result.add(new JLabel(res.getReleaseDate().toString() + " "), BorderLayout.LINE_END);
+        result.setAlignmentY(Component.TOP_ALIGNMENT);
+        result.setBorder(BorderFactory.createEmptyBorder(2,2,2,7));
+        return result;
+    }
 
 
 }

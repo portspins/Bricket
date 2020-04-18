@@ -42,7 +42,7 @@ public final class BricketFrame extends JFrame implements BricketView {
         researchPanel = new JPanel();
         SEARCH_MSG = "Search by item ID or name...";
 
-        searchScroll.setPreferredSize(new Dimension(350,700));
+        searchScroll.setPreferredSize(new Dimension(365,700));
         searchScroll.getVerticalScrollBar().setUnitIncrement(13);
         searchScroll.setBorder(BorderFactory.createEmptyBorder());
 
@@ -61,7 +61,7 @@ public final class BricketFrame extends JFrame implements BricketView {
 
         // Set the search bar panel's layout
         searchBarPanel.setLayout(new BoxLayout(searchBarPanel, BoxLayout.X_AXIS));
-        searchBarPanel.setBorder(BorderFactory.createEmptyBorder(12,22,12,0));
+        searchBarPanel.setBorder(BorderFactory.createEmptyBorder(12,25,12,0));
 
         // Set the search result panel's layout
         searchResultPanel.setLayout(new BoxLayout(searchResultPanel, BoxLayout.Y_AXIS));
@@ -169,8 +169,9 @@ public final class BricketFrame extends JFrame implements BricketView {
         SearchResult current;
         JSeparator separator;
         JPanel newResult;
-        searchResultPanel.setBorder(BorderFactory.createTitledBorder("Search Results"));
         int i = 0;
+        searchResultPanel.setBorder(BorderFactory.createEmptyBorder());
+
         while(itr.hasNext()) {
             current = itr.next();
             try {
@@ -203,11 +204,11 @@ public final class BricketFrame extends JFrame implements BricketView {
         if (i == 0) {
             searchResultPanel.add(new JLabel("  No results found!"));
         } else if (i == 1) {
-            searchResultPanel.setBorder(BorderFactory.createTitledBorder("Search Results - 1 result found"));
+            searchScroll.setBorder(BorderFactory.createTitledBorder("Search Results - 1 result found"));
         } else if (i == 50) {
-            searchResultPanel.setBorder(BorderFactory.createTitledBorder("Search Results - showing top 50 matches"));
+            searchScroll.setBorder(BorderFactory.createTitledBorder("Search Results - showing top 50 matches"));
         } else {
-            searchResultPanel.setBorder(BorderFactory.createTitledBorder("Search Results - " + i + " results found"));
+            searchScroll.setBorder(BorderFactory.createTitledBorder("Search Results - " + i + " results found"));
         }
     }
 
@@ -242,8 +243,14 @@ public final class BricketFrame extends JFrame implements BricketView {
     }
 
     @Override
-    public void viewResearchResult(ResearchResult results) {
-
+    public void viewResearchResult(ResearchResult result) {
+        if(result != null) {
+            try {
+                add(BricketPanelFactory.createResearchResultPanel(result), BorderLayout.CENTER);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
     }
 
     @Override
@@ -283,7 +290,7 @@ public final class BricketFrame extends JFrame implements BricketView {
 
     @Override
     public void submitSearchSelected(int index) {
-        controller.selectSearchResult(index);
+        viewResearchResult(controller.selectSearchResult(index));
     }
 
     @Override
