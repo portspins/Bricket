@@ -18,6 +18,7 @@ public class Speculator {
     public void addResearchResult(SearchResult res) {
         ResearchResult rResult = makeResearchResult(res);
         specs.add(rResult);
+        selectedResult = rResult;
     }
 
     /**
