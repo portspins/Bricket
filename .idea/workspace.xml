@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4eede522-bafe-4567-8306-7cabe5fd6dc0" name="Default Changelist" comment="Created Interface for any views the BricketController will be able to interact with">
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/resources/brickpattern.gif" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/party/bricket/team7/BricketFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/party/bricket/team7/BricketFrame.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/party/bricket/team7/ResearchIO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/party/bricket/team7/ResearchIO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/party/bricket/team7/Search.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/party/bricket/team7/Search.java" afterDir="false" />
@@ -16,6 +16,9 @@
   </component>
   <component name="DefaultGradleProjectSettings">
     <option name="isMigrated" value="true" />
+  </component>
+  <component name="FavoritesManager">
+    <favorites_list name="Bricket" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -77,6 +80,11 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="preferences.general" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\brick\IdeaProjects\Bricket\src\resources" />
+    </key>
   </component>
   <component name="RunManager" selected="Application.BricketFrame">
     <configuration name="BricketFrame" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
@@ -216,7 +224,14 @@
       <option name="project" value="LOCAL" />
       <updated>1587177564207</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Fixed some spacing issues">
+      <created>1587183248499</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1587183248499</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -230,7 +245,8 @@
     <MESSAGE value="Added search results display to view" />
     <MESSAGE value="Updated BricketController with refreshSearch" />
     <MESSAGE value="Minor bug fixes" />
-    <option name="LAST_COMMIT_MESSAGE" value="Minor bug fixes" />
+    <MESSAGE value="Fixed some spacing issues" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed some spacing issues" />
   </component>
   <component name="WindowStateProjectService">
     <state x="552" y="179" key="#Notifications" timestamp="1585690821298">
@@ -258,10 +274,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="756" y="406" width="407" height="237" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes/0.0.1920.1040@0.0.1920.1040" timestamp="1586310659060" />
-    <state x="357" y="92" key="CommitChangelistDialog2" timestamp="1587177563345">
+    <state x="357" y="92" key="CommitChangelistDialog2" timestamp="1587183247430">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="357" y="92" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1587177563345" />
+    <state x="357" y="92" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1587183247430" />
     <state x="2628" y="15" key="CommitChangelistDialog2/0.0.2560.1040/2560.-359.900.1560@2560.-359.900.1560" timestamp="1584566400746" />
     <state x="92" y="92" width="1736" height="856" key="DiffContextDialog" timestamp="1587050622572">
       <screen x="0" y="0" width="1920" height="1040" />
@@ -271,28 +287,28 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="740" y="276" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1585694180384" />
-    <state width="938" height="282" key="GridCell.Tab.0.bottom" timestamp="1587183075050">
+    <state width="938" height="282" key="GridCell.Tab.0.bottom" timestamp="1587185956917">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="938" height="282" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1587183075050" />
+    <state width="938" height="282" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1587185956917" />
     <state width="1340" height="265" key="GridCell.Tab.0.bottom/0.0.2560.1040/2560.-359.900.1560@0.0.2560.1040" timestamp="1584459355447" />
     <state width="857" height="265" key="GridCell.Tab.0.bottom/0.0.2560.1040/2560.-359.900.1560@2560.-359.900.1560" timestamp="1584566400765" />
-    <state width="938" height="282" key="GridCell.Tab.0.center" timestamp="1587183075050">
+    <state width="938" height="282" key="GridCell.Tab.0.center" timestamp="1587185956917">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="938" height="282" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1587183075050" />
+    <state width="938" height="282" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1587185956917" />
     <state width="1340" height="265" key="GridCell.Tab.0.center/0.0.2560.1040/2560.-359.900.1560@0.0.2560.1040" timestamp="1584459355446" />
     <state width="857" height="265" key="GridCell.Tab.0.center/0.0.2560.1040/2560.-359.900.1560@2560.-359.900.1560" timestamp="1584566400765" />
-    <state width="938" height="282" key="GridCell.Tab.0.left" timestamp="1587183075050">
+    <state width="938" height="282" key="GridCell.Tab.0.left" timestamp="1587185956917">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="938" height="282" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1587183075050" />
+    <state width="938" height="282" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1587185956917" />
     <state width="1340" height="265" key="GridCell.Tab.0.left/0.0.2560.1040/2560.-359.900.1560@0.0.2560.1040" timestamp="1584459355446" />
     <state width="857" height="265" key="GridCell.Tab.0.left/0.0.2560.1040/2560.-359.900.1560@2560.-359.900.1560" timestamp="1584566400765" />
-    <state width="938" height="282" key="GridCell.Tab.0.right" timestamp="1587183075050">
+    <state width="938" height="282" key="GridCell.Tab.0.right" timestamp="1587185956917">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="938" height="282" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1587183075050" />
+    <state width="938" height="282" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1587185956917" />
     <state width="1340" height="265" key="GridCell.Tab.0.right/0.0.2560.1040/2560.-359.900.1560@0.0.2560.1040" timestamp="1584459355446" />
     <state width="857" height="265" key="GridCell.Tab.0.right/0.0.2560.1040/2560.-359.900.1560@2560.-359.900.1560" timestamp="1584566400765" />
     <state x="184" y="92" key="MergeDialog" timestamp="1587182735394">
@@ -311,10 +327,10 @@
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
     <state x="627" y="157" key="SettingsEditor/0.0.2560.1040/2560.-359.900.1560@0.0.2560.1040" timestamp="1584458162864" />
-    <state x="552" y="254" key="Vcs.Push.Dialog.v2" timestamp="1587177566288">
+    <state x="552" y="254" key="Vcs.Push.Dialog.v2" timestamp="1587183255394">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="254" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1587177566288" />
+    <state x="552" y="254" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1587183255394" />
     <state x="9" y="232" width="1736" height="856" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1587182871135">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

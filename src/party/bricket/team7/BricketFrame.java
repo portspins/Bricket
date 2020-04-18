@@ -2,6 +2,8 @@ package party.bricket.team7;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.EtchedBorder;
 import javax.swing.event.MouseInputAdapter;
 import java.awt.*;
 import java.awt.event.*;
@@ -39,8 +41,9 @@ public final class BricketFrame extends JFrame implements BricketView {
         researchPanel = new JPanel();
         SEARCH_MSG = "Search by item ID or name...";
 
-        searchScroll.setPreferredSize(new Dimension(315,700));
+        searchScroll.setPreferredSize(new Dimension(350,700));
         searchScroll.getVerticalScrollBar().setUnitIncrement(12);
+        searchScroll.setBorder(BorderFactory.createEmptyBorder());
 
         this.setFocusable( true );
 
@@ -51,6 +54,8 @@ public final class BricketFrame extends JFrame implements BricketView {
         searchButton.setPreferredSize(new Dimension(75, 20));
 
         // Set the search field's maximum width
+        searchField.setPreferredSize(new Dimension(200, 20));
+        searchField.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED, new Color(66,66,66), new Color(66,66,66)));
         searchField.setMaximumSize(searchField.getPreferredSize());
 
         // Set the search bar panel's layout
@@ -58,7 +63,7 @@ public final class BricketFrame extends JFrame implements BricketView {
 
         // Set the search result panel's layout
         searchResultPanel.setLayout(new BoxLayout(searchResultPanel, BoxLayout.Y_AXIS));
-        searchResultPanel.setPreferredSize(new Dimension(300, 40));
+        searchResultPanel.setPreferredSize(new Dimension(335, 40));
 
         searchField.addFocusListener(new FocusListener() {
             @Override
@@ -168,7 +173,7 @@ public final class BricketFrame extends JFrame implements BricketView {
         }
 
         searchResultPanel.setBorder(null);
-        searchResultPanel.setPreferredSize(new Dimension(300, 40));
+        searchResultPanel.setPreferredSize(new Dimension(335, 40));
     }
 
     @Override
@@ -194,11 +199,11 @@ public final class BricketFrame extends JFrame implements BricketView {
             result.add(thumb, BorderLayout.LINE_START);
             result.add(name, BorderLayout.CENTER);
             result.add(new JLabel(current.getReleaseYear().toString() + " "), BorderLayout.LINE_END);
-            result.setMaximumSize(new Dimension(300, 50));
+            result.setMaximumSize(new Dimension(335, 50));
             result.setAlignmentY(Component.TOP_ALIGNMENT);
             result.setBorder(BorderFactory.createEmptyBorder(0,2,3,0));
             searchResultPanel.add(result);
-            searchResultPanel.setPreferredSize(new Dimension(300, (int) (searchResultPanel.getPreferredSize().getHeight() + 40)));
+            searchResultPanel.setPreferredSize(new Dimension(335, (int) (searchResultPanel.getPreferredSize().getHeight() + 40)));
         }
     }
 

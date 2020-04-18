@@ -10,7 +10,7 @@ import java.util.*;
 public class SearchResult {
     private String id;                                                  // ID number in "####-####" format
     private String name;                                                // Item name
-    private Integer releaseYear;                                            // Item release year
+    private Integer releaseYear;                                        // Item release year
     private String itemLink;                                            // Item's Brickset Link
     private String thumbnailLink;                                       // Thumbnail Link
 
@@ -23,13 +23,6 @@ public class SearchResult {
         this.releaseYear = releaseYear;
         this.itemLink = itemLink;
         this.thumbnailLink = thumbnailLink;
-    }
-
-    /**
-     * Default constructor
-     */
-    public SearchResult() {
-
     }
 
     /** GetId

@@ -32,9 +32,10 @@ public class ResearchIO {
         //store string
         //open json file with string name
         //create ResearchResult with json file data
-        ResearchResult loadHusk=new ResearchResult(); //**FIX**
+        //ResearchResult loadHusk=new ResearchResult(); //**FIX**
         //add ResearchResult to Speculator
-        return loadHusk;
+        //return loadHusk;
+        return null;
     }
 
     /** saveResearch.

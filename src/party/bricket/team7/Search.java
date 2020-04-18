@@ -51,7 +51,7 @@ public class Search {
     }
 
     //This will return a search result in sResult array at the given slot
-    public SearchResult selectSearchResult(int i) {
+    public SearchResult getSearchResult(int i) {
         if (i >= 0 && i < sResults.size()) {
             return sResults.get(i);
         }
