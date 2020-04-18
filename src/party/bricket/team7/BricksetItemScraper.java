@@ -79,7 +79,7 @@ public class BricksetItemScraper {
 
     /**
      * scrapes the display image link from item page
-     * @return returns string of URL to image
+     * @return string of URL to image
      */
     public String scrapeImgLink() {
         Elements contentClass = doc.select("div.content");
@@ -87,6 +87,10 @@ public class BricksetItemScraper {
         return src;
     }
 
+    /**
+     * scrapes names of included minifigs, if there are any
+     * @return ArrayList of minifig names from external page
+     */
     public ArrayList<String> scrapeMinifigNames() {
         ArrayList<String> figs = new ArrayList<String>();
         Document figDoc = null;
@@ -109,6 +113,10 @@ public class BricksetItemScraper {
         return figs;
     }
 
+    /**
+     * scrapes the number of pieces in a set
+     * @return integer containing part count in set
+     */
     public int scrapePartCount() {
         Elements elFeatureBoxes = doc.select("section.featurebox");
         Elements elPieces = elFeatureBoxes.get(0).select("dt:contains(Pieces) + dd");
@@ -121,6 +129,10 @@ public class BricksetItemScraper {
         return count;
     }
 
+    /**
+     * scrapes the rating from users on the website
+     * @return double with current user rating of item
+     */
     public double scrapeRating() {
         Elements elFeatureBoxes = doc.select("section.featurebox");
         String strRating = elFeatureBoxes.get(0).select("div.rating").attr("title");
@@ -130,6 +142,10 @@ public class BricksetItemScraper {
         return Double.parseDouble(strRating);
     }
 
+    /**
+     * scrapes the current value (new, if no new then used) in dollars
+     * @return double of current US dollar price of item
+     */
     public double scrapeCurrentValue() {
         Elements elFeatureBoxes = doc.select("section.featurebox");
         Elements elCurrentValues = elFeatureBoxes.get(0).select("dt:contains(Current Value) + dd");
@@ -142,6 +158,10 @@ public class BricksetItemScraper {
         return Double.parseDouble(strCurrentValue);
     }
 
+    /**
+     * scrapes the retail price of the item in US dollars
+     * @return double price of item
+     */
     public double scrapeRetailPrice() {
         Elements elFeatureBoxes = doc.select("section.featurebox");
         Elements elRRP = elFeatureBoxes.get(0).select("dt:contains(RRP) + dd");
@@ -153,9 +173,14 @@ public class BricksetItemScraper {
         return Double.parseDouble(strRRP);
     }
 
+    /**
+     * private method to convert Brickset date format into Calendar date
+     * @param date Brickset date formatted string
+     * @return Calendar item
+     */
     private Calendar makeCalendarFromDateString(String date) {
-        Calendar retired = Calendar.getInstance(TimeZone.getTimeZone("America/Chicago"));
-        retired.setTimeInMillis(0);
+        Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("America/Chicago"));
+        cal.setTimeInMillis(0);
         String strDay = date.substring(0,date.indexOf(" "));
         String strMon = date.substring(date.indexOf(" ")+1,date.lastIndexOf(" "));
         String strYear = date.substring(date.lastIndexOf(" ") + 1);
@@ -164,52 +189,55 @@ public class BricksetItemScraper {
         int day = Integer.parseInt(strDay);
         switch(strMon) { // forgive me
             case "Jan":
-                month = 0;
+                month = Calendar.JANUARY;
                 break;
             case "Feb":
-                month = 1;
+                month = Calendar.FEBRUARY;
                 break;
             case "Mar":
-                month = 2;
+                month = Calendar.MARCH;
                 break;
             case "Apr":
-                month = 3;
+                month = Calendar.APRIL;
                 break;
             case "May":
-                month = 4;
+                month = Calendar.MAY;
                 break;
             case "Jun":
-                month = 5;
+                month = Calendar.JUNE;
                 break;
             case "Jul":
-                month = 6;
+                month = Calendar.JULY;
                 break;
             case "Aug":
-                month = 7;
+                month = Calendar.AUGUST;
                 break;
             case "Sep":
-                month = 8;
+                month = Calendar.SEPTEMBER;
                 break;
             case "Oct":
-                month = 9;
+                month = Calendar.OCTOBER;
                 break;
             case "Nov":
-                month = 10;
+                month = Calendar.NOVEMBER;
                 break;
             case "Dec":
-                month = 11;
+                month = Calendar.DECEMBER;
                 break;
             default:
-                return retired;
+                return cal;
         }
-        retired.set(year,month,day);
-        return retired;
+        cal.set(year,month,day);
+        return cal;
     }
 
+    /**
+     * scrapes the date retired, if it is retired
+     * @return Calendar item containing retire date
+     */
     public Calendar scrapeRetiredDate() {
         Calendar retired = Calendar.getInstance(TimeZone.getTimeZone("America/Chicago"));
         retired.setTimeInMillis(0);
-        System.out.println(retired.toString());
         if(!scrapeIsRetired()) { // not retired, so no use in trying to do all of this
             return retired;
         }
@@ -228,5 +256,24 @@ public class BricksetItemScraper {
         }
         retired = makeCalendarFromDateString(date);
         return retired;
+    }
+
+    /**
+     * scrapes release date of item
+     * @return Calendar item containing release date
+     */
+    public Calendar scrapeReleaseDate() {
+        Calendar release = Calendar.getInstance(TimeZone.getTimeZone("America/Chicago"));
+        release.setTimeInMillis(0);
+        Elements elFeatureBoxes = doc.select("section.featurebox");
+        Element availability = elFeatureBoxes.get(2);
+        String date = availability.select("dt:contains(United States) + dd").text();
+        if (date.isEmpty()) {
+            return release;
+        }
+        int hyphen = date.lastIndexOf("-");
+        date = date.substring(0,hyphen-1);
+        release = makeCalendarFromDateString(date);
+        return release;
     }
 }
