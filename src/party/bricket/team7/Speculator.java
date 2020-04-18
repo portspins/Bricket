@@ -28,12 +28,19 @@ public class Speculator {
      */
     private ResearchResult makeResearchResult(SearchResult res) {
         bSScraper = new BricksetItemScraper(res);
-        return new ResearchResult(
+        ResearchResult result = new ResearchResult(
                 res,
                 bSScraper.scrapeTheme(),
                 bSScraper.scrapeImgLink(),
                 bSScraper.scrapeIsRetired()
         );
+        result.setPartCount(bSScraper.scrapePartCount());
+        result.setRating(bSScraper.scrapeRating());
+        result.setReleaseDate(bSScraper.scrapeReleaseDate());
+        result.setRetailPrice(bSScraper.scrapeRetailPrice());
+        result.setRetireDate(bSScraper.scrapeRetiredDate());
+        result.setValue(bSScraper.scrapeCurrentValue());
+        return result;
     }
 
     //add a ResearchResult by passing it in

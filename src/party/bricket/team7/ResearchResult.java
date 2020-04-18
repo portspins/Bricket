@@ -114,7 +114,10 @@ public class ResearchResult {
      */
     public void setRetailPrice(double price) {
         retailPrice = price;
-        pricePerPart = price / partCount * 100; // Update the linked attribute price per part
+        if(retailPrice == -1.0) {
+            return;
+        }
+        pricePerPart = price / partCount; // Update the linked attribute price per part
     }
 
     /** Gets the item's current average value (or estimated peak retirement value, if not yet retired) in dollars.
@@ -195,7 +198,7 @@ public class ResearchResult {
      */
     public void setPartCount(int count) {
         partCount = count;
-        pricePerPart = retailPrice / count * 100; // Update the linked attribute price per part
+        pricePerPart = retailPrice / count; // Update the linked attribute price per part
     }
 
     /** Gets the item's release date.
