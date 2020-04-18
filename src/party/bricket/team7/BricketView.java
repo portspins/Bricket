@@ -1,5 +1,7 @@
 package party.bricket.team7;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.Iterator;
 
 /**
@@ -9,12 +11,12 @@ import java.util.Iterator;
 
 public interface BricketView {
     public String getFilename();                                            // Gets the filename from the user and returns it
-    public void viewSearchResults(Iterator<SearchResult> itr);              // Goes through list of SearchResults and outputs them
+    public void viewSearchResults(Iterator<SearchResult> itr) throws IOException;              // Goes through list of SearchResults and outputs them
     public void submitSearchQuery();                                        // Gets the search query and submits it to the controller
     public int getScope();                                                  // Gets the scope selected and returns it
     public boolean promptAddOrReplace();                                    // Determines if the user wants to open a new result or replace one
     public boolean promptSave();                                            // Determines if the user wants to save the current research
-    public void viewResearchResults(Iterator<ResearchResult> results);      // Outputs the updated list of Research
+    public void viewResearchResult(ResearchResult results);                 // Outputs the updated list of Research
     public void submitRetailPrice();                                        // Sends the controller the modified retail price
     public void submitPricePerPart();                                       // Sends the controller the modified price per part
     public void submitMinifigName();                                        // Sends the controller the new minifig name
