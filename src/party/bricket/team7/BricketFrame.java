@@ -94,12 +94,22 @@ public final class BricketFrame extends JFrame implements BricketView {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if(searchButton.isEnabled()) {
-                    clearSearchResults();
-                    try {
-                        viewSearchResults(controller.refreshSearch(searchField.getText()));
-                    } catch (IOException ex) {
-                        ex.printStackTrace();
-                    }
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            clearSearchResults();
+                            SwingUtilities.invokeLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    try {
+                                        viewSearchResults(controller.refreshSearch(searchField.getText()));
+                                    } catch (IOException ex) {
+                                        ex.printStackTrace();
+                                    }
+                                }
+                            });
+                        }
+                    }).start();
                 }
             }
         });
@@ -159,7 +169,6 @@ public final class BricketFrame extends JFrame implements BricketView {
 
         searchResultPanel.setBorder(null);
         searchResultPanel.setPreferredSize(new Dimension(300, 40));
-        searchResultPanel.repaint();
     }
 
     @Override
