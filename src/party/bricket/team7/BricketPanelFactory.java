@@ -26,4 +26,8 @@ public abstract class BricketPanelFactory {
         return result;
     }
 
+    // Add stuff from constructor
+
+
+
 }
