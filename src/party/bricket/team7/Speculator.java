@@ -13,7 +13,7 @@ public class Speculator {
 
     }
 
-    //add a new ResearchResult to the list by constructing it from the scrapper and a passed in SearchResult
+    // add a new ResearchResult to the list by constructing it from the scrapper and a passed in SearchResult
     /**Removed the 5 tab limit. Is that ok?*/
     public void addResearchResult(SearchResult res) {
         ResearchResult rResult = makeResearchResult(res);
@@ -40,6 +40,8 @@ public class Speculator {
         result.setRetailPrice(bSScraper.scrapeRetailPrice());
         result.setRetireDate(bSScraper.scrapeRetiredDate());
         result.setValue(bSScraper.scrapeCurrentValue());
+        result.setMinifigList(bSScraper.scrapeMinifigNames());
+
         return result;
     }
 
@@ -80,7 +82,7 @@ public class Speculator {
      * How are we storing the original values to revert back to?
      * @return
      */
-    public ResearchResult resetResearchResult(){
+    public ResearchResult resetResearchResult() {
         return null;
     }
 
@@ -146,7 +148,7 @@ public class Speculator {
     //Set the selectedResult to an item in the list with the given index
     /**Changed the name a little here*/
     public void setSelectedResult(int index){
-        /**this doesn't work
+        /** this doesn't work
          * we need a clone method in ResearchResult if this is what we plan to do
          */
         selectedResult = specs.get(index);
@@ -171,8 +173,8 @@ public class Speculator {
     }
 
    //add a minifig to the minifig list of selectedResult
-    public Boolean addMinifigName(String name){
-        selectedResult.addMinifig(name);
+    public Boolean setMinifigNames(ArrayList<String> names){
+        selectedResult.setMinifigList(names);
         return true;
     }
 

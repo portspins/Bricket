@@ -32,7 +32,6 @@ public class ResearchResult {
     private Calendar releaseDate;                                           // Release date of set
     private Calendar retireDate;                                            // Date of retirement, if applicable
 
-
     /**
      * Creates a new ResearchResult object
      */
@@ -101,6 +100,7 @@ public class ResearchResult {
     public boolean isRetired() {
         return retired;
     }
+
 
     /** Gets the item's retail price in dollars.
      * @return the item's retail price in dollars
@@ -180,10 +180,10 @@ public class ResearchResult {
     }
 
     /** Adds a minifig to this item's list of minifigs.
-     * @param name the minifig's name
+     * @param figs the minifig's name
      */
-    public void addMinifig(String name) {
-        minifigNames.add(name);
+    public void setMinifigList(ArrayList<String> figs) {
+        minifigNames = (ArrayList<String>) figs.clone();
     }
 
     /** Gets the item's part count.
@@ -255,5 +255,6 @@ public class ResearchResult {
         }
         return false;
     }
+
 }
 

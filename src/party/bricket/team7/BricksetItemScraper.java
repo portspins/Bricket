@@ -127,6 +127,9 @@ public class BricksetItemScraper {
         String strCount = elPieces.select("a[href]").text();
         if(strCount.isEmpty()) {
             strCount = elPieces.text();
+            if(strCount.isEmpty()) {
+                strCount = "-1";
+            }
         }
         count = Integer.parseInt(strCount);
         return count;
