@@ -51,7 +51,7 @@ public class BricksetItemScraper {
         String theme = elFeatureBoxes.get(0).select("dt:contains(Theme) + dd").select("a[href]").get(0).text();
         if(!subtheme.isEmpty()) {
             subtheme = elFeatureBoxes.get(0).select("dt:contains(Subtheme) + dd").select("a[href]").get(0).text();
-            theme += ": " + subtheme;
+            theme += " (" + subtheme + ")";
         }
         return theme;
     }

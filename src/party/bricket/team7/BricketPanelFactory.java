@@ -1,11 +1,14 @@
 package party.bricket.team7;
 
 import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.ImageObserver;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.net.URL;
 
@@ -38,7 +41,7 @@ public abstract class BricketPanelFactory {
         JLabel setPhoto = new JLabel();
         URL url = new URL(res.getImageLink());
         Image image = ImageIO.read(url);
-        Image newImage = image.getScaledInstance(420, 350,  java.awt.Image.SCALE_SMOOTH);
+        Image newImage = image.getScaledInstance(410,350, Image.SCALE_SMOOTH);
 
         JLabel name = new JLabel(res.getID() + " " + res.getName());
         name.setBorder(BorderFactory.createEmptyBorder(7,10,0,0));
