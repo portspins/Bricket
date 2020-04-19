@@ -52,6 +52,26 @@ public class BricketController {
         spec.setReleaseDate(newDate);
     }
 
+    public void updateRetireDate(Calendar newDate) {
+        spec.setRetireDate(newDate);
+    }
+
+    public void updatePartCount(int count) {
+        spec.setPartCount(count);
+    }
+
+    public void updatePricePerPart(double ppp) {
+        spec.setPricePerPart(ppp);
+    }
+
+    public void updatePrice(double price) {
+        spec.setRetailPrice(price);
+    }
+
+    public void updateRating(int rating) {
+        spec.setRating(rating);
+    }
+
     public void updateSelected(int index) {
         spec.setSelectedResult(index);
     }

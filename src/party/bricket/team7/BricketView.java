@@ -17,12 +17,12 @@ public interface BricketView {
     public boolean promptAddOrReplace();                                    // Determines if the user wants to open a new result or replace one
     public boolean promptSave();                                            // Determines if the user wants to save the current research
     public void viewResearchResult(ResearchResult results);                 // Outputs the updated list of Research
-    public void submitRetailPrice();                                        // Sends the controller the modified retail price
-    public void submitPricePerPart();                                       // Sends the controller the modified price per part
-    public void submitRating();                                             // Sends the controller the modified rating from 20-100
-    public void submitPartCount();                                          // Sends the controller the modified part count
-    public void submitReleaseDate(String date) throws ParseException;                             // Sends the controller the modified release date
-    public void submitRetireDate();                                         // Sends the controller the modified retire date
+    public void submitRetailPrice(double price);                            // Sends the controller the modified retail price
+    public void submitPricePerPart(double ppp);                             // Sends the controller the modified price per part
+    public void submitRating(int rating);                                   // Sends the controller the modified rating from 20-100
+    public void submitPartCount(int count);                                 // Sends the controller the modified part count
+    public void submitReleaseDate(String date) throws ParseException;       // Sends the controller the modified release date
+    public void submitRetireDate(String date) throws ParseException;        // Sends the controller the modified retire date
     public void submitSearchSelected(int index);                            // Sends the controller the selected search result number
     public void submitResetResult();                                        // Messages the controller to reset the open research result
 }

@@ -41,15 +41,6 @@ public class InfoPanelItem extends JPanel {
                     repaint();
                 }
             });
-            editField.addKeyListener(new KeyAdapter() {
-                @Override
-                public void keyTyped(KeyEvent e) {
-                    super.keyTyped(e);
-                    if (editField.getText().equals(valLabel.getText())) {
-                        editField.setText("");
-                    }
-                }
-            });
             valLabel.setForeground(new Color(0, 128, 255));
             valLabel.addMouseListener(new MouseAdapter() {
                 @Override
@@ -67,7 +58,7 @@ public class InfoPanelItem extends JPanel {
                 }
             });
         }
-        if (value.equals("-1") || value.equals("12/31/1969") || value.equals("")) {
+        if (value.equals("-1") || value.equals("12/31/1969") || value.equals("-0")) {
             valLabel.setText("Not Available");
         }
         add(valLabel, 1);

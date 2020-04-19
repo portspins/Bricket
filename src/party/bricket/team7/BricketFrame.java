@@ -310,23 +310,39 @@ public final class BricketFrame extends JFrame implements BricketView {
     }
 
     @Override
-    public void submitRetailPrice() {
-
+    public void submitRetailPrice(double price) {
+        controller.updateSelected(researchResultPanel.getSelectedIndex());
+        controller.updatePrice(price);
+        researchResultPanel.remove(researchResultPanel.getSelectedComponent());
+        viewResearchResult(controller.getResearchResult());
+        researchResultPanel.setSelectedIndex(researchResultPanel.getTabCount() - 1);
     }
 
     @Override
-    public void submitPricePerPart() {
-
+    public void submitPricePerPart(double ppp) {
+        controller.updateSelected(researchResultPanel.getSelectedIndex());
+        controller.updatePricePerPart(ppp);
+        researchResultPanel.remove(researchResultPanel.getSelectedComponent());
+        viewResearchResult(controller.getResearchResult());
+        researchResultPanel.setSelectedIndex(researchResultPanel.getTabCount() - 1);
     }
 
     @Override
-    public void submitRating() {
-
+    public void submitRating(int rating) {
+        controller.updateSelected(researchResultPanel.getSelectedIndex());
+        controller.updateRating(rating);
+        researchResultPanel.remove(researchResultPanel.getSelectedComponent());
+        viewResearchResult(controller.getResearchResult());
+        researchResultPanel.setSelectedIndex(researchResultPanel.getTabCount() - 1);
     }
 
     @Override
-    public void submitPartCount() {
-
+    public void submitPartCount(int count) {
+        controller.updateSelected(researchResultPanel.getSelectedIndex());
+        controller.updatePartCount(count);
+        researchResultPanel.remove(researchResultPanel.getSelectedComponent());
+        viewResearchResult(controller.getResearchResult());
+        researchResultPanel.setSelectedIndex(researchResultPanel.getTabCount() - 1);
     }
 
     @Override
@@ -342,8 +358,15 @@ public final class BricketFrame extends JFrame implements BricketView {
     }
 
     @Override
-    public void submitRetireDate() {
-
+    public void submitRetireDate(String date) throws ParseException {
+        Calendar newDate = Calendar.getInstance();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH);
+        newDate.setTime(dateFormat.parse(date));
+        controller.updateSelected(researchResultPanel.getSelectedIndex());
+        controller.updateRetireDate(newDate);
+        researchResultPanel.remove(researchResultPanel.getSelectedComponent());
+        viewResearchResult(controller.getResearchResult());
+        researchResultPanel.setSelectedIndex(researchResultPanel.getTabCount() - 1);
     }
 
     @Override
