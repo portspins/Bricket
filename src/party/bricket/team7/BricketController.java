@@ -23,7 +23,7 @@ public class BricketController {
 
     public ResearchResult selectSearchResult(int index) {
         spec.addResearchResult(search.getSearchResult(index));
-        System.out.println("$"+ spec.getResearchResult().getPricePerPart());
+        System.out.println("Peak: $" + spec.calcValue());
         return spec.getResearchResult();
     }
 
