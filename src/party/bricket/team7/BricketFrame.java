@@ -14,7 +14,11 @@ import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Iterator;
+import java.util.Locale;
 
 public final class BricketFrame extends JFrame implements BricketView {
     final JButton searchButton;
@@ -325,8 +329,13 @@ public final class BricketFrame extends JFrame implements BricketView {
     }
 
     @Override
-    public void submitReleaseDate() {
-
+    public void submitReleaseDate(String date) throws ParseException {
+        Calendar newDate = Calendar.getInstance();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH);
+        newDate.setTime(dateFormat.parse(date));
+        controller.updateReleaseDate(newDate);
+        researchResultPanel.remove(researchResultPanel.getSelectedComponent());
+        viewResearchResult(controller.getResearchResult());
     }
 
     @Override

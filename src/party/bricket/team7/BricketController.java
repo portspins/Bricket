@@ -2,6 +2,7 @@ package party.bricket.team7;
 
 import javax.swing.*;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Iterator;
 
 public class BricketController {
@@ -26,6 +27,10 @@ public class BricketController {
         return spec.getResearchResult();
     }
 
+    public ResearchResult getResearchResult() {
+        return spec.getResearchResult();
+    }
+
     public boolean saveToFile(String path) {
         ResearchIO io = new ResearchIO();
         io.saveResearch(spec.getResearchResult(),path);
@@ -40,5 +45,9 @@ public class BricketController {
         }
         spec.addResearchResult(res);
         return spec.getResearchResult();
+    }
+
+    public void updateReleaseDate(Calendar newDate) {
+        spec.setReleaseDate(newDate);
     }
 }

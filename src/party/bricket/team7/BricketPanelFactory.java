@@ -10,6 +10,7 @@ import java.awt.image.ImageObserver;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.net.URL;
+import java.text.ParseException;
 import java.util.Calendar;
 
 public abstract class BricketPanelFactory {
@@ -54,7 +55,22 @@ public abstract class BricketPanelFactory {
         infoPanel.add(new InfoPanelItem("Name:", res.getName(), false));
         infoPanel.add(new InfoPanelItem("Theme:", res.getTheme(), false));
         Calendar releaseDate = res.getReleaseDate();
-        infoPanel.add(new InfoPanelItem("Date Released:", (releaseDate.get(Calendar.MONTH) + 1) + "/" + releaseDate.get(Calendar.DAY_OF_MONTH) + "/" + releaseDate.get(Calendar.YEAR), true));
+        InfoPanelItem releasePanel = new InfoPanelItem("Date Released:", (releaseDate.get(Calendar.MONTH) + 1) + "/" + releaseDate.get(Calendar.DAY_OF_MONTH) + "/" + releaseDate.get(Calendar.YEAR), true);
+        infoPanel.add(releasePanel);
+        JTextField releaseEdit = releasePanel.getEditField();
+        releaseEdit.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                super.keyPressed(e);
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    try {
+                        view.submitReleaseDate(releaseEdit.getText());
+                    } catch (ParseException ex) {
+                        ex.printStackTrace();
+                    }
+                }
+            }
+        });
         Calendar retireDate = res.getRetireDate();
         infoPanel.add(new InfoPanelItem("Date Retired:", (retireDate.get(Calendar.MONTH) + 1) + "/" + retireDate.get(Calendar.DAY_OF_MONTH) + "/" + retireDate.get(Calendar.YEAR), true));
         infoPanel.add(new InfoPanelItem("Part Count:", Integer.toString(res.getPartCount()), true));
@@ -67,6 +83,13 @@ public abstract class BricketPanelFactory {
         result.add(infoPanel, BorderLayout.LINE_END);
         result.setMaximumSize(new Dimension(1200, 100));
         result.setBorder(BorderFactory.createEmptyBorder(2,2,2,7));
+        result.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                result.requestFocus();
+            }
+        });
         return result;
     }
 

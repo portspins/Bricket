@@ -2,10 +2,12 @@ package party.bricket.team7;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.*;
 
 public class InfoPanelItem extends JPanel {
     private JLabel label;
     private Component info;
+    private JTextField editField;
 
     InfoPanelItem() {
         super();
@@ -25,16 +27,54 @@ public class InfoPanelItem extends JPanel {
     }
 
     public void setInfo(String value, boolean editable) {
-        if (value.equals("-1") || value.equals("12/31/1969") || value.equals("")) {
-            add(new JLabel("Not Available"), 1);
-        } else {
-            if (editable) {
-                JTextField editField = new JTextField(value);
-                editField.setMaximumSize(editField.getPreferredSize());
-                add(editField,1);
-            } else {
-                add(new JLabel(value), 1);
-            }
+        final JLabel valLabel = new JLabel(value);
+        if (editable) {
+            editField = new JTextField(value);
+            editField.setMaximumSize(editField.getPreferredSize());
+            editField.addFocusListener(new FocusAdapter() {
+                @Override
+                public void focusLost(FocusEvent e) {
+                    super.focusLost(e);
+                    add(valLabel,1);
+                    remove(editField);
+                    revalidate();
+                    repaint();
+                }
+            });
+            editField.addKeyListener(new KeyAdapter() {
+                @Override
+                public void keyTyped(KeyEvent e) {
+                    super.keyTyped(e);
+                    if (editField.getText().equals(valLabel.getText())) {
+                        editField.setText("");
+                    }
+                }
+            });
+            valLabel.setForeground(new Color(0, 128, 255));
+            valLabel.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    super.mouseClicked(e);
+                    editField.setText(valLabel.getText());
+                    add(editField,1);
+                    editField.requestFocus();
+                    if (editField.getText().equals("Not Available")) {
+                        editField.setText("");
+                    }
+                    remove(valLabel);
+                    revalidate();
+                    repaint();
+                }
+            });
         }
+        if (value.equals("-1") || value.equals("12/31/1969") || value.equals("")) {
+            valLabel.setText("Not Available");
+        }
+        add(valLabel, 1);
     }
+
+    public JTextField getEditField() {
+        return editField;
+    }
+
 }

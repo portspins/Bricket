@@ -2,6 +2,7 @@ package party.bricket.team7;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.text.ParseException;
 import java.util.Iterator;
 
 /**
@@ -20,7 +21,7 @@ public interface BricketView {
     public void submitPricePerPart();                                       // Sends the controller the modified price per part
     public void submitRating();                                             // Sends the controller the modified rating from 20-100
     public void submitPartCount();                                          // Sends the controller the modified part count
-    public void submitReleaseDate();                                        // Sends the controller the modified release date
+    public void submitReleaseDate(String date) throws ParseException;                             // Sends the controller the modified release date
     public void submitRetireDate();                                         // Sends the controller the modified retire date
     public void submitSearchSelected(int index);                            // Sends the controller the selected search result number
     public void submitResetResult();                                        // Messages the controller to reset the open research result
