@@ -152,6 +152,7 @@ public final class BricketFrame extends JFrame implements BricketView {
                 }
             }
         });
+
         // Set the window's layout
         this.setLayout(new BorderLayout());
 

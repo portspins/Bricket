@@ -9,7 +9,7 @@ public class BricketController {
 
     private Search search;
 
-    private Speculator spec;
+    final private Speculator spec;
 
     BricketController() {
         search = null;
@@ -43,6 +43,7 @@ public class BricketController {
         if(res == null) {
             return null;
         }
+        // will make io.loadResearch return ResearchResult tomorrow, just did less involved SearchResult to test
         spec.addResearchResult(res);
         return spec.getResearchResult();
     }

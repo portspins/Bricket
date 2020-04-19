@@ -55,7 +55,8 @@ public abstract class BricketPanelFactory {
         infoPanel.add(new InfoPanelItem("Name:", res.getName(), false));
         infoPanel.add(new InfoPanelItem("Theme:", res.getTheme(), false));
         Calendar releaseDate = res.getReleaseDate();
-        InfoPanelItem releasePanel = new InfoPanelItem("Date Released:", (releaseDate.get(Calendar.MONTH) + 1) + "/" + releaseDate.get(Calendar.DAY_OF_MONTH) + "/" + releaseDate.get(Calendar.YEAR), true);
+        String relDate = (releaseDate.get(Calendar.MONTH) + 1) + "/" + releaseDate.get(Calendar.DAY_OF_MONTH) + "/" + releaseDate.get(Calendar.YEAR);
+        InfoPanelItem releasePanel = new InfoPanelItem("Date Released:", relDate, true);
         infoPanel.add(releasePanel);
         JTextField releaseEdit = releasePanel.getEditField();
         releaseEdit.addKeyListener(new KeyAdapter() {
@@ -66,7 +67,11 @@ public abstract class BricketPanelFactory {
                     try {
                         view.submitReleaseDate(releaseEdit.getText());
                     } catch (ParseException ex) {
-                        ex.printStackTrace();
+                        try {
+                            view.submitReleaseDate(relDate);
+                        } catch (ParseException parseException) {
+                            parseException.printStackTrace();
+                        }
                     }
                 }
             }
