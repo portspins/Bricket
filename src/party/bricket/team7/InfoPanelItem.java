@@ -58,6 +58,7 @@ public class InfoPanelItem extends JPanel {
                 }
             });
         }
+        value = value.replaceAll("/[^0-9.]/g", "");
         if (value.equals("-1") || value.equals("12/31/1969") || value.equals("-0")) {
             valLabel.setText("Not Available");
         }
