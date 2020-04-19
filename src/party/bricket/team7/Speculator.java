@@ -238,14 +238,66 @@ public class Speculator {
         return true;
     }
 
-    /**Question
-     * How do we want this method to work? Are we calculating the current value?
-     * Or is this our future prediction value?
-     * @param res
+    /**
+     * The Algorithm™
+     *
      * @return
      */
-    public double calcValue(ResearchResult res){
-        return 0;
+    public double calcValue() {
+        /*
+         * algorithm will basically work like this
+         * peak price = rrp + retireDifference/10000000 + releaseDifference/10000000 + value/1000 + rating/1000 + partcount/100 + minifigCount/10
+         */
+        Calendar today = Calendar.getInstance(TimeZone.getTimeZone("America/Chicago"));
+        Calendar nullCalendar = Calendar.getInstance(TimeZone.getTimeZone("America/Chicago"));
+        nullCalendar.setTimeInMillis(0);
+
+        Double peakPrice = 0.0;
+
+        Calendar retired = selectedResult.getRetireDate();
+        Calendar release = selectedResult.getReleaseDate();
+        boolean isRetired = selectedResult.isRetired();
+        Integer retireDifference = null; // in milliseconds
+        Integer releaseDifference = null; // same here
+        Integer partCount = selectedResult.getPartCount();
+        Integer rating = selectedResult.getRating();
+        Double rrp = selectedResult.getRetailPrice();
+        Double value = selectedResult.getValue();
+        Integer miniFigCount = selectedResult.getMinifigList().size();
+        // unknown retired date
+        if(isRetired) {
+            if (!retired.equals(nullCalendar)) {
+                retireDifference = today.compareTo(retired);
+            }
+        }
+        if(!release.equals(nullCalendar)) {
+            releaseDifference = today.compareTo(release);
+        }
+        if (rrp != -1.0) {
+            peakPrice += rrp;
+            if(value == -1.0) {
+                peakPrice += rrp/1000.0;
+            }
+        }
+        if(value != -1.0) {
+            peakPrice += value/1000.0;
+            if(rrp == -1.0) {
+                peakPrice += value/1000.0;
+            }
+        }
+        if(retireDifference != null) {
+            peakPrice += retireDifference/10000000.0;
+        }
+        if(releaseDifference != null) {
+            peakPrice += releaseDifference/10000000.0;
+        }
+        if(partCount != -1) {
+            peakPrice += partCount/100.0;
+        }
+        if(miniFigCount > 0) {
+            peakPrice += miniFigCount/10.0;
+        }
+        return peakPrice;
     }
 
     //Returns current selectedResult
