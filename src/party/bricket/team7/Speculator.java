@@ -216,7 +216,7 @@ public class Speculator {
 
    //set rating of selectedResult
     public Boolean setRating(int rating){
-        selectedResult.setRating(rating);
+        selectedResult.setRating(rating / 20);
         return true;
     }
 
