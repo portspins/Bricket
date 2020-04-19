@@ -333,6 +333,7 @@ public final class BricketFrame extends JFrame implements BricketView {
         controller.updateRating(rating);
         researchResultPanel.remove(researchResultPanel.getSelectedComponent());
         viewResearchResult(controller.getResearchResult());
+        System.out.println(controller.getResearchResult().getRating());
         researchResultPanel.setSelectedIndex(researchResultPanel.getTabCount() - 1);
     }
 
