@@ -246,8 +246,9 @@ public class Speculator {
     public double calcValue() {
         /*
          * algorithm will basically work like this
-         * peak price = rrp + retireDifference/10000000 + releaseDifference/10000000 + value/1000 + rating/1000 + partcount/100 + minifigCount/10
+         * peak price = rrp + retireDifference/10000000 + releaseDifference/10000000 + value/1000 + rating/1000 + partCount/100 + minifigCount/10
          */
+        Random rand = new Random();
         Calendar today = Calendar.getInstance(TimeZone.getTimeZone("America/Chicago"));
         Calendar nullCalendar = Calendar.getInstance(TimeZone.getTimeZone("America/Chicago"));
         nullCalendar.setTimeInMillis(0);
@@ -283,6 +284,17 @@ public class Speculator {
             peakPrice += value/1000.0;
             if(rrp == -1.0) {
                 peakPrice += value/1000.0;
+            }
+        }
+        if(value == -1.0 && rrp == -1.0) {
+            if(partCount != -1) {
+                peakPrice += partCount*0.075;
+            }
+            else if(rating != -20) {
+                peakPrice += rating/1000.0 + 3.14159265359;
+            } else {
+                // in this case value/rrp/partCount are not known, so we use pi as the base + random number
+                peakPrice += 3.14159265359 + rand.nextDouble();
             }
         }
         if(retireDifference != null) {
