@@ -48,6 +48,7 @@ public final class BricketFrame extends JFrame implements BricketView {
         searchScroll.getVerticalScrollBar().setUnitIncrement(13);
         searchScroll.setBorder(BorderFactory.createEmptyBorder());
 
+        this.setContentPane(new JLabel(new ImageIcon("src/resources/legoman1.png")));
         this.setFocusable( true );
 
         // Set the search button to be disabled for now
