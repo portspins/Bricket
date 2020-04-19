@@ -7,6 +7,7 @@ public class Speculator {
     private Boolean isSaved;
     private BricksetItemScraper bSScraper;
     private LinkedList<ResearchResult> specs = new LinkedList<ResearchResult>();
+    private LinkedList<ResearchResult> OGSpecs = new LinkedList<ResearchResult>();//Used to store the original version of an item
     private ResearchResult selectedResult;
 
     public Speculator(){
@@ -14,10 +15,16 @@ public class Speculator {
     }
 
     // add a new ResearchResult to the list by constructing it from the scrapper and a passed in SearchResult
-    /**Removed the 5 tab limit. Is that ok?*/
     public void addResearchResult(SearchResult res) {
         ResearchResult rResult = makeResearchResult(res);
+        ResearchResult rResultClone = makeResearchResult(res);
         specs.add(rResult);
+        //needs to check if item is already stored in original state
+        if(hasOGResult(rResultClone)){
+            selectedResult = rResult;
+            return;
+        }
+        OGSpecs.add(rResultClone);
         selectedResult = rResult;
     }
 
@@ -48,33 +55,28 @@ public class Speculator {
     //add a ResearchResult by passing it in
     public void addResearchResult(ResearchResult res){
         specs.add(res);
+        if(!hasOGResult(res)) {
+            OGSpecs.add(res);
+        }
     }
 
-    //Remove a ResearchResult.
-    /**Conflict
-     * UML has this listed as not taking any parameters and passing back a ResearchResult
-     * Do we pass back the ResearchResult we took out?
-     * How do you find the item to remove if you don't pass one in?
-     * @param RR_removal
-     * @return
-     */
-    private ResearchResult removeResearchResult(ResearchResult RR_removal){
+    //Remove a current selectedResult
+    private ResearchResult removeResearchResult(){
        if(specs.isEmpty()){
            System.out.println("There are currently no opened sessions");
            return null;
        }
-       else {
-           for(ResearchResult r: specs){
-               if(r.equals(RR_removal)){
-                   specs.remove(r);
-                   return r;
-               }
-               else{
-                   continue;
-               }
-           }
+       specs.remove(selectedResult);
+
+       if(hasResult(selectedResult)){
+           return selectedResult;
        }
-       return null; // will occur if item was not found
+       else {
+           OGSpecs.remove(findOGResult(selectedResult));
+       }
+
+       return selectedResult;
+
     }
 
     //Resets the current ResearchResult to it's original state
@@ -82,14 +84,21 @@ public class Speculator {
      * How are we storing the original values to revert back to?
      * @return
      */
-    public ResearchResult resetResearchResult() {
-        return null;
+    public Boolean resetResearchResult() {
+
+        selectedResult.setRetailPrice(findOGResult(selectedResult).getRetailPrice());
+        selectedResult.setValue(findOGResult(selectedResult).getValue());
+        selectedResult.setPricePerPart(findOGResult(selectedResult).getPricePerPart());
+        selectedResult.setMinifigList(findOGResult(selectedResult).getMinifigList());
+        selectedResult.setRating(findOGResult(selectedResult).getRating());
+        selectedResult.setPartCount(findOGResult(selectedResult).getPartCount());
+        selectedResult.setReleaseDate(findOGResult(selectedResult).getReleaseDate());
+        selectedResult.setRetireDate(findOGResult(selectedResult).getRetireDate());
+
+        return true;
     }
 
-    /**Question
-     * Does this just check if the list is empty?
-     * @return
-     */
+    //Check to see if the list is empty
     public Boolean hasResults(){
         if(specs.isEmpty()){
             return false; //specs has no results
@@ -98,13 +107,45 @@ public class Speculator {
         }
     }
 
-    //replace a ResearchResult by passing in a SearchResult and constructing the item to be added
+    //Used to check if there is an original version of res item in OGSpecs
+    private Boolean hasOGResult(ResearchResult res){
+        for(ResearchResult r: OGSpecs){
+            if(r.equals(res)){
+                return true;
+            }
+            else{
+                continue;
+            }
+        }
+        return false;
+    }
 
-    /**
-     * Replaces selectedResult in list as well as the variable with the ResearchResult form of SearchResult res
-     * @param res
-     * @return
-     */
+    private ResearchResult findOGResult(ResearchResult res){
+        for(ResearchResult r: OGSpecs){
+            if(r.equals(res)){
+                return r;
+            }
+            else{
+                continue;
+            }
+        }
+        return null;
+    }
+
+    //Used to check if there is version of res item in specs
+    private Boolean hasResult(ResearchResult res){
+        for(ResearchResult r: specs){
+            if(r.equals(res)){
+                return true;
+            }
+            else{
+                continue;
+            }
+        }
+        return false;
+    }
+
+    //replace a ResearchResult by passing in a SearchResult and constructing the item to be added
     public ResearchResult replaceResearchResult(SearchResult res){
         if(specs.isEmpty()){
             System.out.println("There are currently no opened sessions");
@@ -112,45 +153,41 @@ public class Speculator {
         }
         ResearchResult temp = makeResearchResult(res);
         specs.set(specs.indexOf(selectedResult),temp);
+
+        if(!hasResult(selectedResult)){
+            OGSpecs.remove(findOGResult(selectedResult));
+        }
+
+        if(!hasOGResult(temp)){
+            OGSpecs.add(temp);
+        }
+
         selectedResult = temp;
         return selectedResult;
     }
 
    //Replace a ResearchResult in the list by passing in a ResearchResult
-    /**Conflict
-     * UML only has this taking one ResearchResult. We need two.
-     * We need one to replace and a replacement.
-     * Whiched one is passed in? Is selected Session the one replacing?
-     * @param RR_toReplace
-     * @param RR_replacement
-     * @return
-     */
-    private ResearchResult replaceResearchResult(ResearchResult RR_toReplace, ResearchResult RR_replacement){
-        /**Is this check necessary or are we using the hasResults method instead?*/
+    private ResearchResult replaceResearchResult(ResearchResult RR_replacement){
         if(specs.isEmpty()){
             System.out.println("There are currently no opened sessions");
             return null;
         }
-        else{
-            for(ResearchResult r: specs){
-                if(r.equals(RR_toReplace)){
-                    specs.set(specs.indexOf(r), RR_replacement);
-                    return r;
-                }
-                else{
-                    continue;
-                }
-            }
+        specs.set(specs.indexOf(selectedResult), RR_replacement);
+
+        if(!hasResult(selectedResult)){
+            OGSpecs.remove(findOGResult(selectedResult));
         }
-        return null;//couldn't find item to replace in list
+
+        if(!hasOGResult(RR_replacement)){
+            OGSpecs.add(RR_replacement);
+        }
+
+        selectedResult = RR_replacement;
+        return selectedResult;
     }
 
     //Set the selectedResult to an item in the list with the given index
-    /**Changed the name a little here*/
     public void setSelectedResult(int index){
-        /** this doesn't work
-         * we need a clone method in ResearchResult if this is what we plan to do
-         */
         selectedResult = specs.get(index);
     }
 
@@ -191,18 +228,12 @@ public class Speculator {
     }
 
    //set release date of selectedResult
-    /**Concern
-     * we may want to change the date values to just integer values and only use the years
-     * @param date
-     * @return
-     */
     public Boolean setReleaseDate(Calendar date){
         selectedResult.setReleaseDate(date);
         return true;
     }
 
    //set Retire date of selectedResult
-    /**same suggestion as previous.*/
     public Boolean setRetireDate(Calendar date){
         selectedResult.setRetireDate(date);
         return true;
@@ -218,11 +249,7 @@ public class Speculator {
         return 0;
     }
 
-    /**Question
-     * Does this return the current selectedResult?
-     * If so, wouldn't it be better to call this getSelectedResult?
-     * @return
-     */
+    //Returns current selectedResult
     public ResearchResult getResearchResult(){
         return selectedResult;
     }
