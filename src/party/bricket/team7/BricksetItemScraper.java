@@ -178,7 +178,7 @@ public class BricksetItemScraper {
         if(!strRRP.contains("$")) {
             return -1.0;
         }
-        strRRP = strRRP.substring(strRRP.lastIndexOf("$")+1);
+        strRRP = strRRP.substring(strRRP.lastIndexOf("$")+1,strRRP.lastIndexOf("/")-1);
         return Double.parseDouble(strRRP);
     }
 
