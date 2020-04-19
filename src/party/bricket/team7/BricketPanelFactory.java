@@ -13,6 +13,7 @@ import java.net.URL;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import static java.lang.Math.abs;
@@ -62,6 +63,18 @@ public abstract class BricketPanelFactory {
         infoPanel.add(new InfoPanelItem("ID Number:", res.getID(), false));
         infoPanel.add(new InfoPanelItem("Name:", res.getName(), false));
         infoPanel.add(new InfoPanelItem("Theme:", res.getTheme(), false));
+        String retireVal = "No";
+        if (res.isRetired())
+            retireVal = "Yes";
+        infoPanel.add(new InfoPanelItem("Retired:", retireVal, false));
+        StringBuilder minifigStr = new StringBuilder();
+        if (res.getMinifigList().size() == 0)
+            minifigStr.append("No minifigs");
+        ArrayList<String> list = (ArrayList<String>) res.getMinifigList().clone();
+        System.out.println(list.toString());
+        for (String m : list) {
+            infoPanel.add(new InfoPanelItem("Minifig:", m, false));
+        }
 
         Calendar releaseDate = res.getReleaseDate();
         String relDate = (releaseDate.get(Calendar.MONTH) + 1) + "/" + releaseDate.get(Calendar.DAY_OF_MONTH) + "/" + releaseDate.get(Calendar.YEAR);
