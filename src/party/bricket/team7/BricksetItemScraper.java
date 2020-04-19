@@ -51,7 +51,7 @@ public class BricksetItemScraper {
         String theme = elFeatureBoxes.get(0).select("dt:contains(Theme) + dd").select("a[href]").get(0).text();
         if(!subtheme.isEmpty()) {
             subtheme = elFeatureBoxes.get(0).select("dt:contains(Subtheme) + dd").select("a[href]").get(0).text();
-            theme += ": " + subtheme;
+            theme += " (" + subtheme + ")";
         }
         return theme;
     }
@@ -178,7 +178,10 @@ public class BricksetItemScraper {
         if(!strRRP.contains("$")) {
             return -1.0;
         }
-        strRRP = strRRP.substring(strRRP.lastIndexOf("$")+1);
+        if(strRRP.contains("£") && strRRP.contains("$") && strRRP.contains("€"))
+            strRRP = strRRP.substring(strRRP.lastIndexOf("$")+1,strRRP.lastIndexOf("/")-1);
+        else
+            strRRP = strRRP.substring(strRRP.lastIndexOf("$")+1);
         return Double.parseDouble(strRRP);
     }
 
