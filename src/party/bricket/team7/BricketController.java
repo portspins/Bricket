@@ -50,4 +50,8 @@ public class BricketController {
     public void updateReleaseDate(Calendar newDate) {
         spec.setReleaseDate(newDate);
     }
+
+    public void updateSelected(int index) {
+        spec.setSelectedResult(index);
+    }
 }

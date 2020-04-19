@@ -333,9 +333,11 @@ public final class BricketFrame extends JFrame implements BricketView {
         Calendar newDate = Calendar.getInstance();
         SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH);
         newDate.setTime(dateFormat.parse(date));
+        controller.updateSelected(researchResultPanel.getSelectedIndex());
         controller.updateReleaseDate(newDate);
         researchResultPanel.remove(researchResultPanel.getSelectedComponent());
         viewResearchResult(controller.getResearchResult());
+        researchResultPanel.setSelectedIndex(researchResultPanel.getTabCount() - 1);
     }
 
     @Override
