@@ -58,8 +58,8 @@ public class InfoPanelItem extends JPanel {
                 }
             });
         }
-        value = value.replaceAll("[^-?0-9.]", "");
-        if (value.equals("-1") || value.equals("12/31/1969") || value.equals("-0")) {
+        value = value.replaceAll("[^-?0-9./]", "");
+        if (value.equals("1") || value.equals("12/31/1969") || value.equals("0")) {
             valLabel.setText("Not Available");
         }
         add(valLabel, 1);
