@@ -29,8 +29,8 @@ public class ResearchResult {
     private ArrayList<String> minifigNames;                             // List of minifigs contained in the item
     private int rating;                                                 // Rating from 20-100
     private int partCount;                                              // Part count of the set
-    private Calendar releaseDate;                                           // Release date of set
-    private Calendar retireDate;                                            // Date of retirement, if applicable
+    private Calendar releaseDate;                                       // Release date of set
+    private Calendar retireDate;                                        // Date of retirement, if applicable
 
     /**
      * Creates a new ResearchResult object
@@ -46,6 +46,7 @@ public class ResearchResult {
         theme = thm;                                              // Initialize theme
         imageLink = imgLink;                                      // Initialize link to image of item
         retired = ret;                                            // Initialize retired flag
+
 
         retailPrice = 0.0;                                        // Initialize Recommended Retail Price in dollars
         value = 0.0;                                              // Initialize average value (or estimated value, if not retired) in dollars
@@ -100,7 +101,6 @@ public class ResearchResult {
     public boolean isRetired() {
         return retired;
     }
-
 
     /** Gets the item's retail price in dollars.
      * @return the item's retail price in dollars

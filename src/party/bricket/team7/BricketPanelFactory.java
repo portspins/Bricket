@@ -1,12 +1,11 @@
 package party.bricket.team7;
 
 import javax.imageio.ImageIO;
+import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.image.ImageObserver;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -40,6 +39,7 @@ public abstract class BricketPanelFactory {
         JPanel setPhotoPanel = new JPanel();
         JPanel infoPanel = new JPanel();
         JLabel setPhoto = new JLabel();
+        int elCounter = 0;
         URL url = new URL(res.getImageLink());
         Image image = ImageIO.read(url);
         Image newImage = image.getScaledInstance(410,350, Image.SCALE_SMOOTH);
@@ -54,9 +54,9 @@ public abstract class BricketPanelFactory {
         infoPanel.add(createInfoPanelItem("Name:", res.getName(), false));
         infoPanel.add(createInfoPanelItem("Theme:", res.getTheme(), false));
         Calendar releaseDate = res.getReleaseDate();
-        infoPanel.add(createInfoPanelItem("Date Released:", releaseDate.get(Calendar.MONTH) + "/" + releaseDate.get(Calendar.DAY_OF_MONTH) + "/" + releaseDate.get(Calendar.YEAR), true));
+        infoPanel.add(createInfoPanelItem("Date Released:", (releaseDate.get(Calendar.MONTH) + 1) + "/" + releaseDate.get(Calendar.DAY_OF_MONTH) + "/" + releaseDate.get(Calendar.YEAR), true));
         Calendar retireDate = res.getRetireDate();
-        infoPanel.add(createInfoPanelItem("Date Retired:", retireDate.get(Calendar.MONTH) + "/" + retireDate.get(Calendar.DAY_OF_MONTH) + "/" + retireDate.get(Calendar.YEAR), true));
+        infoPanel.add(createInfoPanelItem("Date Retired:", (retireDate.get(Calendar.MONTH) + 1) + "/" + retireDate.get(Calendar.DAY_OF_MONTH) + "/" + retireDate.get(Calendar.YEAR), true));
         infoPanel.add(createInfoPanelItem("Part Count:", Integer.toString(res.getPartCount()), true));
         result.setLayout(new BorderLayout());
         setPhoto.setIcon(new ImageIcon(newImage));
