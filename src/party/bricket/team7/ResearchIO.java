@@ -1,6 +1,10 @@
 package party.bricket.team7;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.stream.Stream;
+
 import org.json.*;
 
 
@@ -19,9 +23,10 @@ public class ResearchIO {
      */
     private File research;
     //Possibly needs replaced with JSON implementation
-    ResearchIO(String path) {
-        research = new File(path);
+    ResearchIO() {
+        research = null;
     }
+
     /** loadResearch.
      * Accepts a JSON file name string and adds the stored
      * ResearchResult into Speculator. Stores the loaded
@@ -29,23 +34,41 @@ public class ResearchIO {
      * Check for fail to open exception.
      * Need a consistent naming scheme for files.
      */
-    public ResearchResult loadResearch(String id)
+    public SearchResult loadResearch(String path)
     {
         //store string
         //open json file with string name
         //create ResearchResult with json file data
-        //ResearchResult loadHusk=new ResearchResult(); //**FIX**
+        //ResearchResult loadHusk = new ResearchResult(); //**FIX**
         //add ResearchResult to Speculator
         //return loadHusk;
-        return null;
+        String data = null;
+        StringBuilder contentBuilder = new StringBuilder();
+        try {
+            Stream<String> stream = Files.lines(Paths.get(path));
+            stream.forEach(s -> contentBuilder.append(s).append("\n"));
+            data = contentBuilder.toString();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if(data.isEmpty()) {
+            return null;
+        }
+
+        JSONObject fmt = new JSONObject(data);
+        // really only think here that is important is the bricksetLink
+        SearchResult res = new SearchResult(fmt.get("id").toString(),fmt.get("name").toString(),2000,fmt.get("bricksetLink").toString(),fmt.get("imageLink").toString());
+        return res;
     }
 
     /** saveResearch.
      * Saves the researchResult provided into a JSON file.
      * Need a consistent naming scheme for files.
      */
-    public boolean saveResearch(ResearchResult s)
+    public boolean saveResearch(ResearchResult s,String path)
     {
+        research = new File(path);
         //create JSON Object
         JSONObject toSave = new JSONObject();
         //store ResearchResult data in JSON Object
@@ -76,6 +99,7 @@ public class ResearchIO {
             e.printStackTrace();
         }
         //return boolean, true if saving was successful, false if not.
+        research = null;
         return false;
     }
 }

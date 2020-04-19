@@ -18,6 +18,7 @@ import java.util.Iterator;
 public final class BricketFrame extends JFrame implements BricketView {
     final JButton searchButton;
     final JButton saveButton;
+    final JButton loadButton;
     final JTextField searchField;
     final JPanel searchBarPanel;
     final JFileChooser fc;
@@ -42,6 +43,7 @@ public final class BricketFrame extends JFrame implements BricketView {
         searchField = new JTextField("Search by item ID or name...", SEARCH_WIDTH);
         searchButton = new JButton("Search");
         saveButton = new JButton("Save");
+        loadButton = new JButton("Load");
         fc = new JFileChooser();
         searchBarPanel = new JPanel();
         searchResultPanel = new JPanel();
@@ -61,6 +63,8 @@ public final class BricketFrame extends JFrame implements BricketView {
         // same for save button
         saveButton.setEnabled(false);
         saveButton.setPreferredSize(new Dimension(75,20));
+        loadButton.setEnabled(true);
+        loadButton.setPreferredSize(new Dimension(75,20));
         // Set the search button's bounds
         searchButton.setPreferredSize(new Dimension(75, 20));
 
@@ -128,6 +132,21 @@ public final class BricketFrame extends JFrame implements BricketView {
                 }
             }
         });
+
+        loadButton.addMouseListener(new MouseInputAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if(loadButton.isEnabled()) {
+                    int ret = fc.showOpenDialog(BricketFrame.this);
+                    if(ret == JFileChooser.APPROVE_OPTION) {
+                        File file = fc.getSelectedFile();
+                        saveButton.setEnabled(true);
+                        ResearchResult rer = controller.loadFromFile(file.getAbsolutePath());
+                        viewResearchResult(rer);
+                    }
+                }
+            }
+        });
         // Set the window's layout
         this.setLayout(new BorderLayout());
 
@@ -135,7 +154,9 @@ public final class BricketFrame extends JFrame implements BricketView {
         searchBarPanel.add(searchField);
         searchBarPanel.add(Box.createRigidArea(new Dimension(2, 0)));
         searchBarPanel.add(searchButton);
-        searchBarPanel.add(Box.createRigidArea(new Dimension(900,0)));
+        searchBarPanel.add(Box.createRigidArea(new Dimension(815,0)));
+        searchBarPanel.add(loadButton);
+        searchBarPanel.add(Box.createRigidArea(new Dimension(10,0)));
         searchBarPanel.add(saveButton);
 
         this.addMouseListener(new MouseAdapter() {

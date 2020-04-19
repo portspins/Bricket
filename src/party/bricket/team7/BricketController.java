@@ -12,11 +12,11 @@ public class BricketController {
 
     BricketController() {
         search = null;
+        spec = new Speculator();
     }
 
     public Iterator<SearchResult> refreshSearch(String query) {
         search = new Search(query);
-        spec = new Speculator();
         return search.getSearchIterator();
     }
 
@@ -27,8 +27,18 @@ public class BricketController {
     }
 
     public boolean saveToFile(String path) {
-        ResearchIO io = new ResearchIO(path);
-        io.saveResearch(spec.getResearchResult());
+        ResearchIO io = new ResearchIO();
+        io.saveResearch(spec.getResearchResult(),path);
         return true;
+    }
+
+    public ResearchResult loadFromFile(String path) {
+        ResearchIO io = new ResearchIO();
+        SearchResult res = io.loadResearch(path);
+        if(res == null) {
+            return null;
+        }
+        spec.addResearchResult(res);
+        return spec.getResearchResult();
     }
 }
