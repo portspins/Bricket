@@ -15,6 +15,8 @@ import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.Calendar;
 
+import static java.lang.Math.abs;
+
 enum editFieldNum {
     RELEASE_DATE, RETIRE_DATE, RETAIL_PRICE, PRICE_PER_PART, RATING, PART_COUNT
 }
@@ -74,24 +76,24 @@ public abstract class BricketPanelFactory {
         JTextField retireEdit = retirePanel.getEditField();
         addEditListener(retireEdit, view, editFieldNum.RETIRE_DATE);
 
-        InfoPanelItem ratingPanel = new InfoPanelItem("Rating (20-100):", Integer.toString(res.getRating()), true);
+        InfoPanelItem ratingPanel = new InfoPanelItem("Rating:", Integer.toString(abs(res.getRating())) + "%", true);
         infoPanel.add(ratingPanel);
         JTextField ratingEdit = ratingPanel.getEditField();
         addEditListener(ratingEdit, view, editFieldNum.RATING);
 
-        String currencyString = NumberFormat.getCurrencyInstance().format(res.getRetailPrice());
+        String currencyString = NumberFormat.getCurrencyInstance().format(abs(res.getRetailPrice()));
         currencyString = currencyString.replaceAll("\\.00", "");
         InfoPanelItem pricePanel = new InfoPanelItem("Price:", currencyString, true);
         infoPanel.add(pricePanel);
         JTextField priceEdit = pricePanel.getEditField();
         addEditListener(priceEdit, view, editFieldNum.RETAIL_PRICE);
 
-        InfoPanelItem partPanel = new InfoPanelItem("Part Count:", Integer.toString(res.getPartCount()), true);
+        InfoPanelItem partPanel = new InfoPanelItem("Part Count:", Integer.toString(abs(res.getPartCount())), true);
         infoPanel.add(partPanel);
         JTextField partEdit = partPanel.getEditField();
         addEditListener(partEdit, view, editFieldNum.PART_COUNT);
 
-        currencyString = NumberFormat.getCurrencyInstance().format(res.getPricePerPart());
+        currencyString = NumberFormat.getCurrencyInstance().format(abs(res.getPricePerPart()));
         InfoPanelItem perPartPanel = new InfoPanelItem("Price Per Part:", currencyString, true);
         infoPanel.add(perPartPanel);
         JTextField pppEdit = perPartPanel.getEditField();
@@ -125,7 +127,7 @@ public abstract class BricketPanelFactory {
                     public void keyPressed(KeyEvent e) {
                         super.keyPressed(e);
                         if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                            //view.submitRating(Integer.parseInt(editField.getText()));
+                            view.submitRating(Integer.parseInt(editField.getText().replaceAll("/[^0-9.]/g", "")) / 20);
                         }
                     }
                 });
@@ -177,7 +179,7 @@ public abstract class BricketPanelFactory {
                     public void keyPressed(KeyEvent e) {
                         super.keyPressed(e);
                         if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                            view.submitRetailPrice(Double.parseDouble(editField.getText().replaceAll("[\\D]", "")));
+                            view.submitRetailPrice(Double.parseDouble(editField.getText().replaceAll("/[^0-9.]/g", "")));
                         }
                     }
                 });
@@ -188,7 +190,7 @@ public abstract class BricketPanelFactory {
                     public void keyPressed(KeyEvent e) {
                         super.keyPressed(e);
                         if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                            view.submitPricePerPart(Double.parseDouble(editField.getText().replaceAll("[\\D]", "")));
+                            view.submitPricePerPart(Double.parseDouble(editField.getText().replaceAll("/[^0-9.]/g", "")));
                         }
                     }
                 });
