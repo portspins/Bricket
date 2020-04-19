@@ -127,7 +127,7 @@ public abstract class BricketPanelFactory {
                     public void keyPressed(KeyEvent e) {
                         super.keyPressed(e);
                         if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                            view.submitRating(Integer.parseInt(editField.getText().replaceAll("/[^0-9.]/g", "")) / 20);
+                            view.submitRating(Integer.parseInt(editField.getText().replaceAll("[^0-9]", "")));
                         }
                     }
                 });
@@ -179,7 +179,7 @@ public abstract class BricketPanelFactory {
                     public void keyPressed(KeyEvent e) {
                         super.keyPressed(e);
                         if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                            view.submitRetailPrice(Double.parseDouble(editField.getText().replaceAll("/[^0-9.]/g", "")));
+                            view.submitRetailPrice(Double.parseDouble(editField.getText().replaceAll("[^-?0-9.]", "")));
                         }
                     }
                 });
@@ -190,7 +190,7 @@ public abstract class BricketPanelFactory {
                     public void keyPressed(KeyEvent e) {
                         super.keyPressed(e);
                         if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                            view.submitPricePerPart(Double.parseDouble(editField.getText().replaceAll("/[^0-9.]/g", "")));
+                            view.submitPricePerPart(Double.parseDouble(editField.getText().replaceAll("[^-?0-9.]", "")));
                         }
                     }
                 });
