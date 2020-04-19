@@ -1,5 +1,7 @@
 package party.bricket.team7;
 
+import org.jsoup.internal.StringUtil;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
@@ -202,6 +204,7 @@ public final class BricketFrame extends JFrame implements BricketView {
             }
         }
         if (i == 0) {
+            searchScroll.setBorder(BorderFactory.createTitledBorder("Search Results"));
             searchResultPanel.add(new JLabel("  No results found!"));
         } else if (i == 1) {
             searchScroll.setBorder(BorderFactory.createTitledBorder("Search Results - 1 result found"));
@@ -246,7 +249,11 @@ public final class BricketFrame extends JFrame implements BricketView {
     public void viewResearchResult(ResearchResult result) {
         if(result != null) {
             try {
-                researchResultPanel.addTab(result.getID(), new ImageIcon(), BricketPanelFactory.createResearchResultPanel(result), result.getID() + " " + result.getName());
+                String nameAbbrev = result.getName();
+                if (nameAbbrev.length() > 15) {
+                    nameAbbrev = nameAbbrev.substring(0, 12) + "...";
+                }
+                researchResultPanel.addTab(result.getID() + " " + nameAbbrev, new ImageIcon(), BricketPanelFactory.createResearchResultPanel(result), result.getID() + " " + result.getName());
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
