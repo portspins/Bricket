@@ -34,7 +34,7 @@ public abstract class BricketPanelFactory {
 
     // Add stuff from constructor
 
-    public static JPanel createResearchResultPanel(ResearchResult res) throws IOException {
+    public static JPanel createResearchResultPanel(ResearchResult res, BricketView view) throws IOException {
         JPanel result = new JPanel();
         JPanel setPhotoPanel = new JPanel();
         JPanel infoPanel = new JPanel();
@@ -50,14 +50,14 @@ public abstract class BricketPanelFactory {
         infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
         setPhotoPanel.setLayout(new BoxLayout(setPhotoPanel, BoxLayout.Y_AXIS));
         setPhotoPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-        infoPanel.add(createInfoPanelItem("ID Number:", res.getID(), false));
-        infoPanel.add(createInfoPanelItem("Name:", res.getName(), false));
-        infoPanel.add(createInfoPanelItem("Theme:", res.getTheme(), false));
+        infoPanel.add(new InfoPanelItem("ID Number:", res.getID(), false));
+        infoPanel.add(new InfoPanelItem("Name:", res.getName(), false));
+        infoPanel.add(new InfoPanelItem("Theme:", res.getTheme(), false));
         Calendar releaseDate = res.getReleaseDate();
-        infoPanel.add(createInfoPanelItem("Date Released:", (releaseDate.get(Calendar.MONTH) + 1) + "/" + releaseDate.get(Calendar.DAY_OF_MONTH) + "/" + releaseDate.get(Calendar.YEAR), true));
+        infoPanel.add(new InfoPanelItem("Date Released:", (releaseDate.get(Calendar.MONTH) + 1) + "/" + releaseDate.get(Calendar.DAY_OF_MONTH) + "/" + releaseDate.get(Calendar.YEAR), true));
         Calendar retireDate = res.getRetireDate();
-        infoPanel.add(createInfoPanelItem("Date Retired:", (retireDate.get(Calendar.MONTH) + 1) + "/" + retireDate.get(Calendar.DAY_OF_MONTH) + "/" + retireDate.get(Calendar.YEAR), true));
-        infoPanel.add(createInfoPanelItem("Part Count:", Integer.toString(res.getPartCount()), true));
+        infoPanel.add(new InfoPanelItem("Date Retired:", (retireDate.get(Calendar.MONTH) + 1) + "/" + retireDate.get(Calendar.DAY_OF_MONTH) + "/" + retireDate.get(Calendar.YEAR), true));
+        infoPanel.add(new InfoPanelItem("Part Count:", Integer.toString(res.getPartCount()), true));
         result.setLayout(new BorderLayout());
         setPhoto.setIcon(new ImageIcon(newImage));
         result.add(name, BorderLayout.PAGE_START);
@@ -68,29 +68,6 @@ public abstract class BricketPanelFactory {
         result.setMaximumSize(new Dimension(1200, 100));
         result.setBorder(BorderFactory.createEmptyBorder(2,2,2,7));
         return result;
-    }
-
-    private static JPanel createInfoPanelItem(String label, String value, boolean editable) {
-        JPanel newItem = new JPanel();
-        newItem.setLayout(new BoxLayout(newItem, BoxLayout.X_AXIS));
-
-        newItem.add(new JLabel(label));
-        newItem.setPreferredSize(new Dimension(200, 20));
-        newItem.add(Box.createHorizontalGlue());
-
-        if (editable) {
-            JTextField editField = new JTextField(value);
-            editField.setMaximumSize(editField.getPreferredSize());
-            if (value.equals("-1" ) || value.equals("11/31/1969") || value.equals("")) {
-                newItem.add(new JLabel("Not Available"));
-            } else {
-                newItem.add(editField);
-            }
-        } else {
-            newItem.add(new JLabel(value));
-        }
-
-        return newItem;
     }
 
 

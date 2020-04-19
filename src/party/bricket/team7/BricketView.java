@@ -18,7 +18,6 @@ public interface BricketView {
     public void viewResearchResult(ResearchResult results);                 // Outputs the updated list of Research
     public void submitRetailPrice();                                        // Sends the controller the modified retail price
     public void submitPricePerPart();                                       // Sends the controller the modified price per part
-    public void submitMinifigName();                                        // Sends the controller the new minifig name
     public void submitRating();                                             // Sends the controller the modified rating from 20-100
     public void submitPartCount();                                          // Sends the controller the modified part count
     public void submitReleaseDate();                                        // Sends the controller the modified release date

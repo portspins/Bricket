@@ -297,7 +297,7 @@ public final class BricketFrame extends JFrame implements BricketView {
                 if (nameAbbrev.length() > 15) {
                     nameAbbrev = nameAbbrev.substring(0, 12) + "...";
                 }
-                researchResultPanel.addTab(result.getID() + " " + nameAbbrev, new ImageIcon(), BricketPanelFactory.createResearchResultPanel(result), result.getID() + " " + result.getName());
+                researchResultPanel.addTab(result.getID() + " " + nameAbbrev, new ImageIcon(), BricketPanelFactory.createResearchResultPanel(result, this), result.getID() + " " + result.getName());
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
@@ -311,11 +311,6 @@ public final class BricketFrame extends JFrame implements BricketView {
 
     @Override
     public void submitPricePerPart() {
-
-    }
-
-    @Override
-    public void submitMinifigName() {
 
     }
 
