@@ -17,9 +17,11 @@ public class ResearchIO {
      * stores the data of the most recently opened ResearchResult file.
      * change to store the selected ResearchResult file in its tab later.
      */
-    private File research = new File("DefaultFile.json");
+    private File research;
     //Possibly needs replaced with JSON implementation
-
+    ResearchIO(String path) {
+        research = new File(path);
+    }
     /** loadResearch.
      * Accepts a JSON file name string and adds the stored
      * ResearchResult into Speculator. Stores the loaded

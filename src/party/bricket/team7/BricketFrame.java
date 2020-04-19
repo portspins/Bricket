@@ -10,14 +10,17 @@ import javax.swing.border.SoftBevelBorder;
 import javax.swing.event.MouseInputAdapter;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Iterator;
 
 public final class BricketFrame extends JFrame implements BricketView {
     final JButton searchButton;
+    final JButton saveButton;
     final JTextField searchField;
     final JPanel searchBarPanel;
+    final JFileChooser fc;
     final JPanel searchResultPanel;
     final JTabbedPane researchResultPanel;
     final JScrollPane searchScroll;
@@ -38,6 +41,8 @@ public final class BricketFrame extends JFrame implements BricketView {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         searchField = new JTextField("Search by item ID or name...", SEARCH_WIDTH);
         searchButton = new JButton("Search");
+        saveButton = new JButton("Save");
+        fc = new JFileChooser();
         searchBarPanel = new JPanel();
         searchResultPanel = new JPanel();
         researchResultPanel = new JTabbedPane();
@@ -53,7 +58,9 @@ public final class BricketFrame extends JFrame implements BricketView {
 
         // Set the search button to be disabled for now
         searchButton.setEnabled(false);
-
+        // same for save button
+        saveButton.setEnabled(false);
+        saveButton.setPreferredSize(new Dimension(75,20));
         // Set the search button's bounds
         searchButton.setPreferredSize(new Dimension(75, 20));
 
@@ -109,6 +116,18 @@ public final class BricketFrame extends JFrame implements BricketView {
             }
         });
 
+        saveButton.addMouseListener(new MouseInputAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if(saveButton.isEnabled()) {
+                    int ret = fc.showSaveDialog(BricketFrame.this);
+                    if (ret == JFileChooser.APPROVE_OPTION) {
+                        File file = fc.getSelectedFile();
+                        controller.saveToFile(file.getAbsolutePath());
+                    }
+                }
+            }
+        });
         // Set the window's layout
         this.setLayout(new BorderLayout());
 
@@ -116,6 +135,8 @@ public final class BricketFrame extends JFrame implements BricketView {
         searchBarPanel.add(searchField);
         searchBarPanel.add(Box.createRigidArea(new Dimension(2, 0)));
         searchBarPanel.add(searchButton);
+        searchBarPanel.add(Box.createRigidArea(new Dimension(900,0)));
+        searchBarPanel.add(saveButton);
 
         this.addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent mouseEvent) {
@@ -298,6 +319,7 @@ public final class BricketFrame extends JFrame implements BricketView {
 
     @Override
     public void submitSearchSelected(int index) {
+        saveButton.setEnabled(true);
         viewResearchResult(controller.selectSearchResult(index));
     }
 

@@ -41,7 +41,6 @@ public class Speculator {
         result.setRetireDate(bSScraper.scrapeRetiredDate());
         result.setValue(bSScraper.scrapeCurrentValue());
         result.setMinifigList(bSScraper.scrapeMinifigNames());
-
         return result;
     }
 

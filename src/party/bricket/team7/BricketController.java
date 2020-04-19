@@ -22,7 +22,13 @@ public class BricketController {
 
     public ResearchResult selectSearchResult(int index) {
         spec.addResearchResult(search.getSearchResult(index));
-        System.out.println(spec.getResearchResult().getPricePerPart());
+        System.out.println("$"+ spec.getResearchResult().getPricePerPart());
         return spec.getResearchResult();
+    }
+
+    public boolean saveToFile(String path) {
+        ResearchIO io = new ResearchIO(path);
+        io.saveResearch(spec.getResearchResult());
+        return true;
     }
 }
