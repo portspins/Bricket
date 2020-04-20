@@ -22,26 +22,24 @@ public class ResearchIO {
      * change to store the selected ResearchResult file in its tab later.
      */
     private File research;
-    //Possibly needs replaced with JSON implementation
     ResearchIO() {
         research = null;
     }
 
     /** loadResearch.
-     * Accepts a JSON file name string and adds the stored
-     * ResearchResult into Speculator. Stores the loaded
-     * file in research.
-     * Check for fail to open exception.
-     * Need a consistent naming scheme for files.
+     * Creates and builds a string of data from provided
+     * path that provides the information needed to
+     * produce a searchResult.
      */
     public SearchResult loadResearch(String path)
     {
-        //store string
+
         //open json file with string name
         //create ResearchResult with json file data
         //ResearchResult loadHusk = new ResearchResult(); //**FIX**
         //add ResearchResult to Speculator
         //return loadHusk;
+        // store string
         String data = null;
         StringBuilder contentBuilder = new StringBuilder();
         try {
@@ -59,6 +57,9 @@ public class ResearchIO {
         JSONObject fmt = new JSONObject(data);
         // really only think here that is important is the bricksetLink
         SearchResult res = new SearchResult(fmt.get("id").toString(),fmt.get("name").toString(),2000,fmt.get("bricksetLink").toString(),fmt.get("imageLink").toString());
+        //parse information into a researchResult
+        ResearchResult restored = new ResearchResult(res,fmt.get("theme").toString(),fmt.get("imageLink").toString(),(Boolean)fmt.getBoolean("retiredFlag"));
+        //set commands to fill out ResearchResult
         return res;
     }
 
