@@ -371,6 +371,14 @@ public final class BricketFrame extends JFrame implements BricketView {
     }
 
     @Override
+    public void resetTabWithResearchResult() {
+        controller.resetToOG();
+        researchResultPanel.remove(researchResultPanel.getSelectedComponent());
+        viewResearchResult(controller.getResearchResult());
+        researchResultPanel.setSelectedIndex(researchResultPanel.getTabCount() - 1);
+    }
+
+    @Override
     public void submitSearchSelected(int index) {
         saveButton.setEnabled(true);
         viewResearchResult(controller.selectSearchResult(index));

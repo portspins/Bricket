@@ -1,5 +1,6 @@
 package party.bricket.team7;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -254,6 +255,20 @@ public class ResearchResult {
             }
         }
         return false;
+    }
+
+    @Override
+    public Object clone() {
+        SearchResult res = new SearchResult(id,name,2000,bricksetLink,imageLink);
+        ResearchResult second = new ResearchResult(res,theme,imageLink,retired);
+        second.setMinifigList((ArrayList<String>) minifigNames.clone());
+        second.setPartCount(partCount);
+        second.setValue(value);
+        second.setRetireDate((Calendar) retireDate.clone());
+        second.setRetailPrice(retailPrice);
+        second.setReleaseDate((Calendar) releaseDate.clone());
+        second.setRating(rating);
+        return second;
     }
 
 }

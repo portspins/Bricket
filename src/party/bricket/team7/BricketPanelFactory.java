@@ -5,6 +5,7 @@ import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import javax.swing.*;
 import javax.swing.border.Border;
+import javax.swing.event.MouseInputAdapter;
 import java.awt.*;
 import java.awt.image.ImageObserver;
 import java.io.BufferedReader;
@@ -48,6 +49,8 @@ public abstract class BricketPanelFactory {
         JPanel result = new JPanel();
         JPanel setPhotoPanel = new JPanel();
         JPanel infoPanel = new JPanel();
+        JPanel buttonPanel = new JPanel();
+        JButton resetButton = new JButton();
         JLabel setPhoto = new JLabel();
         int elCounter = 0;
         URL url = new URL(res.getImageLink());
@@ -75,6 +78,12 @@ public abstract class BricketPanelFactory {
         for (String m : list) {
             infoPanel.add(new InfoPanelItem("Minifig:", m, false));
         }
+
+        resetButton.setText("Reset");
+        resetButton.setEnabled(true);
+        buttonPanel.setLayout(new BoxLayout(buttonPanel,BoxLayout.Y_AXIS));
+        buttonPanel.add(Box.createRigidArea(new Dimension(1100,0))); // @Matthew I need help with moving the button
+        buttonPanel.add(resetButton);
 
         Calendar releaseDate = res.getReleaseDate();
         String relDate = (releaseDate.get(Calendar.MONTH) + 1) + "/" + releaseDate.get(Calendar.DAY_OF_MONTH) + "/" + releaseDate.get(Calendar.YEAR);
@@ -112,6 +121,14 @@ public abstract class BricketPanelFactory {
         JTextField pppEdit = perPartPanel.getEditField();
         addEditListener(pppEdit, view, editFieldNum.PRICE_PER_PART);
 
+        resetButton.addMouseListener(new MouseInputAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if(resetButton.isEnabled()) {
+                    view.resetTabWithResearchResult();
+                }
+            }
+        });
 
         result.setLayout(new BorderLayout());
         setPhoto.setIcon(new ImageIcon(newImage));
@@ -120,6 +137,7 @@ public abstract class BricketPanelFactory {
         result.add(setPhotoPanel, BorderLayout.LINE_START);
         infoPanel.setBorder(BorderFactory.createEmptyBorder(20,0,0,10));
         result.add(infoPanel, BorderLayout.LINE_END);
+        result.add(buttonPanel,BorderLayout.SOUTH);
         result.setMaximumSize(new Dimension(1200, 100));
         result.setBorder(BorderFactory.createEmptyBorder(2,2,2,7));
         result.addMouseListener(new MouseAdapter() {

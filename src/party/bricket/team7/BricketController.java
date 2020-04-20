@@ -75,4 +75,8 @@ public class BricketController {
     public void updateSelected(int index) {
         spec.setSelectedResult(index);
     }
+
+    public boolean resetToOG() {
+        return spec.resetResearchResult();
+    }
 }
