@@ -303,8 +303,6 @@ public final class BricketFrame extends JFrame implements BricketView {
                     nameAbbrev = nameAbbrev.substring(0, 12) + "...";
                 }
                 researchResultPanel.addTab(result.getID() + " " + nameAbbrev, new ImageIcon(), BricketPanelFactory.createResearchResultPanel(result, this), result.getID() + " " + result.getName());
-                int index = researchResultPanel.indexOfTab(result.getID() + " " + nameAbbrev);
-
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
