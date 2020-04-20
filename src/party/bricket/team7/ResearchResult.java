@@ -152,7 +152,7 @@ public class ResearchResult {
      */
     public void setPricePerPart(double partPrice) {
         pricePerPart = partPrice;
-        retailPrice = partPrice * partCount / 100; // Update the linked attribute retail price
+        retailPrice = partPrice * partCount; // Update the linked attribute retail price
     }
 
     /** Gets the item's rating as an integer between 20-100.

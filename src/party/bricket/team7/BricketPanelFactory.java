@@ -52,7 +52,12 @@ public abstract class BricketPanelFactory {
         JPanel buttonPanel = new JPanel();
         JButton resetButton = new JButton();
         JLabel setPhoto = new JLabel();
-        int elCounter = 0;
+        String currencyString = NumberFormat.getCurrencyInstance().format(res.getPeakPrice());
+        currencyString = currencyString.replaceAll("\\.00", "");
+        JLabel predictedPriceLabel = new JLabel("<html>Estimated Peak Retirement Value: " + currencyString + "</html>");
+        predictedPriceLabel.setMaximumSize(new Dimension(395, 60));
+        predictedPriceLabel.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 18));
+        predictedPriceLabel.setBorder(BorderFactory.createEmptyBorder(10,15,0,0));
         URL url = new URL(res.getImageLink());
         Image image = ImageIO.read(url);
         Image newImage = image.getScaledInstance(410,350, Image.SCALE_SMOOTH);
@@ -70,13 +75,19 @@ public abstract class BricketPanelFactory {
         if (res.isRetired())
             retireVal = "Yes";
         infoPanel.add(new InfoPanelItem("Retired:", retireVal, false));
-        StringBuilder minifigStr = new StringBuilder();
-        if (res.getMinifigList().size() == 0)
-            minifigStr.append("No minifigs");
-        ArrayList<String> list = (ArrayList<String>) res.getMinifigList().clone();
-        System.out.println(list.toString());
-        for (String m : list) {
-            infoPanel.add(new InfoPanelItem("Minifig:", m, false));
+
+        currencyString = NumberFormat.getCurrencyInstance().format(res.getValue());
+        currencyString = currencyString.replaceAll("\\.00", "");
+        infoPanel.add(new InfoPanelItem("Current Value:", currencyString, false));
+
+        ArrayList<String> figs = res.getMinifigList();
+        if (figs.size() == 0) {
+            infoPanel.add(new InfoPanelItem("Minifigs:", "No minifigs", false));
+        } else {
+            infoPanel.add(new InfoPanelItem("Minifigs:", figs.get(0), false));
+            for (int i = 1; i < res.getMinifigList().size(); i++) {
+                infoPanel.add(new InfoPanelItem("", figs.get(i), false));
+            }
         }
 
         resetButton.setText("Reset");
@@ -103,9 +114,9 @@ public abstract class BricketPanelFactory {
         JTextField ratingEdit = ratingPanel.getEditField();
         addEditListener(ratingEdit, view, editFieldNum.RATING);
 
-        String currencyString = NumberFormat.getCurrencyInstance().format(abs(res.getRetailPrice()));
+        currencyString = NumberFormat.getCurrencyInstance().format(abs(res.getRetailPrice()));
         currencyString = currencyString.replaceAll("\\.00", "");
-        InfoPanelItem pricePanel = new InfoPanelItem("Price:", currencyString, true);
+        InfoPanelItem pricePanel = new InfoPanelItem("Retail Price:", currencyString, true);
         infoPanel.add(pricePanel);
         JTextField priceEdit = pricePanel.getEditField();
         addEditListener(priceEdit, view, editFieldNum.RETAIL_PRICE);
@@ -134,11 +145,12 @@ public abstract class BricketPanelFactory {
         setPhoto.setIcon(new ImageIcon(newImage));
         result.add(name, BorderLayout.PAGE_START);
         setPhotoPanel.add(setPhoto);
+        setPhotoPanel.add(predictedPriceLabel);
         result.add(setPhotoPanel, BorderLayout.LINE_START);
         infoPanel.setBorder(BorderFactory.createEmptyBorder(20,0,0,10));
-        result.add(infoPanel, BorderLayout.LINE_END);
-        result.add(buttonPanel,BorderLayout.SOUTH);
-        result.setMaximumSize(new Dimension(1200, 100));
+        result.add(infoPanel, BorderLayout.CENTER);
+        result.add(buttonPanel, BorderLayout.PAGE_END);
+        result.setMaximumSize(new Dimension(800, 100));
         result.setBorder(BorderFactory.createEmptyBorder(2,2,2,7));
         result.addMouseListener(new MouseAdapter() {
             @Override

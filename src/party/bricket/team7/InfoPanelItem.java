@@ -12,7 +12,7 @@ public class InfoPanelItem extends JPanel {
     InfoPanelItem() {
         super();
         setLayout(new GridLayout(1,2, 8,8));
-        setMaximumSize(new Dimension(360, 20));
+        setMaximumSize(new Dimension(360, 27));
     }
 
     InfoPanelItem(String label, String value, boolean editable) {
@@ -58,7 +58,8 @@ public class InfoPanelItem extends JPanel {
                 }
             });
         }
-        value = value.replaceAll("[^-?0-9./]", "");
+        value = value.replaceAll("[^0-9a-zA-Z./]", "");
+        System.out.println(value);
         if (value.equals("1") || value.equals("12/31/1969") || value.equals("0")) {
             valLabel.setText("Not Available");
         }

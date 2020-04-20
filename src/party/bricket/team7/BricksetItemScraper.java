@@ -110,9 +110,14 @@ public class BricksetItemScraper {
             e.printStackTrace();
         }
         Elements figItems = figDoc.select("li.item");
+        String figName;
         for(int i = 0; i < figItems.size(); i++) {
-            figs.add(figItems.select("h1 > a[href]").text());
+            figName = figItems.get(i).select("h1 > a[href]").text().replaceAll("\\(.*\\)", "").trim();
+            String[] figNames = figName.split(" - ");
+            String[] shortFigNames = figNames[0].split(",");
+            figs.add(shortFigNames[0]);
         }
+        System.out.println(figs.toString());
         return figs;
     }
 
@@ -143,7 +148,7 @@ public class BricksetItemScraper {
         Elements elFeatureBoxes = doc.select("section.featurebox");
         String strRating = elFeatureBoxes.get(0).select("div.rating").attr("title");
         if(strRating.isEmpty()) {
-            return -1.0;
+            return 0;
         }
         return Double.parseDouble(strRating);
     }
