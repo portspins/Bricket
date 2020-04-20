@@ -1,5 +1,6 @@
 package party.bricket.team7;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.text.ParseException;
@@ -25,5 +26,6 @@ public interface BricketView {
     public void submitRetireDate(String date) throws ParseException;        // Sends the controller the modified retire date
     public void submitSearchSelected(int index);                            // Sends the controller the selected search result number
     public void resetTabWithResearchResult();
+    public void killTab(JPanel tab);
     public void submitResetResult();                                        // Messages the controller to reset the open research result
 }
