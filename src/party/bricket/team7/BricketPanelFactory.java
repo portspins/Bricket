@@ -159,15 +159,6 @@ public abstract class BricketPanelFactory {
                 result.requestFocus();
             }
         });
-        result.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                super.keyPressed(e);
-                if(e.isControlDown() && e.getKeyCode() == KeyEvent.VK_W) {
-                    view.killTab(result);
-                }
-            }
-        });
         return result;
     }
 

@@ -31,6 +31,10 @@ public class BricketController {
         return spec.getResearchResult();
     }
 
+    public void removeResearchResult() {
+        spec.removeResearchResult();
+    }
+
     public boolean saveToFile(String path) {
         ResearchIO io = new ResearchIO();
         io.saveResearch(spec.getResearchResult(),path);

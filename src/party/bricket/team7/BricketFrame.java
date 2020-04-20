@@ -1,5 +1,6 @@
 package party.bricket.team7;
 
+import javafx.scene.input.KeyCode;
 import org.jsoup.internal.StringUtil;
 
 import javax.imageio.ImageIO;
@@ -21,17 +22,17 @@ import java.util.Iterator;
 import java.util.Locale;
 
 public final class BricketFrame extends JFrame implements BricketView {
-    final JButton searchButton;
-    final JButton saveButton;
-    final JButton loadButton;
-    final JTextField searchField;
-    final JPanel searchBarPanel;
-    final JFileChooser fc;
-    final JPanel searchResultPanel;
-    final JTabbedPane researchResultPanel;
-    final JScrollPane searchScroll;
-    final BricketController controller;
-    final String SEARCH_MSG;
+    final private JButton searchButton;
+    final private JButton saveButton;
+    final private JButton loadButton;
+    final private JTextField searchField;
+    final private JPanel searchBarPanel;
+    final private JFileChooser fc;
+    final private JPanel searchResultPanel;
+    final private JTabbedPane researchResultPanel;
+    final private JScrollPane searchScroll;
+    final private BricketController controller;
+    final private String SEARCH_MSG;
 
     public BricketFrame() {
         // Call the parent constructor
@@ -147,7 +148,19 @@ public final class BricketFrame extends JFrame implements BricketView {
                         File file = fc.getSelectedFile();
                         saveButton.setEnabled(true);
                         ResearchResult rer = controller.loadFromFile(file.getAbsolutePath());
-                        viewResearchResult(rer);
+                        viewResearchResult(rer, true);
+                    }
+                }
+            }
+        });
+
+        researchResultPanel.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.isControlDown() && e.getKeyCode() == KeyEvent.VK_W) {
+                    int index = researchResultPanel.getSelectedIndex();
+                    if (index >= 0) {
+                        killTab(index);
                     }
                 }
             }
@@ -295,14 +308,25 @@ public final class BricketFrame extends JFrame implements BricketView {
     }
 
     @Override
-    public void viewResearchResult(ResearchResult result) {
+    public void viewResearchResult(ResearchResult result, boolean isNewResult) {
         if(result != null) {
             try {
                 String nameAbbrev = result.getName();
+                int index;
                 if (nameAbbrev.length() > 15) {
                     nameAbbrev = nameAbbrev.substring(0, 12) + "...";
                 }
-                researchResultPanel.addTab(result.getID() + " " + nameAbbrev, new ImageIcon(), BricketPanelFactory.createResearchResultPanel(result, this), result.getID() + " " + result.getName());
+                if(isNewResult) {
+                    index = researchResultPanel.getTabCount();
+                } else {
+                    index = researchResultPanel.getSelectedIndex();
+                    if (index == 0) {
+                        index++;
+                    }
+                }
+                researchResultPanel.insertTab(result.getID() + " " + nameAbbrev, new ImageIcon(), BricketPanelFactory.createResearchResultPanel(result, this), result.getID() + " " + result.getName(), index);
+                researchResultPanel.setSelectedIndex(index);
+                System.out.println(index);
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
@@ -313,37 +337,28 @@ public final class BricketFrame extends JFrame implements BricketView {
     public void submitRetailPrice(double price) {
         controller.updateSelected(researchResultPanel.getSelectedIndex());
         controller.updatePrice(price);
-        researchResultPanel.remove(researchResultPanel.getSelectedComponent());
-        viewResearchResult(controller.getResearchResult());
-        researchResultPanel.setSelectedIndex(researchResultPanel.getTabCount() - 1);
+        updateTab();
     }
 
     @Override
     public void submitPricePerPart(double ppp) {
         controller.updateSelected(researchResultPanel.getSelectedIndex());
         controller.updatePricePerPart(ppp);
-        researchResultPanel.remove(researchResultPanel.getSelectedComponent());
-        viewResearchResult(controller.getResearchResult());
-        researchResultPanel.setSelectedIndex(researchResultPanel.getTabCount() - 1);
+        updateTab();
     }
 
     @Override
     public void submitRating(int rating) {
         controller.updateSelected(researchResultPanel.getSelectedIndex());
         controller.updateRating(rating);
-        researchResultPanel.remove(researchResultPanel.getSelectedComponent());
-        viewResearchResult(controller.getResearchResult());
-        System.out.println(controller.getResearchResult().getRating());
-        researchResultPanel.setSelectedIndex(researchResultPanel.getTabCount() - 1);
+        updateTab();
     }
 
     @Override
     public void submitPartCount(int count) {
         controller.updateSelected(researchResultPanel.getSelectedIndex());
         controller.updatePartCount(count);
-        researchResultPanel.remove(researchResultPanel.getSelectedComponent());
-        viewResearchResult(controller.getResearchResult());
-        researchResultPanel.setSelectedIndex(researchResultPanel.getTabCount() - 1);
+        updateTab();
     }
 
     @Override
@@ -353,9 +368,7 @@ public final class BricketFrame extends JFrame implements BricketView {
         newDate.setTime(dateFormat.parse(date));
         controller.updateSelected(researchResultPanel.getSelectedIndex());
         controller.updateReleaseDate(newDate);
-        researchResultPanel.remove(researchResultPanel.getSelectedComponent());
-        viewResearchResult(controller.getResearchResult());
-        researchResultPanel.setSelectedIndex(researchResultPanel.getTabCount() - 1);
+        updateTab();
     }
 
     @Override
@@ -365,33 +378,36 @@ public final class BricketFrame extends JFrame implements BricketView {
         newDate.setTime(dateFormat.parse(date));
         controller.updateSelected(researchResultPanel.getSelectedIndex());
         controller.updateRetireDate(newDate);
-        researchResultPanel.remove(researchResultPanel.getSelectedComponent());
-        viewResearchResult(controller.getResearchResult());
-        researchResultPanel.setSelectedIndex(researchResultPanel.getTabCount() - 1);
+        updateTab();
     }
 
     @Override
     public void resetTabWithResearchResult() {
         controller.resetToOG();
-        researchResultPanel.remove(researchResultPanel.getSelectedComponent());
-        viewResearchResult(controller.getResearchResult());
-        researchResultPanel.setSelectedIndex(researchResultPanel.getTabCount() - 1);
+        updateTab();
+        controller.updateSelected(researchResultPanel.getSelectedIndex());
     }
 
     @Override
     public void submitSearchSelected(int index) {
         saveButton.setEnabled(true);
-        viewResearchResult(controller.selectSearchResult(index));
+        viewResearchResult(controller.selectSearchResult(index), true);
+        controller.updateSelected(researchResultPanel.getSelectedIndex());
     }
 
-    @Override
-    public void killTab(JPanel tab) {
-        researchResultPanel.remove(tab);
-
+    public void killTab(int index) {
+        researchResultPanel.removeTabAt(index);
+        controller.updateSelected(index);
+        controller.removeResearchResult();
     }
 
-    @Override
-    public void submitResetResult() {
-
+    public void updateTab() {
+        researchResultPanel.remove(researchResultPanel.getSelectedComponent());
+        if (researchResultPanel.getTabCount() == 0) {
+            viewResearchResult(controller.getResearchResult(), true);
+        } else {
+            viewResearchResult(controller.getResearchResult(), false);
+        }
     }
+
 }

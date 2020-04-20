@@ -17,7 +17,7 @@ public interface BricketView {
     public void submitSearchQuery();                                        // Gets the search query and submits it to the controller
     public boolean promptAddOrReplace();                                    // Determines if the user wants to open a new result or replace one
     public boolean promptSave();                                            // Determines if the user wants to save the current research
-    public void viewResearchResult(ResearchResult results);                 // Outputs the updated list of Research
+    public void viewResearchResult(ResearchResult result, boolean newRes);  // Outputs the updated list of Research
     public void submitRetailPrice(double price);                            // Sends the controller the modified retail price
     public void submitPricePerPart(double ppp);                             // Sends the controller the modified price per part
     public void submitRating(int rating);                                   // Sends the controller the modified rating from 20-100
@@ -25,7 +25,5 @@ public interface BricketView {
     public void submitReleaseDate(String date) throws ParseException;       // Sends the controller the modified release date
     public void submitRetireDate(String date) throws ParseException;        // Sends the controller the modified retire date
     public void submitSearchSelected(int index);                            // Sends the controller the selected search result number
-    public void resetTabWithResearchResult();
-    public void killTab(JPanel tab);
-    public void submitResetResult();                                        // Messages the controller to reset the open research result
+    public void resetTabWithResearchResult();                               // Messages the controller to reset the open research result
 }
