@@ -395,10 +395,10 @@ public final class BricketFrame extends JFrame implements BricketView {
         controller.updateSelected(researchResultPanel.getSelectedIndex());
     }
 
-    public void killTab(int index) {
-        researchResultPanel.removeTabAt(index);
-        controller.updateSelected(index);
-        controller.removeResearchResult();
+    @Override
+    public void killTab(JPanel tab) {
+        researchResultPanel.remove(tab);
+
     }
 
     public void updateTab() {

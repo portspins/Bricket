@@ -279,7 +279,7 @@ public class ResearchResult {
         second.setRetireDate((Calendar) retireDate.clone());
         second.setRetailPrice(retailPrice);
         second.setReleaseDate((Calendar) releaseDate.clone());
-        second.setRating(rating);
+        second.setRating(rating/20.0);
         return second;
     }
 

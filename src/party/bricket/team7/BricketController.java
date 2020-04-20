@@ -43,7 +43,7 @@ public class BricketController {
 
     public ResearchResult loadFromFile(String path) {
         ResearchIO io = new ResearchIO();
-        SearchResult res = io.loadResearch(path);
+        ResearchResult res = io.loadResearch(path);
         if(res == null) {
             return null;
         }

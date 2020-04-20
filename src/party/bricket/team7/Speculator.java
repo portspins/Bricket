@@ -17,7 +17,7 @@ public class Speculator {
     // add a new ResearchResult to the list by constructing it from the scrapper and a passed in SearchResult
     public void addResearchResult(SearchResult res) {
         ResearchResult rResult = makeResearchResult(res);
-        ResearchResult rResultClone = makeResearchResult(res);
+        ResearchResult rResultClone = (ResearchResult) rResult.clone();
         specs.add(rResult);
         //needs to check if item is already stored in original state
         if(hasOGResult(rResultClone)){
@@ -53,10 +53,13 @@ public class Speculator {
 
     //add a ResearchResult by passing a ResearchResult object in
     public void addResearchResult(ResearchResult res){
+        ResearchResult cloned = (ResearchResult) res.clone();
         specs.add(res);
-        if(!hasOGResult(res)) {
-            OGSpecs.add(res);
+        if(hasOGResult(res)) {
+            selectedResult = res;
+            return;
         }
+        OGSpecs.add(cloned);
         selectedResult = res;
     }
 
