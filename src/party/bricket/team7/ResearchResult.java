@@ -32,7 +32,7 @@ public class ResearchResult {
     private int partCount;                                              // Part count of the set
     private Calendar releaseDate;                                       // Release date of set
     private Calendar retireDate;                                        // Date of retirement, if applicable
-
+    private double peakPrice;                                           // peak price
     /**
      * Creates a new ResearchResult object
      */
@@ -59,6 +59,7 @@ public class ResearchResult {
         retireDate  = Calendar.getInstance(TimeZone.getTimeZone("America/Chicago"));    // Initialize date of retirement
         retireDate.setTimeInMillis(0);
         minifigNames = new ArrayList<String>();                   // Initialize list of minifigs
+        peakPrice = 0;
     }
 
     /** Gets the item's ID string.
@@ -118,6 +119,9 @@ public class ResearchResult {
         if(retailPrice == -1.0) {
             return;
         }
+        if(value == 0.0) {
+            peakPrice = price;
+        }
         pricePerPart = price / partCount; // Update the linked attribute price per part
     }
 
@@ -133,6 +137,7 @@ public class ResearchResult {
      */
     public void setValue(double price) {
         value = price;
+        peakPrice = price;
     }
 
     /** Gets the item's price per piece in cents.
@@ -230,6 +235,13 @@ public class ResearchResult {
         this.retireDate = (Calendar) retireDate.clone();
     }
 
+    public Double getPeakPrice() {
+        return peakPrice;
+    }
+
+    public void setPeakPrice(Double price) {
+        peakPrice = price;
+    }
     /** Provides a string representation of the object.
      * @return a string of some of the ResearchResult's data
      */

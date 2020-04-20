@@ -86,7 +86,7 @@ public class Speculator {
         selectedResult.setValue(findOGResult(selectedResult).getValue());
         selectedResult.setPricePerPart(findOGResult(selectedResult).getPricePerPart());
         selectedResult.setMinifigList(findOGResult(selectedResult).getMinifigList());
-        selectedResult.setRating(findOGResult(selectedResult).getRating());
+        selectedResult.setRating(findOGResult(selectedResult).getRating()/20.0);
         selectedResult.setPartCount(findOGResult(selectedResult).getPartCount());
         selectedResult.setReleaseDate(findOGResult(selectedResult).getReleaseDate());
         selectedResult.setRetireDate(findOGResult(selectedResult).getRetireDate());
@@ -263,7 +263,7 @@ public class Speculator {
         Integer partCount = selectedResult.getPartCount();
         Integer rating = selectedResult.getRating();
         Double rrp = selectedResult.getRetailPrice();
-        Double value = findOGResult(selectedResult).getValue();
+        Double value = selectedResult.getValue();
         Integer miniFigCount = selectedResult.getMinifigList().size();
         // unknown retired date
         if(isRetired) {
@@ -310,7 +310,7 @@ public class Speculator {
             peakPrice += miniFigCount/10.0;
         }
 
-        selectedResult.setValue(peakPrice);
+        selectedResult.setPeakPrice(peakPrice);
         return peakPrice;
     }
 
