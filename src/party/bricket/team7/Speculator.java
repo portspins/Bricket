@@ -283,7 +283,7 @@ public class Speculator {
         if(value != -1.0) {
             peakPrice += value/1000.0;
             if(rrp == -1.0) {
-                peakPrice += value/1000.0;
+                peakPrice += value;
             }
         }
         if(value == -1.0 && rrp == -1.0) {
