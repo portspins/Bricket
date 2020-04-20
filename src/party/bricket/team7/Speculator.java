@@ -84,7 +84,6 @@ public class Speculator {
 
         selectedResult.setRetailPrice(findOGResult(selectedResult).getRetailPrice());
         selectedResult.setValue(findOGResult(selectedResult).getValue());
-        selectedResult.setPricePerPart(findOGResult(selectedResult).getPricePerPart());
         selectedResult.setMinifigList(findOGResult(selectedResult).getMinifigList());
         selectedResult.setRating(findOGResult(selectedResult).getRating()/20.0);
         selectedResult.setPartCount(findOGResult(selectedResult).getPartCount());
