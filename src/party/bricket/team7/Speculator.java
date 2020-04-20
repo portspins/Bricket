@@ -51,12 +51,13 @@ public class Speculator {
         return result;
     }
 
-    //add a ResearchResult by passing it in
+    //add a ResearchResult by passing a ResearchResult object in
     public void addResearchResult(ResearchResult res){
         specs.add(res);
         if(!hasOGResult(res)) {
             OGSpecs.add(res);
         }
+        selectedResult = res;
     }
 
     //Remove a current selectedResult
@@ -79,10 +80,6 @@ public class Speculator {
     }
 
     //Resets the current ResearchResult to it's original state
-    /**Question
-     * How are we storing the original values to revert back to?
-     * @return
-     */
     public Boolean resetResearchResult() {
 
         selectedResult.setRetailPrice(findOGResult(selectedResult).getRetailPrice());
@@ -120,6 +117,9 @@ public class Speculator {
     }
 
     private ResearchResult findOGResult(ResearchResult res){
+        if(!hasOGResult(res)){
+            return null;
+        }
         for(ResearchResult r: OGSpecs){
             if(r.equals(res)){
                 return r;
@@ -263,7 +263,7 @@ public class Speculator {
         Integer partCount = selectedResult.getPartCount();
         Integer rating = selectedResult.getRating();
         Double rrp = selectedResult.getRetailPrice();
-        Double value = selectedResult.getValue();
+        Double value = findOGResult(selectedResult).getValue();
         Integer miniFigCount = selectedResult.getMinifigList().size();
         // unknown retired date
         if(isRetired) {
@@ -309,11 +309,14 @@ public class Speculator {
         if(miniFigCount > 0) {
             peakPrice += miniFigCount/10.0;
         }
+
+        selectedResult.setValue(peakPrice);
         return peakPrice;
     }
 
     //Returns current selectedResult
     public ResearchResult getResearchResult(){
+        calcValue();
         return selectedResult;
     }
 
