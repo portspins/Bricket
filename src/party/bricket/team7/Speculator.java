@@ -61,7 +61,7 @@ public class Speculator {
     }
 
     //Remove a current selectedResult
-    private ResearchResult removeResearchResult(){
+    public ResearchResult removeResearchResult(){
        if(specs.isEmpty()){
            System.out.println("There are currently no opened sessions");
            return null;
