@@ -387,7 +387,6 @@ public final class BricketFrame extends JFrame implements BricketView {
     @Override
     public void killTab(JPanel tab) {
         researchResultPanel.remove(tab);
-
     }
 
     @Override
