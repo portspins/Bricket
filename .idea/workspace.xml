@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4eede522-bafe-4567-8306-7cabe5fd6dc0" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/brick.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dictionaries/brick.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/party/bricket/team7/BricketPanelFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/party/bricket/team7/BricketPanelFactory.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -357,11 +355,17 @@
       <option name="project" value="LOCAL" />
       <updated>1587336711635</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="Added preliminary minifig names">
+      <created>1587338430245</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1587338430245</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Created preliminary version of ResearchResult including gets and sets" />
     <MESSAGE value="Just updated SearchResult getItemLink() method name" />
     <MESSAGE value="Updated SearchResult to trimmed version since some things got moved to ResearchResult" />
     <MESSAGE value="Updated ResearchResult constructor to take four parameters only, with the first being a SearchResult" />
@@ -386,7 +390,8 @@
     <MESSAGE value="Fixed some bugs" />
     <MESSAGE value="Fixed some bugs with changing values" />
     <MESSAGE value="Fixed several major buggy bugs" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed several major buggy bugs" />
+    <MESSAGE value="Added preliminary minifig names" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added preliminary minifig names" />
   </component>
   <component name="WindowStateProjectService">
     <state x="552" y="179" key="#Notifications" timestamp="1585690821298">
@@ -418,10 +423,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="756" y="406" width="407" height="237" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes/0.0.1920.1040@0.0.1920.1040" timestamp="1586310659060" />
-    <state x="357" y="92" key="CommitChangelistDialog2" timestamp="1587336710994">
+    <state x="357" y="92" key="CommitChangelistDialog2" timestamp="1587338429562">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="357" y="92" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1587336710994" />
+    <state x="357" y="92" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1587338429562" />
     <state x="2628" y="15" key="CommitChangelistDialog2/0.0.2560.1040/2560.-359.900.1560@2560.-359.900.1560" timestamp="1584566400746" />
     <state x="92" y="92" width="1736" height="856" key="DiffContextDialog" timestamp="1587050622572">
       <screen x="0" y="0" width="1920" height="1040" />
@@ -488,10 +493,10 @@
     </state>
     <state x="470" y="157" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1587320633185" />
     <state x="627" y="157" key="SettingsEditor/0.0.2560.1040/2560.-359.900.1560@0.0.2560.1040" timestamp="1584458162864" />
-    <state x="552" y="254" key="Vcs.Push.Dialog.v2" timestamp="1587336713123">
+    <state x="552" y="254" key="Vcs.Push.Dialog.v2" timestamp="1587338432996">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="254" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1587336713123" />
+    <state x="552" y="254" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1587338432996" />
     <state x="9" y="232" width="1736" height="856" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1587182871135">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
