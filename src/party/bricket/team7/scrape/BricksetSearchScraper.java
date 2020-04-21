@@ -1,4 +1,4 @@
-package party.bricket.team7;
+package party.bricket.team7.scrape;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -24,7 +24,7 @@ public class BricksetSearchScraper {
      * Constructor for basic searches without a scope
      * @param query the string a user searches for. can be name, ID, etc.
      */
-    BricksetSearchScraper(String query) {
+    public BricksetSearchScraper(String query) {
         names = new ArrayList<String>();
         IDs = new ArrayList<String>();
         links = new ArrayList<String>();

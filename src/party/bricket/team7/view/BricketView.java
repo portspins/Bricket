@@ -1,8 +1,9 @@
-package party.bricket.team7;
+package party.bricket.team7.view;
 
-import javax.swing.*;
+import party.bricket.team7.data.ResearchResult;
+import party.bricket.team7.data.SearchResult;
+
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.text.ParseException;
 import java.util.Iterator;
 

@@ -1,4 +1,4 @@
-package party.bricket.team7;
+package party.bricket.team7.control;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -10,9 +10,11 @@ import java.util.TimeZone;
 import java.util.stream.Stream;
 
 import org.json.*;
+import party.bricket.team7.data.ResearchResult;
+import party.bricket.team7.data.SearchResult;
 
 
-/** party.bricket.team7.ResearchIO: A class extended by Speculator that will enable
+/** party.bricket.team7.control.ResearchIO: A class extended by Speculator that will enable
  * the saving and loading of a ResearchResult.
  * Save a ResearchResult as a file, store its data, and implement a "load" option
  * to open saved ResearchResult files.
@@ -26,7 +28,7 @@ public class ResearchIO {
      * change to store the selected ResearchResult file in its tab later.
      */
     private File research;
-    ResearchIO() {
+    public ResearchIO() {
         research = null;
     }
 

@@ -1,7 +1,8 @@
-package party.bricket.team7;
+package party.bricket.team7.data;
+
+import party.bricket.team7.scrape.BricksetItemScraper;
 
 import java.util.*;
-import java.util.Scanner;
 
 public class Speculator {
     private Boolean isSaved;

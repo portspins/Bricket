@@ -1,4 +1,4 @@
-package party.bricket.team7;
+package party.bricket.team7.view;
 
 import javax.swing.*;
 import java.awt.*;

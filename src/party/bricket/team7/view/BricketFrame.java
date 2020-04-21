@@ -1,20 +1,16 @@
-package party.bricket.team7;
+package party.bricket.team7.view;
 
-import javafx.scene.input.KeyCode;
-import org.jsoup.internal.StringUtil;
+import party.bricket.team7.control.BricketController;
+import party.bricket.team7.data.ResearchResult;
+import party.bricket.team7.data.SearchResult;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
-import javax.swing.border.Border;
-import javax.swing.border.EtchedBorder;
-import javax.swing.border.SoftBevelBorder;
 import javax.swing.event.MouseInputAdapter;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -60,7 +56,6 @@ public final class BricketFrame extends JFrame implements BricketView {
         searchScroll.setPreferredSize(new Dimension(365,700));
         searchScroll.getVerticalScrollBar().setUnitIncrement(13);
         searchScroll.setBorder(BorderFactory.createEmptyBorder());
-
         this.setContentPane(new JLabel(new ImageIcon("src/resources/legoman1.png")));
         this.setFocusable( true );
 
@@ -218,7 +213,6 @@ public final class BricketFrame extends JFrame implements BricketView {
             //Find the components you want to remove
             searchResultPanel.remove(c);
         }
-
         searchResultPanel.setBorder(null);
         searchResultPanel.setPreferredSize(new Dimension(335, 40));
     }

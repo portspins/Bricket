@@ -1,9 +1,7 @@
-package party.bricket.team7;
+package party.bricket.team7.data;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.TimeZone;
 
 /**

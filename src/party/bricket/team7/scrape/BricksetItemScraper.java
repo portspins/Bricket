@@ -1,9 +1,11 @@
-package party.bricket.team7;
+package party.bricket.team7.scrape;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 import org.jsoup.nodes.Element;
+import party.bricket.team7.data.SearchResult;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -22,7 +24,7 @@ public class BricksetItemScraper {
      * Constructor for scraping an individual item page
      * @param result the desired item's SearchResult
      */
-    BricksetItemScraper(SearchResult result) {
+    public BricksetItemScraper(SearchResult result) {
         url = "https://brickset.com" + result.getItemLink();
         try {
             doc = Jsoup.connect(url).get(); // store html in memory for speed

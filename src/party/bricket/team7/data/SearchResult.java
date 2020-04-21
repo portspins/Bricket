@@ -1,8 +1,8 @@
-package party.bricket.team7;
+package party.bricket.team7.data;
 
 import java.util.*;
 
-/** party.bricket.team7.SearchResult: A class that will act as a data type for a single item
+/** party.bricket.team7.data.SearchResult: A class that will act as a data type for a single item
  * from a brickset search's result list.
  * Stores ID#, Name, Release Year, Brickset page link, Thumbnail link
  * @author Daniel Morris

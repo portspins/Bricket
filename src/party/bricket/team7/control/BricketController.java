@@ -1,7 +1,10 @@
-package party.bricket.team7;
+package party.bricket.team7.control;
 
-import javax.swing.*;
-import java.util.ArrayList;
+import party.bricket.team7.data.ResearchResult;
+import party.bricket.team7.data.Search;
+import party.bricket.team7.data.SearchResult;
+import party.bricket.team7.data.Speculator;
+
 import java.util.Calendar;
 import java.util.Iterator;
 
@@ -11,7 +14,7 @@ public class BricketController {
 
     final private Speculator spec;
 
-    BricketController() {
+    public BricketController() {
         search = null;
         spec = new Speculator();
     }

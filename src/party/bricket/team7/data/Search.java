@@ -1,10 +1,12 @@
-package party.bricket.team7;
+package party.bricket.team7.data;
 
 /**Search class will be responsible for:
  * Maintaining a list of results
  * Takes a query from main
  * Uses an instantiation of BrickSet Scraper
  */
+import party.bricket.team7.scrape.BricksetSearchScraper;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 

@@ -1,17 +1,15 @@
-package party.bricket.team7;
+package party.bricket.team7.view;
+
+import party.bricket.team7.data.ResearchResult;
+import party.bricket.team7.data.SearchResult;
 
 import javax.imageio.ImageIO;
 import java.awt.event.*;
-import java.awt.image.BufferedImage;
 import javax.swing.*;
-import javax.swing.border.Border;
 import javax.swing.event.MouseInputAdapter;
 import java.awt.*;
-import java.awt.image.ImageObserver;
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.net.URL;
-import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
