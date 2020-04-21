@@ -58,10 +58,15 @@ public class InfoPanelItem extends JPanel {
                 }
             });
         }
-        value = value.replaceAll("[^0-9a-zA-Z./]", "");
+
+        value = value.replaceAll("[^-?0-9./]", "");
         System.out.println(value);
-        if (value.equals("1") || value.equals("12/31/1969") || value.equals("0")) {
-            valLabel.setText("Not Available");
+        try {
+            if (value.equals("12/31/1969") || Double.parseDouble(value) <= 0) {
+                valLabel.setText("Not Available");
+            }
+        } catch (NumberFormatException ex) {
+            // Date already checked so just continue
         }
         add(valLabel, 1);
     }

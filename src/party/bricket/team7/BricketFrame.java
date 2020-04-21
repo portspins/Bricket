@@ -202,11 +202,6 @@ public final class BricketFrame extends JFrame implements BricketView {
 
     public static void main(String[] args) {
         final BricketFrame main_window = new BricketFrame();
-
-        // Create a new Search object with a BricksetScraper object and the query
-
-        // Iterate through Search's SearchResults and print out the info from each
-
     }
 
     @Override
@@ -318,15 +313,14 @@ public final class BricketFrame extends JFrame implements BricketView {
                 }
                 if(isNewResult) {
                     index = researchResultPanel.getTabCount();
+                    researchResultPanel.addTab(result.getID() + " " + nameAbbrev, BricketPanelFactory.createResearchResultPanel(result, this));
                 } else {
                     index = researchResultPanel.getSelectedIndex();
-                    if (index == 0) {
-                        index++;
-                    }
+                    researchResultPanel.setComponentAt(index, BricketPanelFactory.createResearchResultPanel(result, this));
+                    researchResultPanel.setTitleAt(index, result.getID() + " " + nameAbbrev);
                 }
-                researchResultPanel.insertTab(result.getID() + " " + nameAbbrev, new ImageIcon(), BricketPanelFactory.createResearchResultPanel(result, this), result.getID() + " " + result.getName(), index);
                 researchResultPanel.setSelectedIndex(index);
-                System.out.println(index);
+                researchResultPanel.setToolTipTextAt(index, result.getID() + " " + result.getName());
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
@@ -383,9 +377,9 @@ public final class BricketFrame extends JFrame implements BricketView {
 
     @Override
     public void resetTabWithResearchResult() {
+        controller.updateSelected(researchResultPanel.getSelectedIndex());
         controller.resetToOG();
         updateTab();
-        controller.updateSelected(researchResultPanel.getSelectedIndex());
     }
 
     @Override
@@ -395,19 +389,15 @@ public final class BricketFrame extends JFrame implements BricketView {
         controller.updateSelected(researchResultPanel.getSelectedIndex());
     }
 
-    @Override
-    public void killTab(JPanel tab) {
-        researchResultPanel.remove(tab);
-
+    public void killTab(int index) {
+        researchResultPanel.remove(index);
+        if (researchResultPanel.getTabCount() == 0) {
+            saveButton.setEnabled(false);
+        }
     }
 
     public void updateTab() {
-        researchResultPanel.remove(researchResultPanel.getSelectedComponent());
-        if (researchResultPanel.getTabCount() == 0) {
-            viewResearchResult(controller.getResearchResult(), true);
-        } else {
-            viewResearchResult(controller.getResearchResult(), false);
-        }
+        viewResearchResult(controller.getResearchResult(), false);
     }
 
 }
