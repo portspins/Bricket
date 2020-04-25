@@ -4,28 +4,51 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
+/**
+ * A panel for a research result information item
+ * @author Matthew Hise
+ */
+
 public class InfoPanelItem extends JPanel {
     private JLabel label;
     private Component info;
     private JTextField editField;
 
+    /**
+     * Constructor
+     */
     InfoPanelItem() {
         super();
         setLayout(new GridLayout(1,2, 8,8));
         setMaximumSize(new Dimension(360, 27));
     }
 
+    /**
+     * Parametrized constructor
+     * @param label the label defining what information is presented
+     * @param value the initial value corresponding to the label
+     * @param editable true if the value should be able to be edited
+     */
     InfoPanelItem(String label, String value, boolean editable) {
         this();
         setLabel(label);
         setInfo(value, editable);
     }
 
+    /**
+     * Set the label for the panel
+     * @param label the label
+     */
     public void setLabel(String label) {
         this.label = new JLabel(label);
         add(this.label, 0);
     }
 
+    /**
+     * Set the value and allow it to be edited if requested
+     * @param value the initial value
+     * @param editable true if the value should be able to be edited
+     */
     public void setInfo(String value, boolean editable) {
         final JLabel valLabel = new JLabel(value);
         if (editable) {

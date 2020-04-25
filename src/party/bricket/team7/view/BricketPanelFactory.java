@@ -17,12 +17,24 @@ import java.util.Calendar;
 
 import static java.lang.Math.abs;
 
+/**
+ * The fields that may be edited
+ */
 enum editFieldNum {
     RELEASE_DATE, RETIRE_DATE, RETAIL_PRICE, PRICE_PER_PART, RATING, PART_COUNT
 }
 
+/**
+ * A factory to construct panels needed by the view
+ */
 public abstract class BricketPanelFactory {
 
+    /**
+     * A factory method to create search result item listings
+     * @param res the search result object
+     * @return the panel constructed
+     * @throws IOException
+     */
     public static JPanel createSearchResultPanel(SearchResult res) throws IOException {
         JPanel result = new JPanel();
         JLabel thumb = new JLabel();
@@ -41,8 +53,13 @@ public abstract class BricketPanelFactory {
         return result;
     }
 
-    // Add stuff from constructor
-
+    /**
+     * A factory method to create research result panels
+     * @param res the research result object
+     * @param view the view being used
+     * @return the panel constructed
+     * @throws IOException
+     */
     public static JPanel createResearchResultPanel(ResearchResult res, BricketView view) throws IOException {
         JPanel result = new JPanel();
         JPanel setPhotoPanel = new JPanel();

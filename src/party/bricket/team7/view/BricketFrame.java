@@ -17,6 +17,9 @@ import java.util.Calendar;
 import java.util.Iterator;
 import java.util.Locale;
 
+/**
+ * A standard BricketView implementation class
+ */
 public final class BricketFrame extends JFrame implements BricketView {
     final private JButton searchButton;
     final private JButton saveButton;
@@ -30,6 +33,9 @@ public final class BricketFrame extends JFrame implements BricketView {
     final private BricketController controller;
     final private String SEARCH_MSG;
 
+    /**
+     * The constructor, which starts up the view
+     */
     public BricketFrame() {
         // Call the parent constructor
         super("Bricket");
@@ -199,11 +205,9 @@ public final class BricketFrame extends JFrame implements BricketView {
         final BricketFrame main_window = new BricketFrame();
     }
 
-    @Override
-    public String getFilename() {
-        return null;
-    }
-
+    /**
+     * Clears the search panel of all results
+     */
     public void clearSearchResults() {
         //Get the components in the panel
         Component[] componentList = searchResultPanel.getComponents();
@@ -217,6 +221,11 @@ public final class BricketFrame extends JFrame implements BricketView {
         searchResultPanel.setPreferredSize(new Dimension(335, 40));
     }
 
+    /**
+     * Builds and prints out the search results
+     * @param itr an iterator to the list of search results found
+     * @throws IOException
+     */
     @Override
     public void viewSearchResults(Iterator<SearchResult> itr) throws IOException {
         SearchResult current;
@@ -266,6 +275,9 @@ public final class BricketFrame extends JFrame implements BricketView {
         }
     }
 
+    /**
+     * Submits the search query and tells the view to refresh
+     */
     @Override
     public void submitSearchQuery() {
         new Thread(new Runnable() {
@@ -286,16 +298,11 @@ public final class BricketFrame extends JFrame implements BricketView {
         }).start();
     }
 
-    @Override
-    public boolean promptAddOrReplace() {
-        return false;
-    }
-
-    @Override
-    public boolean promptSave() {
-        return false;
-    }
-
+    /**
+     * Shows a new research result tab or replaces a current one
+     * @param result the new research result to display
+     * @param isNewResult true if a new tab is to be added
+     */
     @Override
     public void viewResearchResult(ResearchResult result, boolean isNewResult) {
         if(result != null) {
@@ -321,6 +328,10 @@ public final class BricketFrame extends JFrame implements BricketView {
         }
     }
 
+    /**
+     * Submits a new retail price to the model and refreshes the view
+     * @param price the new retail price in dollars
+     */
     @Override
     public void submitRetailPrice(double price) {
         controller.updateSelected(researchResultPanel.getSelectedIndex());
@@ -328,6 +339,10 @@ public final class BricketFrame extends JFrame implements BricketView {
         updateTab();
     }
 
+    /**
+     * Submits a new price per part to the model and refreshes the view
+     * @param ppp the new price per part in dollars
+     */
     @Override
     public void submitPricePerPart(double ppp) {
         controller.updateSelected(researchResultPanel.getSelectedIndex());
@@ -335,6 +350,10 @@ public final class BricketFrame extends JFrame implements BricketView {
         updateTab();
     }
 
+    /**
+     * Submits a new rating to the model as an integer between 20 and 100 and refreshes the view
+     * @param rating the new rating as an integer between 20 and 100
+     */
     @Override
     public void submitRating(int rating) {
         controller.updateSelected(researchResultPanel.getSelectedIndex());
@@ -342,6 +361,10 @@ public final class BricketFrame extends JFrame implements BricketView {
         updateTab();
     }
 
+    /**
+     * Submits a new part count to the model and refreshes the view
+     * @param count the new part count
+     */
     @Override
     public void submitPartCount(int count) {
         controller.updateSelected(researchResultPanel.getSelectedIndex());
@@ -349,6 +372,11 @@ public final class BricketFrame extends JFrame implements BricketView {
         updateTab();
     }
 
+    /**
+     * Submits a new release date to the model and refreshes the view
+     * @param date the new date as a string in the format MM/dd/yyyy
+     * @throws ParseException
+     */
     @Override
     public void submitReleaseDate(String date) throws ParseException {
         Calendar newDate = Calendar.getInstance();
@@ -359,6 +387,11 @@ public final class BricketFrame extends JFrame implements BricketView {
         updateTab();
     }
 
+    /**
+     * Submits a new retire date to the model and refreshes the view
+     * @param date the new date as a string in the format MM/dd/yyyy
+     * @throws ParseException
+     */
     @Override
     public void submitRetireDate(String date) throws ParseException {
         Calendar newDate = Calendar.getInstance();
@@ -369,6 +402,9 @@ public final class BricketFrame extends JFrame implements BricketView {
         updateTab();
     }
 
+    /**
+     * Resets the current tab with the original research result
+     */
     @Override
     public void resetTabWithResearchResult() {
         controller.updateSelected(researchResultPanel.getSelectedIndex());
@@ -376,6 +412,10 @@ public final class BricketFrame extends JFrame implements BricketView {
         updateTab();
     }
 
+    /**
+     * Adds the research result for a search result selected
+     * @param index the index of the search result chosen
+     */
     @Override
     public void submitSearchSelected(int index) {
         saveButton.setEnabled(true);
@@ -383,13 +423,25 @@ public final class BricketFrame extends JFrame implements BricketView {
         controller.updateSelected(researchResultPanel.getSelectedIndex());
     }
 
+    /**
+     * Closes the current tab and removes that one from the model
+     * @param index the index of the tab to close and remove
+     */
     public void killTab(int index) {
+        controller.updateSelected(researchResultPanel.getSelectedIndex());
+        controller.removeResearchResult();
         researchResultPanel.remove(index);
         if (researchResultPanel.getTabCount() == 0) {
             saveButton.setEnabled(false);
+        } else {
+            controller.updateSelected(researchResultPanel.getSelectedIndex());
         }
+
     }
 
+    /**
+     * Update the current tab after the model has changed
+     */
     public void updateTab() {
         viewResearchResult(controller.getResearchResult(), false);
     }
