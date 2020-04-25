@@ -312,7 +312,9 @@ public class Speculator {
         if(miniFigCount > 0) {
             peakPrice += miniFigCount/10.0;
         }
-
+        if(value > peakPrice) {
+            peakPrice += value;
+        }
         selectedResult.setPeakPrice(peakPrice);
         return peakPrice;
     }

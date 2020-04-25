@@ -28,8 +28,11 @@ public class ResearchIO {
      * change to store the selected ResearchResult file in its tab later.
      */
     private File research;
+    private Double ioVersion;
+
     public ResearchIO() {
         research = null;
+        ioVersion = 0.1;
     }
 
     private String getSubstringWithLength(String main, String substring, int len) {
@@ -60,6 +63,7 @@ public class ResearchIO {
         //return loadHusk;
         // store string
         String data = null;
+        Double fileVersion = null;
         StringBuilder contentBuilder = new StringBuilder();
         Calendar retireDate = Calendar.getInstance(TimeZone.getTimeZone("America/Chicago"));
         retireDate.setTimeInMillis(0);
@@ -71,6 +75,13 @@ public class ResearchIO {
             data = contentBuilder.toString();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+        fileVersion = Double.parseDouble(data.split("\\n")[0].split("=")[1]);
+        System.out.println("Version: " + fileVersion);
+        data = data.split("\\n")[1];
+
+        if(fileVersion < ioVersion) {
+            return null;
         }
 
         if(data.isEmpty()) {
@@ -140,6 +151,7 @@ public class ResearchIO {
         try {
             FileWriter save = new FileWriter(research);
             //Write JSON Object into file
+            save.write("ioVer=" + ioVersion.toString() + "\n");
             save.write(toSave.toString());
             save.close();
         } catch (IOException e) {
