@@ -31,8 +31,8 @@ public class Speculator {
 
     /**
      * make new ResearchResult from SearchResult
-     * @param res
-     * @return
+     * @param res a SearchResult used to construct a ResearchResult
+     * @return ResearchResult
      */
     private ResearchResult makeResearchResult(SearchResult res) {
         bSScraper = new BricksetItemScraper(res);
@@ -243,8 +243,8 @@ public class Speculator {
 
     /**
      * The Algorithm™
-     *
-     * @return
+     * calculates a predicted peak resale price of the item
+     * @return double peakPrice
      */
     public double calcValue() {
         /*
@@ -256,7 +256,7 @@ public class Speculator {
         Calendar nullCalendar = Calendar.getInstance(TimeZone.getTimeZone("America/Chicago"));
         nullCalendar.setTimeInMillis(0);
 
-        Double peakPrice = 0.0;
+        double peakPrice = 0.0;
 
         Calendar retired = selectedResult.getRetireDate();
         Calendar release = selectedResult.getReleaseDate();

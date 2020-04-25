@@ -70,8 +70,7 @@ public class BricketController {
      */
     public boolean saveToFile(String path) {
         ResearchIO io = new ResearchIO();
-        io.saveResearch(spec.getResearchResult(),path);
-        return true;
+        return io.saveResearch(spec.getResearchResult(),path);
     }
 
     /**

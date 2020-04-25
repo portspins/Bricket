@@ -134,7 +134,10 @@ public final class BricketFrame extends JFrame implements BricketView {
                     int ret = fc.showSaveDialog(BricketFrame.this);
                     if (ret == JFileChooser.APPROVE_OPTION) {
                         File file = fc.getSelectedFile();
-                        controller.saveToFile(file.getAbsolutePath());
+                        if(!controller.saveToFile(file.getAbsolutePath())) {
+                            // display error if file fails to save
+                            JOptionPane.showMessageDialog(researchResultPanel, "Error saving to " + file.getAbsolutePath() + ". Please choose a different location.");
+                        }
                     }
                 }
             }

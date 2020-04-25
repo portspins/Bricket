@@ -35,10 +35,23 @@ public class ResearchIO {
         ioVersion = 0.1;
     }
 
+    /**
+     * given a string, substring, and length, this finds the substring, navigates to the end of the substring,
+     * and then reads and returns the substring after that is length len long
+     * @param main the main string that will be searched through
+     * @param substring the substring to look for data after
+     * @param len the length of the data we want to return
+     * @return the data of size len found after the given substring in the main string
+     */
     private String getSubstringWithLength(String main, String substring, int len) {
         return main.substring(main.indexOf(substring) + substring.length(), Math.min(main.indexOf(substring) + substring.length() + len, main.length()));
     }
 
+    /**
+     * gets a list of minifigs from a json array
+     * @param list String of raw json-formatted array data
+     * @return ArrayList of Strings containing minifigs
+     */
     private ArrayList<String> parseMinifigs(String list) {
         ArrayList<String> ret = new ArrayList<String>();
         list = list.replace("[","");
@@ -48,10 +61,10 @@ public class ResearchIO {
         return ret;
     }
 
-    /** loadResearch.
-     * Creates and builds a string of data from provided
-     * path that provides the information needed to
-     * produce a searchResult.
+    /**
+     * creates and returns a researchResult from a file with json-formatted data
+     * @param path the location of the file on the filesystem
+     * @return ResarchResult
      */
     public ResearchResult loadResearch(String path)
     {
@@ -76,19 +89,34 @@ public class ResearchIO {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        fileVersion = Double.parseDouble(data.split("\\n")[0].split("=")[1]);
+        // data will be formatted with ioVer=x.xx on the first line and everything else on the second
+        // so first we get the ioVersion, which is the x.xx after the ioVer= in the first line
+        try {
+            fileVersion = Double.parseDouble(data.split("\\n")[0].split("=")[1]);
+        } catch (NumberFormatException e) {
+            System.out.println("Unable to get ioVersion, file is most likely ancient.");
+            return null;
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("File at " + path + " not formatted correctly, stopping read.");
+            return null;
+        }
         System.out.println("Version: " + fileVersion);
-        data = data.split("\\n")[1];
 
         if(fileVersion < ioVersion) {
             return null;
         }
-
+        // then we get the actual data that contains the ResearchResult if the ioVersion checks out
+        data = data.split("\\n")[1];
         if(data.isEmpty()) {
             return null;
         }
-
-        JSONObject fmt = new JSONObject(data);
+        JSONObject fmt;
+        try {
+            fmt = new JSONObject(data);
+        } catch (JSONException e) {
+            System.out.println("Data in " + path + " not formatted correctly.");
+            return null;
+        }
         // really only think here that is important is the bricksetLink
         SearchResult res = new SearchResult(fmt.get("id").toString(),fmt.get("name").toString(),2000,fmt.get("bricksetLink").toString(),fmt.get("imageLink").toString());
         //parse information into a researchResult
@@ -119,9 +147,11 @@ public class ResearchIO {
         return restored;
     }
 
-    /** saveResearch.
-     * Saves the researchResult provided into a JSON file.
-     * Need a consistent naming scheme for files.
+    /**
+     * saves the ResearchResult provided into a JSON file.
+     * @param s the ResearchResult that will be written to the file
+     * @param path the location of the file to be written to on the disk
+     * @return a boolean of if the file save succeeded or not
      */
     public boolean saveResearch(ResearchResult s,String path)
     {
@@ -159,6 +189,6 @@ public class ResearchIO {
         }
         //return boolean, true if saving was successful, false if not.
         research = null;
-        return false;
+        return true;
     }
 }
