@@ -150,13 +150,13 @@ public final class BricketFrame extends JFrame implements BricketView {
                     int ret = fc.showOpenDialog(BricketFrame.this);
                     if(ret == JFileChooser.APPROVE_OPTION) {
                         File file = fc.getSelectedFile();
-                        saveButton.setEnabled(true);
                         ResearchResult rer = controller.loadFromFile(file.getAbsolutePath());
                         if(rer == null) {
                             // make sure loadFromFile didn't error out with versioning or otherwise
                             JOptionPane.showMessageDialog(researchResultPanel, "Error loading data from file, make sure it is not too old and all of the data is formatted correctly.");
                         } else {
                             viewResearchResult(rer, true);
+                            saveButton.setEnabled(true);
                         }
                     }
                 }

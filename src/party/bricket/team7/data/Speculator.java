@@ -4,7 +4,7 @@ import party.bricket.team7.scrape.BricksetItemScraper;
 
 import java.util.*;
 
-public class Speculator {
+public class  Speculator {
     private Boolean isSaved;
     private BricksetItemScraper bSScraper;
     private LinkedList<ResearchResult> specs = new LinkedList<ResearchResult>();

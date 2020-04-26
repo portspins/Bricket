@@ -11,7 +11,6 @@ import java.awt.event.*;
 
 public class InfoPanelItem extends JPanel {
     private JLabel label;
-    private Component info;
     private JTextField editField;
 
     /**
