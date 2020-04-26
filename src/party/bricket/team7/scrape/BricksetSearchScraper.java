@@ -37,24 +37,25 @@ public class BricksetSearchScraper {
         Elements elItems;
         Elements elYear;
         // build URL
-        url = "https://brickset.com/sets?query=" + query;
+        url = "https://brickset.com/sets?query=" + query; // link to grab with query parameter
         System.out.println("Scraping: " + url);
         try {
+            // get first 50 results by setting setsPageLength cookie to 50 when submitting GET to page
             doc = Jsoup.connect(url).cookie("setsPageLength","50").get();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        elItems = doc.select("article.set");
+        elItems = doc.select("article.set"); // in article tag with 'set' class
         elUrl = elItems.select("div.meta").select("h1").select("a[href]");
-        elID = elItems.select("div.meta");
-        elName = elItems.select("div.highslide-caption > h1");
+        elID = elItems.select("div.meta"); //
+        elName = elItems.select("div.highslide-caption > h1"); //
         elYear = elItems.select("div.meta");
-        Integer tempYear = -1;
+        int tempYear = -1;
         String thumb = null;
         for(int i = 0; i < elItems.size(); i++) { // loop through as long as we have a name
             // if year is not found, a -1 is returned in place of the year for that item.
             if(!elYear.get(i).select("a.year").text().isEmpty()) {
-                tempYear = Integer.valueOf(elYear.get(i).select("a.year").text());
+                tempYear = Integer.parseInt(elYear.get(i).select("a.year").text());
                 years.add(tempYear);
                 tempYear = -1;
             } else {

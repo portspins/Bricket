@@ -17,8 +17,8 @@ import java.util.TimeZone;
  */
 public class BricksetItemScraper {
 
-    private String url;
-    private Document doc;
+    private final String url;
+    private Document doc; // store doc in memory so we don't have to pull new data each time
 
     /**
      * Constructor for scraping an individual item page
@@ -48,10 +48,10 @@ public class BricksetItemScraper {
      * @return theme of item
      */
     public String scrapeTheme() {
-        Elements elFeatureBoxes = doc.select("section.featurebox");
-        String subtheme = elFeatureBoxes.get(0).select("dt:contains(Subtheme) + dd").html();
-        String theme = elFeatureBoxes.get(0).select("dt:contains(Theme) + dd").select("a[href]").get(0).text();
-        if(!subtheme.isEmpty()) {
+        Elements elFeatureBoxes = doc.select("section.featurebox"); // narrow down to featurebox classes
+        String subtheme = elFeatureBoxes.get(0).select("dt:contains(Subtheme) + dd").html(); // attempt to get subtheme
+        String theme = elFeatureBoxes.get(0).select("dt:contains(Theme) + dd").select("a[href]").get(0).text(); // get theme
+        if(!subtheme.isEmpty()) { // sometimes there is not a subtheme, if there isn't we want to skip the combination here
             subtheme = elFeatureBoxes.get(0).select("dt:contains(Subtheme) + dd").select("a[href]").get(0).text();
             theme += " (" + subtheme + ")";
         }
@@ -63,17 +63,17 @@ public class BricksetItemScraper {
      * @return boolean true if it is retired and false if it is still being sold
      */
     public boolean scrapeIsRetired() {
-        Elements elFeatureBoxes = doc.select("section.featurebox");
-        Element availability = elFeatureBoxes.get(2);
-        String date = availability.select("dt:contains(United States) + dd").text();
-        if (date.isEmpty() || date.equals("-")) {
+        Elements elFeatureBoxes = doc.select("section.featurebox"); // narrow down to featurebox classes
+        Element availability = elFeatureBoxes.get(2); // availability is in the 3rd featurebox
+        String date = availability.select("dt:contains(United States) + dd").text(); // get US availability
+        if (date.isEmpty() || date.equals("-")) { // if there is no availability for the US or there is but it is '-', assume retired
             return true;
         }
         // get rid of price
-        int lastSpace = date.lastIndexOf(" ");
-        int hyphen = date.lastIndexOf("-");
-        date = date.substring(hyphen + 2, lastSpace);
-        if (date.equals("now")) {
+        int lastSpace = date.lastIndexOf(" "); // get last space
+        int hyphen = date.lastIndexOf("-");    // and hyphen
+        date = date.substring(hyphen + 2, lastSpace); // now use space/hyphen locations to get date string
+        if (date.equals("now")) { // still available, not retired
             return false;
         }
         return true;
@@ -84,8 +84,8 @@ public class BricksetItemScraper {
      * @return string of URL to image
      */
     public String scrapeImgLink() {
-        Elements contentClass = doc.select("div.content");
-        String src = contentClass.select("img").attr("src");
+        Elements contentClass = doc.select("div.content"); // get initial content section that
+        String src = contentClass.select("img").attr("src"); // get src attribute from <img> tag
         if(src.startsWith("/")) { // this is a relative path, so add brickset.com to it
             src = "https://brickset.com" + src;
         }
@@ -98,28 +98,29 @@ public class BricksetItemScraper {
      */
     public ArrayList<String> scrapeMinifigNames() {
         ArrayList<String> figs = new ArrayList<String>();
-        Document figDoc = null;
+        Document figDoc = null; // need a new Document because we are going to have to jump to a different page
         Elements featureBoxes = doc.select("section.featurebox");
         Elements figMan = featureBoxes.get(0).select("dt:contains(Minifigs) + dd");
-        if(figMan.isEmpty()) {
+        if(figMan.isEmpty()) { // if no minifigs listed, then no need to continue. return empty list
             return figs;
         }
-        String figLink = figMan.select("a[href]").attr("href");
-        figLink = "https://brickset.com" + figLink;
+        String figLink = figMan.select("a[href]").attr("href"); // get the external link to the minifig list
+        figLink = "https://brickset.com" + figLink; // its a relative link, so need to add brickset.com
         try {
             figDoc = Jsoup.connect(figLink).get();
         } catch (IOException e) {
             e.printStackTrace();
+            return figs;
         }
-        Elements figItems = figDoc.select("li.item");
+        Elements figItems = figDoc.select("li.item"); // each one is in a list with the class 'item'
         String figName;
-        for(int i = 0; i < figItems.size(); i++) {
+        for(int i = 0; i < figItems.size(); i++) { // iterate through list of items
+            // get name and remove unnecessary data
             figName = figItems.get(i).select("h1 > a[href]").text().replaceAll("\\(.*\\)", "").trim();
-            String[] figNames = figName.split(" - ");
+            String[] figNames = figName.split(" - "); //
             String[] shortFigNames = figNames[0].split(",");
             figs.add(shortFigNames[0]);
         }
-        System.out.println(figs.toString());
         return figs;
     }
 
@@ -128,17 +129,17 @@ public class BricksetItemScraper {
      * @return integer containing part count in set
      */
     public int scrapePartCount() {
-        Elements elFeatureBoxes = doc.select("section.featurebox");
+        Elements elFeatureBoxes = doc.select("section.featurebox"); // need Pieces data from first featurebox
         Elements elPieces = elFeatureBoxes.get(0).select("dt:contains(Pieces) + dd");
-        Integer count = 0;
-        String strCount = elPieces.select("a[href]").text();
+        int count = 0;
+        String strCount = elPieces.select("a[href]").text(); // part count is usually a link
         if(strCount.isEmpty()) {
-            strCount = elPieces.text();
-            if(strCount.isEmpty()) {
+            strCount = elPieces.text(); // but sometimes it is just normal unlinked text
+            if(strCount.isEmpty()) { // if we can't even get that, we still need to return a value
                 strCount = "-1";
             }
         }
-        count = Integer.parseInt(strCount);
+        count = Integer.parseInt(strCount); // str to int
         return count;
     }
 
@@ -148,11 +149,11 @@ public class BricksetItemScraper {
      */
     public double scrapeRating() {
         Elements elFeatureBoxes = doc.select("section.featurebox");
-        String strRating = elFeatureBoxes.get(0).select("div.rating").attr("title");
+        String strRating = elFeatureBoxes.get(0).select("div.rating").attr("title"); // rating in title attribute
         if(strRating.isEmpty()) {
             return 0;
         }
-        return Double.parseDouble(strRating);
+        return Double.parseDouble(strRating); // str to double
     }
 
     /**
@@ -164,11 +165,11 @@ public class BricksetItemScraper {
         Elements elCurrentValues = elFeatureBoxes.get(0).select("dt:contains(Current Value) + dd");
         elCurrentValues = elCurrentValues.select("a.plain[href]");
         if(elCurrentValues.isEmpty()) {
-            return -1.0;
+            return -1.0; // still need to return a value
         }
         String strCurrentValue = elCurrentValues.get(0).text();
-        strCurrentValue = strCurrentValue.substring(strCurrentValue.lastIndexOf("$")+1);
-        return Double.parseDouble(strCurrentValue);
+        strCurrentValue = strCurrentValue.substring(strCurrentValue.lastIndexOf("$")+1); // get rid of dollar sign
+        return Double.parseDouble(strCurrentValue); // str to double
     }
 
     /**
@@ -178,18 +179,18 @@ public class BricksetItemScraper {
     public double scrapeRetailPrice() {
         Elements elFeatureBoxes = doc.select("section.featurebox");
         Elements elRRP = elFeatureBoxes.get(0).select("dt:contains(RRP) + dd");
-        if(elRRP.isEmpty()) {
+        if(elRRP.isEmpty()) { // sometimes there is not an RRP, so still ret a value
             return -1.0;
         }
         String strRRP = elRRP.text();
-        if(!strRRP.contains("$")) {
+        if(!strRRP.contains("$")) { // if there isn't a $ value, it is empty or exclusively euros
             return -1.0;
         }
-        if(strRRP.contains("£") && strRRP.contains("$") && strRRP.contains("€"))
-            strRRP = strRRP.substring(strRRP.lastIndexOf("$")+1,strRRP.lastIndexOf("/")-1);
+        if(strRRP.contains("£") && strRRP.contains("$") && strRRP.contains("€")) // sometimes all three currencies are listed
+            strRRP = strRRP.substring(strRRP.lastIndexOf("$")+1,strRRP.lastIndexOf("/")-1); // get dollar value in list of currencies
         else
-            strRRP = strRRP.substring(strRRP.lastIndexOf("$")+1);
-        return Double.parseDouble(strRRP);
+            strRRP = strRRP.substring(strRRP.lastIndexOf("$")+1); // remove dollar value
+        return Double.parseDouble(strRRP); // str to double
     }
 
     /**
@@ -198,15 +199,21 @@ public class BricksetItemScraper {
      * @return Calendar item
      */
     private Calendar makeCalendarFromDateString(String date) {
-        Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("America/Chicago"));
-        cal.setTimeInMillis(0);
+        Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("America/Chicago")); // local time
+        cal.setTimeInMillis(0); // set to epoch as default "bad" value
+        // date is in format DAY MONTH YEAR
         String strDay = date.substring(0,date.indexOf(" "));
         String strMon = date.substring(date.indexOf(" ")+1,date.lastIndexOf(" "));
         String strYear = date.substring(date.lastIndexOf(" ") + 1);
         int month = -1;
-        int year = Integer.parseInt("20" + strYear);
+        int year = -1;
+        if(!strYear.matches("19\\d\\d")) { // year is not in 19xx format, should be for 2000s
+            year = Integer.parseInt("20" + strYear); // year is
+        } else {
+            year = Integer.parseInt(strYear); // year is in 19xx format
+        }
         int day = Integer.parseInt(strDay);
-        switch(strMon) { // forgive me
+        switch(strMon) { // forgive me, this is the best way I could think of to get the month value from a string
             case "Jan":
                 month = Calendar.JANUARY;
                 break;
@@ -246,7 +253,7 @@ public class BricksetItemScraper {
             default:
                 return cal;
         }
-        cal.set(year,month,day);
+        cal.set(year,month,day); // set calendar date to parsed values
         return cal;
     }
 
@@ -255,25 +262,25 @@ public class BricksetItemScraper {
      * @return Calendar item containing retire date
      */
     public Calendar scrapeRetiredDate() {
-        Calendar retired = Calendar.getInstance(TimeZone.getTimeZone("America/Chicago"));
-        retired.setTimeInMillis(0);
+        Calendar retired = Calendar.getInstance(TimeZone.getTimeZone("America/Chicago")); // local HSV time
+        retired.setTimeInMillis(0); // set to epoch for default "bad" value
         if(!scrapeIsRetired()) { // not retired, so no use in trying to do all of this
             return retired;
         }
         Elements elFeatureBoxes = doc.select("section.featurebox");
-        Element availability = elFeatureBoxes.get(2);
+        Element availability = elFeatureBoxes.get(2); // retire date is in 3rd featurebox
         String date = availability.select("dt:contains(United States) + dd").text();
-        if (date.isEmpty() || date.equals("-")) {
+        if (date.isEmpty() || date.equals("-")) { // if bad date, return epoch
             return retired;
         }
         // get rid of price
         int lastSpace = date.lastIndexOf(" ");
         int hyphen = date.lastIndexOf("-");
-        date = date.substring(hyphen + 2, lastSpace);
-        if(date.isEmpty()) {
+        date = date.substring(hyphen + 2, lastSpace); // date between hyphen and last space
+        if(date.isEmpty()) { // return epoch if no retire date
             return retired;
         }
-        retired = makeCalendarFromDateString(date);
+        retired = makeCalendarFromDateString(date); // convert Brickset date string to Calendar date
         return retired;
     }
 
@@ -282,17 +289,21 @@ public class BricksetItemScraper {
      * @return Calendar item containing release date
      */
     public Calendar scrapeReleaseDate() {
+        // this one is similar to scrapeRetireDate since the HTML is similar
         Calendar release = Calendar.getInstance(TimeZone.getTimeZone("America/Chicago"));
-        release.setTimeInMillis(0);
+        release.setTimeInMillis(0); // epoch for "bad" value
         Elements elFeatureBoxes = doc.select("section.featurebox");
-        Element availability = elFeatureBoxes.get(2);
+        Element availability = elFeatureBoxes.get(2); // in 3rd featurebox
         String date = availability.select("dt:contains(United States) + dd").text();
         if (date.isEmpty() || date.equals("-")) {
             return release;
         }
         int hyphen = date.lastIndexOf("-");
         date = date.substring(0,hyphen-1);
-        release = makeCalendarFromDateString(date);
+        if(date.isEmpty()) { // make sure date is valid
+            return release;
+        }
+        release = makeCalendarFromDateString(date); // convert Brickset date string to Calendar
         return release;
     }
 }

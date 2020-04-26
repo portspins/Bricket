@@ -33,7 +33,7 @@ public class ResearchIO {
 
     public ResearchIO() {
         research = null;
-        ioVersion = 0.1;
+        ioVersion = 0.1; // current ioVersion is set here if any major changes are made
     }
 
     /**
@@ -54,12 +54,10 @@ public class ResearchIO {
      * @return ArrayList of Strings containing minifigs
      */
     private ArrayList<String> parseMinifigs(String list) {
-        ArrayList<String> ret = new ArrayList<String>();
-        list = list.replace("[","");
+        list = list.replace("[",""); // get rid of brackets
         list = list.replace("]","");
-        String[] splitUp = list.split("\\s*,\\s*");
-        ret.addAll(Arrays.asList(splitUp));
-        return ret;
+        String[] splitUp = list.split("\\s*,\\s*"); // get values delimited by ' , '
+        return new ArrayList<String>(Arrays.asList(splitUp)); // return ArrayList of values
     }
 
     /**
@@ -69,40 +67,39 @@ public class ResearchIO {
      */
     public ResearchResult loadResearch(String path)
     {
-        String data = null;
-        Double fileVersion = null;
-        StringBuilder contentBuilder = new StringBuilder();
+        String data = null; // for json data
+        Double fileVersion = null; // for ioVersion data
+        StringBuilder contentBuilder = new StringBuilder(); // for reading entire file as single string
         Calendar retireDate = Calendar.getInstance(TimeZone.getTimeZone("America/Chicago"));
-        retireDate.setTimeInMillis(0);
+        retireDate.setTimeInMillis(0); // set to epoch for bad value
         Calendar releaseDate = Calendar.getInstance(TimeZone.getTimeZone("America/Chicago"));
-        releaseDate.setTimeInMillis(0);
+        releaseDate.setTimeInMillis(0); // epoch for bad value
         try {
-            Stream<String> stream = Files.lines(Paths.get(path));
+            Stream<String> stream = Files.lines(Paths.get(path)); // read entire file as single string
             stream.forEach(s -> contentBuilder.append(s).append("\n"));
             data = contentBuilder.toString();
         } catch (MalformedInputException e) {
-            System.out.println("Bad file.");
+            System.out.println("Bad file."); // if error in reading (could be binary file), return null and error out
             return null;
         } catch (IOException e) {
             return null;
         } catch (UncheckedIOException e) {
-            System.out.println("Bad file.");
+            System.out.println("Bad file."); // same here as with malformed input
             return null;
         }
         // data will be formatted with ioVer=x.xx on the first line and everything else on the second
         // so first we get the ioVersion, which is the x.xx after the ioVer= in the first line
         try {
-            fileVersion = Double.parseDouble(data.split("\\n")[0].split("=")[1]);
-        } catch (NumberFormatException e) {
+            fileVersion = Double.parseDouble(data.split("\\n")[0].split("=")[1]); // get first line and get value after = sign
+        } catch (NumberFormatException e) { // if there was no value or it messed up in any other way, return null
             System.out.println("Unable to get ioVersion, file is most likely ancient.");
             return null;
         } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("File at " + path + " not formatted correctly, stopping read.");
             return null;
         }
-        System.out.println("Version: " + fileVersion);
 
-        if(fileVersion < ioVersion) {
+        if(fileVersion < ioVersion) { // if fileVersion is too old, return null because there are breaking changes with each new version
             return null;
         }
         // then we get the actual data that contains the ResearchResult if the ioVersion checks out
@@ -110,32 +107,33 @@ public class ResearchIO {
         if(data.isEmpty()) {
             return null;
         }
-        JSONObject fmt;
+        JSONObject fmt; // read second line as json data
         try {
             fmt = new JSONObject(data);
         } catch (JSONException e) {
             System.out.println("Data in " + path + " not formatted correctly.");
             return null;
         }
-        // really only think here that is important is the bricksetLink
+        // really only thing here that is important is the bricksetLink
+        // so create search result
         SearchResult res = new SearchResult(fmt.get("id").toString(),fmt.get("name").toString(),2000,fmt.get("bricksetLink").toString(),fmt.get("imageLink").toString());
-        //parse information into a researchResult
+        // parse information into a ResearchResult built with SearchResult
         ResearchResult restored = new ResearchResult(res,fmt.get("theme").toString(),fmt.get("imageLink").toString(),fmt.getBoolean("retiredFlag"));
-
+        // get retire date
         String retireStr = fmt.get("retireDate").toString();
-        int retireYear = Integer.parseInt(getSubstringWithLength(retireStr, ",YEAR=", 4));
-        int retireMonth = Integer.parseInt(getSubstringWithLength(retireStr,",MONTH=",2).replace(",",""));
-        int retireDay = Integer.parseInt(getSubstringWithLength(retireStr,"DAY_OF_MONTH=",2).replace(",",""));
-        retireDate.set(retireYear,retireMonth,retireDay);
-
+        int retireYear = Integer.parseInt(getSubstringWithLength(retireStr, ",YEAR=", 4)); // parse year
+        int retireMonth = Integer.parseInt(getSubstringWithLength(retireStr,",MONTH=",2).replace(",","")); // parse month
+        int retireDay = Integer.parseInt(getSubstringWithLength(retireStr,"DAY_OF_MONTH=",2).replace(",","")); // parse day
+        retireDate.set(retireYear,retireMonth,retireDay); // set Calendar date
+        // get release date
         String releaseStr = fmt.get("releaseDate").toString();
-        int releaseYear = Integer.parseInt(getSubstringWithLength(releaseStr,",YEAR=",4));
-        int releaseMonth = Integer.parseInt(getSubstringWithLength(releaseStr,",MONTH=",2).replace(",",""));
-        int releaseDay = Integer.parseInt(getSubstringWithLength(releaseStr,"DAY_OF_MONTH=",2).replace(",",""));
+        int releaseYear = Integer.parseInt(getSubstringWithLength(releaseStr,",YEAR=",4)); // parse year
+        int releaseMonth = Integer.parseInt(getSubstringWithLength(releaseStr,",MONTH=",2).replace(",","")); // parse month
+        int releaseDay = Integer.parseInt(getSubstringWithLength(releaseStr,"DAY_OF_MONTH=",2).replace(",","")); // parse day
 
-        releaseDate.set(releaseYear,releaseMonth,releaseDay);
-
-        restored.setReleaseDate(releaseDate);
+        releaseDate.set(releaseYear,releaseMonth,releaseDay); // set Calendar release date
+        // set ResearchResult values
+        restored.setReleaseDate(releaseDate); //
         restored.setRetireDate(retireDate);
         restored.setPartCount(Integer.parseInt(fmt.get("partCount").toString()));
         restored.setValue(Double.parseDouble(fmt.get("value").toString()));
@@ -143,7 +141,6 @@ public class ResearchIO {
         restored.setRetailPrice(Double.parseDouble(fmt.get("retailPrice").toString()));
         restored.setMinifigList((ArrayList<String>)parseMinifigs(fmt.get("minifigList").toString()).clone());
         restored.setPeakPrice(Double.parseDouble(fmt.get("peakPrice").toString()));
-        //set commands to fill out ResearchResult
         return restored;
     }
 
