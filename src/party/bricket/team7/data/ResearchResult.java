@@ -35,9 +35,6 @@ public class ResearchResult {
      * Creates a new ResearchResult object
      */
 
-    // MODIFY TO TAKE SEARCH RESULT!!
-    //Edit by Daniel added parameters, change if not what we wanted,
-    // I just tried to fix the errors.
     public ResearchResult(SearchResult searchRes, String thm, String imgLink, boolean ret) {
         id = searchRes.getId();                                   // Initialize ID string in "####-####" format
         name = searchRes.getName();                               // Initialize item name

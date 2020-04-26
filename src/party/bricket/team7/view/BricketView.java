@@ -13,7 +13,7 @@ import java.util.Iterator;
  */
 
 public interface BricketView {
-    void viewSearchResults(Iterator<SearchResult> itr) throws IOException;  // Goes through list of SearchResults and outputs them
+    void viewSearchResults(Iterator<SearchResult> itr);              // Goes through list of SearchResults and outputs them
     void submitSearchQuery();                                        // Gets the search query and submits it to the controller
     void viewResearchResult(ResearchResult result, boolean newRes);  // Outputs the updated list of Research
     void submitRetailPrice(double price);                            // Sends the controller the modified retail price

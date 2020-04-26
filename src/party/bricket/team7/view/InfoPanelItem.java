@@ -17,9 +17,9 @@ public class InfoPanelItem extends JPanel {
      * Constructor
      */
     InfoPanelItem() {
-        super();
-        setLayout(new GridLayout(1,2, 8,8));
-        setMaximumSize(new Dimension(360, 27));
+        super();    // Call the JPanel constructor
+        setLayout(new GridLayout(1,2, 8,8));    // Set up a 2 column row with spacing
+        setMaximumSize(new Dimension(360, 27));           // Set the maximum size for the info panel
     }
 
     /**
@@ -29,9 +29,9 @@ public class InfoPanelItem extends JPanel {
      * @param editable true if the value should be able to be edited
      */
     InfoPanelItem(String label, String value, boolean editable) {
-        this();
-        setLabel(label);
-        setInfo(value, editable);
+        this();                     // Call the default constructor
+        setLabel(label);            // Set the label
+        setInfo(value, editable);   // Set the corresponding info, passing in if it is editable
     }
 
     /**
@@ -39,8 +39,8 @@ public class InfoPanelItem extends JPanel {
      * @param label the label
      */
     public void setLabel(String label) {
-        this.label = new JLabel(label);
-        add(this.label, 0);
+        this.label = new JLabel(label);         // Create a new JLabel with the desired text
+        add(this.label, 0);               // Add it to the first column of the row
     }
 
     /**
@@ -49,50 +49,54 @@ public class InfoPanelItem extends JPanel {
      * @param editable true if the value should be able to be edited
      */
     public void setInfo(String value, boolean editable) {
-        final JLabel valLabel = new JLabel(value);
-        if (editable) {
-            editField = new JTextField(value);
-            editField.setMaximumSize(editField.getPreferredSize());
+        final JLabel valLabel = new JLabel(value);       // Create a new JLabel with the initial value set
+        if (editable) {  // If this info is editable
+            editField = new JTextField(value);                        // Create a new JTextField with the initial value set
+            editField.setMaximumSize(editField.getPreferredSize());   // Set its maximum size
             editField.addFocusListener(new FocusAdapter() {
                 @Override
-                public void focusLost(FocusEvent e) {
+                public void focusLost(FocusEvent e) {   // When the field loses focus, toggle back to the JLabel
                     super.focusLost(e);
-                    add(valLabel,1);
-                    remove(editField);
-                    revalidate();
+                    add(valLabel,1);    // Add the JLabel back
+                    remove(editField);         // In place of the JTextField
+                    revalidate();              // Refresh the view
                     repaint();
                 }
             });
-            valLabel.setForeground(new Color(0, 128, 255));
+            valLabel.setForeground(new Color(0, 128, 255));     // Make the JLabel text blue since it is editable
             valLabel.addMouseListener(new MouseAdapter() {
                 @Override
-                public void mouseClicked(MouseEvent e) {
+                public void mouseClicked(MouseEvent e) {  // Add listener so when JLabel clicked, JTextField appears
                     super.mouseClicked(e);
-                    editField.setText(valLabel.getText());
-                    add(editField,1);
-                    editField.requestFocus();
-                    if (editField.getText().equals("Not Available")) {
-                        editField.setText("");
+                    editField.setText(valLabel.getText());  // Set the JTextField's initial text to the JLabel's current text
+                    add(editField,1);                 // Add the edit field
+                    remove(valLabel);                       // In place of the info
+                    editField.requestFocus();               // Give it focus
+                    if (editField.getText().equals("Not Available")) {  // If the factor had no valid initial value
+                        editField.setText("");      // Clear the edit field's initial value
                     }
-                    remove(valLabel);
-                    revalidate();
+                    revalidate();              // Refresh the view
                     repaint();
                 }
             });
         }
 
-        value = value.replaceAll("[^-?0-9./]", "");
+        value = value.replaceAll("[^-?0-9./]", "");     // Change the value to only numbers and dates
         System.out.println(value);
-        try {
-            if (value.equals("12/31/1969") || Double.parseDouble(value) <= 0) {
-                valLabel.setText("Not Available");
+        try {       // This will succeed if the date is invalid or the value is a number
+            if (value.equals("12/31/1969") || Double.parseDouble(value) <= 0) {     // If an invalid date or a negative number or zero
+                valLabel.setText("Not Available");  // Set the text to reflect the invalidity
             }
-        } catch (NumberFormatException ex) {
+        } catch (NumberFormatException ex) {    // If this exception is thrown, nothing needs to be done
             // Date already checked so just continue
         }
-        add(valLabel, 1);
+        add(valLabel, 1);   // Add the info to the second column of the row
     }
 
+    /**
+     * Get the editable textfield object
+     * @return the editfield object
+     */
     public JTextField getEditField() {
         return editField;
     }

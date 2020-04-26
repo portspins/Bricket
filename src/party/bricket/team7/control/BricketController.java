@@ -23,6 +23,7 @@ public class BricketController {
      * Constructor for the controller
      */
     public BricketController() {
+        // Initialize members
         search = null;
         spec = new Speculator();
     }
@@ -33,8 +34,8 @@ public class BricketController {
      * @return an iterator to the list of search results found
      */
     public Iterator<SearchResult> refreshSearch(String query) {
-        search = new Search(query);
-        return search.getSearchIterator();
+        search = new Search(query);                                   // Creates a search for the query
+        return search.getSearchIterator();                            // Returns an iterator to the list of results to the view
     }
 
     /**
@@ -43,9 +44,9 @@ public class BricketController {
      * @return the constructed research result
      */
     public ResearchResult selectSearchResult(int index) {
-        spec.addResearchResult(search.getSearchResult(index));
+        spec.addResearchResult(search.getSearchResult(index));   // Get the search result at the selected index and add it to speculator
         System.out.println("Peak: $" + spec.calcValue());
-        return spec.getResearchResult();
+        return spec.getResearchResult();                         // Return the research result created to the view
     }
 
     /**
@@ -69,8 +70,8 @@ public class BricketController {
      * @return true if save succeeded
      */
     public boolean saveToFile(String path) {
-        ResearchIO io = new ResearchIO();
-        return io.saveResearch(spec.getResearchResult(),path);
+        ResearchIO io = new ResearchIO();                           // Create the ResearchIO object
+        return io.saveResearch(spec.getResearchResult(),path);      // Save the research result to the file
     }
 
     /**
@@ -79,14 +80,14 @@ public class BricketController {
      * @return the loaded research result
      */
     public ResearchResult loadFromFile(String path) {
-        ResearchIO io = new ResearchIO();
-        ResearchResult res = io.loadResearch(path);
-        if(res == null) {
+        ResearchIO io = new ResearchIO();                   // Create the ResearchIO object
+        ResearchResult res = io.loadResearch(path);         // Attempt to open the file
+        if(res == null) {                                   // If the result object was not successfully created
             return null;
         }
-        // will make io.loadResearch return ResearchResult tomorrow, just did less involved SearchResult to test
-        spec.addResearchResult(res);
-        return spec.getResearchResult();
+
+        spec.addResearchResult(res);                        // If successfully created result, add it to the speculator
+        return spec.getResearchResult();                    // And return it to the view
     }
 
     /**
