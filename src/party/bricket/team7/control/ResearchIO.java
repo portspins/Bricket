@@ -1,6 +1,7 @@
 package party.bricket.team7.control;
 
 import java.io.*;
+import java.nio.charset.MalformedInputException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -68,13 +69,6 @@ public class ResearchIO {
      */
     public ResearchResult loadResearch(String path)
     {
-
-        //open json file with string name
-        //create ResearchResult with json file data
-        //ResearchResult loadHusk = new ResearchResult(); //**FIX**
-        //add ResearchResult to Speculator
-        //return loadHusk;
-        // store string
         String data = null;
         Double fileVersion = null;
         StringBuilder contentBuilder = new StringBuilder();
@@ -86,8 +80,14 @@ public class ResearchIO {
             Stream<String> stream = Files.lines(Paths.get(path));
             stream.forEach(s -> contentBuilder.append(s).append("\n"));
             data = contentBuilder.toString();
+        } catch (MalformedInputException e) {
+            System.out.println("Bad file.");
+            return null;
         } catch (IOException e) {
-            e.printStackTrace();
+            return null;
+        } catch (UncheckedIOException e) {
+            System.out.println("Bad file.");
+            return null;
         }
         // data will be formatted with ioVer=x.xx on the first line and everything else on the second
         // so first we get the ioVersion, which is the x.xx after the ioVer= in the first line
