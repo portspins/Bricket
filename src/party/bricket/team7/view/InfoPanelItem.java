@@ -81,7 +81,7 @@ public class InfoPanelItem extends JPanel {
             });
         }
 
-        value = value.replaceAll("[^-?0-9./]", "");     // Change the value to only numbers and dates
+        value = value.replaceAll("[^-?0-9A-Za-z./]", "");     // Change the value to only numbers and dates
         System.out.println(value);
         try {       // This will succeed if the date is invalid or the value is a number
             if (value.equals("12/31/1969") || Double.parseDouble(value) <= 0) {     // If an invalid date or a negative number or zero
