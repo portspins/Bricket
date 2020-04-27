@@ -1,6 +1,8 @@
 Bricket
 =======
-A LEGO set price predictor
+A LEGO set price predictor.
+
+Project website: [bricket.party](https://bricket.party)
 
 Authors
 -------
